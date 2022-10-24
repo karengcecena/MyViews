@@ -38,7 +38,7 @@ class Media(db.Model):
     media_type = db.Column(db.String(20), nullable=False)
     title = db.Column(db.String(50), nullable=False)
     overview = db.Column(db.Text)
-    release_date = db.Column(db.Datetime)
+    release_date = db.Column(db.DateTime)
     genre = db.Column(db.String(50))
     poster_path = db.Column(db.String(50))
     seasons = db.Column(db.Integer)
