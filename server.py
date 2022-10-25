@@ -31,20 +31,50 @@ def display_create_user():
 
     return render_template("create_user.html")
 
+@app.route("/register-user", methods=["POST"])
+def register_user():
+    """Gets info input in create user page and registers user"""
+    
+    username = request.form.get("username")
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    if crud.get_user_by_username(username):
+        flash("Sorry, that username is already taken.")
+
+    elif crud.get_user_by_email(email):
+        flash("Sorry, that email is already taken")
+
+    else:
+        user = crud.create_user(username=username, email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
+        flash ("Succesfully created user")
+        return redirect ("/")
+
+    ## will the bottom line work?
+    return redirect ("/create-user")
+   
+
 @app.route("/login")
 def login_user():
     """Logs in the user"""
 
+    email = request.form.get("email")
+    password = request.form.get("password")
+    user = crud.get_user_by_email(email)
+
+    if email in session:
+        if password == user.password:
+            flash("You have successfully logged in")
+            return redirect ("/user-profile")
+        else:
+            flash("Your password was incorrect")
+
+
+
+
     redirect("user_profile.html")
-
-@app.route("/register-user")
-def register_user():
-    """Gets info input in create user page and registers user"""
-    pass
-
-    redirect("/login")
-
-
 
 if __name__ == "__main__":
     connect_to_db(app)
