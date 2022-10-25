@@ -52,11 +52,10 @@ def register_user():
         flash ("Succesfully created user")
         return redirect ("/")
 
-    ## will the bottom line work?
     return redirect ("/create-user")
    
 
-@app.route("/login")
+@app.route("/login", methods=["POST"])
 def login_user():
     """Logs in the user"""
 
@@ -64,17 +63,28 @@ def login_user():
     password = request.form.get("password")
     user = crud.get_user_by_email(email)
 
-    if email in session:
+    if user:
         if password == user.password:
+            # could I have both?
+            session["username"] = user.username
+            # session['email'] = email
             flash("You have successfully logged in")
             return redirect ("/user-profile")
         else:
-            flash("Your password was incorrect")
+            flash("Your password was incorrect. Please try again.")
 
+    else:
+        flash("Sorry, a user with that email doesn't exist")
 
+    return redirect("/")
 
+@app.route("/user-profile")
+def display_user_profile():
+    user_email = session["username"]
+    user = crud.get_user_by_email(user_email)
 
-    redirect("user_profile.html")
+    return render_template("user_profile.html", user=user)
+
 
 if __name__ == "__main__":
     connect_to_db(app)
