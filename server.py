@@ -45,7 +45,7 @@ def show_search_results():
 
     results = data['results']
 
-    return render_template("all_media.html", data=data, search_text=search_text, results=results)
+    return render_template("all_media.html", data=data, search_text=search_text, results=results, res=res)
 
 ### come back to later
 @app.route("/media-info/<media_id>")
