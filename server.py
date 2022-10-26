@@ -52,7 +52,13 @@ def show_search_results():
 def show_media(media_id):
     """Shows media information"""
 
-    return render_template("media_information.html", media_id=media_id)
+    url = f"https://api.themoviedb.org/3/movie/{media_id}"
+    payload = {"api_key": API_KEY} 
+
+    res = requests.get(url, params=payload)
+    data = res.json()
+
+    return render_template("media_information.html", data=data)
 
 @app.route("/create-user")
 def display_create_user():

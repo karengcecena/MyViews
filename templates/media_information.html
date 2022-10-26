@@ -3,6 +3,53 @@
 
 {% block body %} 
 
-    <p>i'm media</p>
+    <h1>{{data["original_title"]}}</h1>
+    <p>{{data["overview"]}}</p>
+    <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
+
+    <form action="rate-movie" method="POST">
+        Have you seen this movie? Rate it: 
+        <!-- score= 0 -->
+        <input type="radio" name="score" value=0 id="0">
+        <label for="0">0</label>
+
+        <!-- score= 1 -->
+        <input type="radio" name="score" value=1 id="1">
+        <label for="1">1</label>
+
+        <!-- score= 2 -->
+        <input type="radio" name="score" value=2 id="2">
+        <label for="2">2</label>
+
+        <!-- score= 3 -->
+        <input type="radio" name="score" value=3 id="3">
+        <label for="3">3</label>
+
+        <!-- score= 4 -->
+        <input type="radio" name="score" value=4 id="4">
+        <label for="4">4</label>
+
+        <!-- score= 5 -->
+        <input type="radio" name="score" value=5 id="5">
+        <label for="5">5</label>
+
+        <input type="submit">
+
+    </form>
+
+    <form action="sort-folder" method="POST">
+        Want to add this movie to your list?
+        <!-- Watched List-->
+        <input type="radio" name="list" value="watched" id="watched">
+        <label for="watched">Watched List</label>
+
+        <!-- To Be Watched List-->
+        <input type="radio" name="score" value="not_watched" id="tobeewatched">
+        <label for="tobeewatched">To Be Watched List</label>
+
+        <input type="submit">
+
+    </form>
+
       
 {% endblock %}
