@@ -10,12 +10,18 @@ def create_user(username, email, password):
 
     return user
 
+
 def get_user_by_email(email):
     """Gets user by their email"""
 
     return User.query.filter(User.email == email).first()
 
+
 def get_user_by_username(username):
     """Gets user by their username"""
 
     return User.query.filter(User.username == username).first()
+
+def get_media_by_title(media_title):
+    """Gets media from TMDB and information"""
+    pass

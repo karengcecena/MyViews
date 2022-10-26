@@ -2,4 +2,25 @@
 
 {% block title %} All Media {% endblock %}
 
-{% block body %} Let's Pretend there are movies here {% endblock %}
+{% block body %} 
+
+<h1> Showing Results for "{{ search_text }}": </h1>
+
+<div> 
+    <ul>
+        {% for result in results%}
+            <li>
+                <a href="/media-info/{{ result['id'] }}"> {{ result["original_title"] }}: </a>
+                <p>- {{ result["overview"] }}</p>
+                <p>- {{ result["poster_path"] }}</p>
+
+                <img src="{{ result['poster_path'] }}">
+            </li>
+                
+           
+        {% endfor %}   
+    </ul>
+</div>
+
+
+{% endblock %}

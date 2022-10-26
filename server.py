@@ -5,6 +5,7 @@ from flask import (Flask, render_template, request, flash, session,
 from model import connect_to_db, db
 import crud
 import os
+import requests
 
 from jinja2 import StrictUndefined
 
@@ -19,11 +20,39 @@ def homepage():
 
     return render_template("homepage.html")
 
-@app.route("/media")
-def show_media():
-    """Shows all media"""
+@app.route("/search")
+def display_search_bar():
+    """Displays search bar for media page"""
 
-    return render_template("all_media.html")
+    return render_template("search_media.html")
+
+
+@app.route("/media-search-results", methods=["POST"])
+def show_search_results():
+    "Displays results from search bar query"
+
+    search_text = request.form.get("title")
+
+    url = "https://api.themoviedb.org/3/search/movie"
+    payload = {"api_key": API_KEY} 
+
+    # add movie title to payload
+    if search_text:
+        payload["query"]=search_text
+
+    res = requests.get(url, params=payload)
+    data = res.json()
+
+    results = data['results']
+
+    return render_template("all_media.html", data=data, search_text=search_text, results=results)
+
+### come back to later
+@app.route("/media-info/<media_id>")
+def show_media(media_id):
+    """Shows media information"""
+
+    return render_template("media_information.html", media_id=media_id)
 
 @app.route("/create-user")
 def display_create_user():
@@ -65,9 +94,8 @@ def login_user():
 
     if user:
         if password == user.password:
-            # could I have both?
             session["username"] = user.username
-            # session['email'] = email
+            session['email'] = email
             flash("You have successfully logged in")
             return redirect ("/user-profile")
         else:
@@ -80,7 +108,7 @@ def login_user():
 
 @app.route("/user-profile")
 def display_user_profile():
-    user_email = session["username"]
+    user_email = session["email"]
     user = crud.get_user_by_email(user_email)
 
     return render_template("user_profile.html", user=user)
