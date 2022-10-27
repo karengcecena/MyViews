@@ -127,9 +127,10 @@ class WatchedList(db.Model):
 
     def __repr__(self):
         """Show info about WatchedList"""
-        # can I add movie_title: {self.media_id.title} to repr?
+        # so that the movie title can be shown in the repr
+        media = Media.query.get(self.media_id)
 
-        return f"<WatchedList item_id: {self.item_id} user_id: {self.user_id} media_id: {self.media_id}>"
+        return f"<WatchedList item_id: {self.item_id} movie_title: {media.title} user_id: {self.user_id} media_id: {self.media_id}>"
 
 class ToBeWatchedList(db.Model):
 
@@ -141,11 +142,11 @@ class ToBeWatchedList(db.Model):
 
     # this is an association table, so it doesn't directly connect back to any table
 
-
     def __repr__(self):
         """Show info about ToBeWatchedList"""
+        media = Media.query.get(self.media_id)
 
-        return f"<ToBeWatchedList item_id: {self.item_id} user_id: {self.user_id} media_id: {self.media_id}>"
+        return f"<ToBeWatchedList item_id: {self.item_id} movie_title: {media.title} user_id: {self.user_id} media_id: {self.media_id}>"
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///project_db", echo=True):
