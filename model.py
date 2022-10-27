@@ -34,7 +34,7 @@ class Media(db.Model):
     __tablename__ = "medias"
 
     media_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    TMBD_id = db.Column(db.Integer, unique=True, nullable=False)
+    TMDB_id = db.Column(db.Integer, unique=True, nullable=False)
     media_type = db.Column(db.String(20), nullable=False)
     title = db.Column(db.String(50), nullable=False)
     overview = db.Column(db.Text)
@@ -55,7 +55,7 @@ class Media(db.Model):
 
     def __repr__(self):
         """Show info about Media"""
-        ### possible add ons: TMBD_id: {self.TMBD_id}, genre: {self.genre}
+        ### possible add ons: TMDB_id: {self.TMDB_id}, genre: {self.genre}
 
         return f"<Media media_id: {self.media_id} media_type: {self.media_type} media_title: {self.title}>"
 
@@ -78,7 +78,7 @@ class Rating(db.Model):
     def __repr__(self):
         """Show info about Rating"""
 
-        return f"<Rating rating_id: {self.rating_id} score: {self.score} media_id: {self.media_id} user_id: {self.user_id}>"
+        return f"<Rating rating_id: {self.rating_id} movie_title: {self.media.title} score: {self.score} media_id: {self.media_id} user_id: {self.user_id}>"
 
 class Playlist(db.Model):
     

@@ -47,18 +47,18 @@ def show_search_results():
 
     return render_template("all_media.html", data=data, search_text=search_text, results=results, res=res)
 
-### come back to later
-@app.route("/media-info/<media_id>")
-def show_media(media_id):
-    """Shows media information"""
+@app.route("/media-info/<TMDB_id>")
+def show_media(TMDB_id):
+    """Shows specific media information for selected media"""
 
-    url = f"https://api.themoviedb.org/3/movie/{media_id}"
+     #get media information
+    url = f"https://api.themoviedb.org/3/movie/{TMDB_id}"
     payload = {"api_key": API_KEY} 
 
     res = requests.get(url, params=payload)
     data = res.json()
 
-    return render_template("media_information.html", data=data)
+    return render_template("media_information.html", data=data, TMDB_id=TMDB_id)
 
 @app.route("/create-user")
 def display_create_user():
@@ -112,13 +112,75 @@ def login_user():
 
     return redirect("/")
 
+######### this needs work 10/26 ############################
 @app.route("/user-profile")
 def display_user_profile():
+    """Displays the user profile page"""
     user_email = session["email"]
     user = crud.get_user_by_email(user_email)
 
     return render_template("user_profile.html", user=user)
+############################################################
 
+
+@app.route("/media-info/<TMDB_id>/rating", methods=["POST"])
+def rate_movie(TMDB_id):
+    """Sets score user input in under ratings"""
+    
+    score = request.form.get("score")
+    movie = crud.get_media_by_TMDB_id(TMDB_id)
+
+    # add movie to database if not in there already
+    if not movie:
+        #get movie information
+        url = f"https://api.themoviedb.org/3/movie/{TMDB_id}"
+        payload = {"api_key": API_KEY} 
+
+        res = requests.get(url, params=payload)
+        data = res.json()
+
+        # add movie to db
+        movie = crud.add_movie_to_db(data)
+        db.session.add(movie)
+        db.session.commit()
+    
+    # check if a score was input:
+    if score:   
+
+        # check if user is logged in: 
+        if "email" in session:
+            user_email = session["email"]
+            user = crud.get_user_by_email(user_email)
+
+            # check if user has rated this media before:
+            if crud.user_rated(movie, user):
+
+                # update the score in db
+                movie_rating = crud.user_rated(movie, user)
+                movie_rating.score = score
+                db.session.commit()
+
+                flash(f"Your score has been updated to {score}")
+
+            else:
+                # add rating to movie 
+                rating = crud.add_rating_to_db(score, user.user_id, movie.media_id)
+                db.session.add(rating)
+                db.session.commit()
+                flash(f"You rated {data['original_title']} a {score} out of 5")
+
+        else:
+            flash("Sorry, only logged in users can rate movies")
+    else: 
+        flash("Sorry, it seems no score was selected.")
+
+    return redirect(f"/media-info/{TMDB_id}")
+
+######### this needs work 10/26 ############################
+@app.route("media-info/{{ TMDB_id }}/sort-folder", methods=["POST"])
+def add_movie_to_folder():
+    pass
+############################################################
 
 if __name__ == "__main__":
     connect_to_db(app)
