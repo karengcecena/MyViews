@@ -57,3 +57,28 @@ def user_rated(media, user):
     return Rating.query.filter(Rating.media_id == media.media_id, Rating.user_id == user.user_id).first()
 
 
+def user_sorted_Watched(media, user):
+    """Checks if user has sorted movie in folder previously"""
+
+    return WatchedList.query.filter(WatchedList.media_id == media.media_id, WatchedList.user_id == user.user_id).first()
+
+
+def user_sorted_ToBeWatched(media, user):
+    """Checks if user has sorted movie in folder previously"""
+
+    return ToBeWatchedList.query.filter(ToBeWatchedList.media_id == media.media_id, ToBeWatchedList.user_id == user.user_id).first()
+
+
+def add_to_WatchedList(media, user):
+    """Adds media to users watched list"""
+
+    movie_folder = WatchedList(user_id=user.user_id, media_id=media.media_id)
+
+    return movie_folder
+
+def add_to_ToBeWatchedList(media, user):
+    """Adds media to users to be watched list"""
+
+    movie_folder = ToBeWatchedList(user_id=user.user_id, media_id=media.media_id)
+
+    return movie_folder

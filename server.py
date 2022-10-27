@@ -112,7 +112,7 @@ def login_user():
 
     return redirect("/")
 
-######### this needs work 10/26 ############################
+######### this needs work 10/26 after lunch############################
 @app.route("/user-profile")
 def display_user_profile():
     """Displays the user profile page"""
@@ -176,11 +176,97 @@ def rate_movie(TMDB_id):
 
     return redirect(f"/media-info/{TMDB_id}")
 
-######### this needs work 10/26 ############################
-@app.route("media-info/{{ TMDB_id }}/sort-folder", methods=["POST"])
-def add_movie_to_folder():
-    pass
-############################################################
+@app.route("/<TMDB_id>/sort-folder", methods=["POST"])
+def add_movie_to_folder(TMDB_id):
+    """Adds selected movie to watched or to be watched list"""
+
+    folder = request.form.get("list")
+    movie = crud.get_media_by_TMDB_id(TMDB_id)
+
+    # add movie to database if not in there already
+    if not movie:
+        #get movie information
+        url = f"https://api.themoviedb.org/3/movie/{TMDB_id}"
+        payload = {"api_key": API_KEY} 
+
+        res = requests.get(url, params=payload)
+        data = res.json()
+
+        # add movie to db
+        movie = crud.add_movie_to_db(data)
+        db.session.add(movie)
+        db.session.commit()
+
+    # check if folder was selected:
+    if folder:
+
+        # check is user is logged in:
+        if "email" in session:
+            user_email = session["email"]
+            user = crud.get_user_by_email(user_email)
+
+            # sort into folder depending on value:
+            if folder == "watched":
+                
+                # check if user added to watched_list before:
+                if crud.user_sorted_Watched(movie, user):
+                    flash("This movie is already in your Watched List")
+
+                # check if user added to to_be_watched_list before:
+                elif crud.user_sorted_ToBeWatched(movie, user):
+                    # delete from to_be_watched_list
+                    movie_folder = crud.user_sorted_ToBeWatched(movie, user)
+                    db.session.delete(movie_folder)
+                    db.session.commit()
+
+                    # add to watched list
+                    movie_folder = crud.add_to_WatchedList(movie, user)
+                    db.session.add(movie_folder)
+                    db.session.commit()
+                    flash("This movie has been switched from your To Be Watched List to your Watched List")
+
+                else:
+                    # add to watched list:
+                    movie_folder = crud.add_to_WatchedList(movie, user)
+                    db.session.add(movie_folder)
+                    db.session.commit()
+                    flash("This movie has been added to your Watched List")
+
+
+            elif folder == "not_watched":
+                # check if user added to to_be_watched_list before:
+                if crud.user_sorted_ToBeWatched(movie, user):
+                    flash("This movie is already in your To Be Watched List")
+
+                # check if user added to watched_list before:
+                elif crud.user_sorted_Watched(movie, user):
+                    flash("This movie is already in your Watched List")
+                    # delete from watched_list
+                    movie_folder = crud.user_sorted_Watched(movie, user)
+                    db.session.delete(movie_folder)
+                    db.session.commit()
+
+                    # add to to_be_watched list
+                    movie_folder = crud.add_to_ToBeWatchedList(movie, user)
+                    db.session.add(movie_folder)
+                    db.session.commit()
+                    flash("This movie has been switched from your Watched List to your To Be Watched List")
+
+                else:
+                    # add to to_be_watched list:
+                    movie_folder = crud.add_to_ToBeWatchedList(movie, user)
+                    db.session.add(movie_folder)
+                    db.session.commit()
+                    flash("This movie has been added to your Watched List")
+
+        else:
+            flash("Sorry, only logged in users can rate movies")
+
+    else:
+        flash("Sorry, it seems no folder was selected.")
+
+    return redirect(f"/media-info/{TMDB_id}")
+
 
 if __name__ == "__main__":
     connect_to_db(app)

@@ -127,6 +127,7 @@ class WatchedList(db.Model):
 
     def __repr__(self):
         """Show info about WatchedList"""
+        # can I add movie_title: {self.media_id.title} to repr?
 
         return f"<WatchedList item_id: {self.item_id} user_id: {self.user_id} media_id: {self.media_id}>"
 
