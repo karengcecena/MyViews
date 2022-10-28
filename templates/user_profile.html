@@ -3,7 +3,44 @@
 
 {% block body %} 
 
-    <p>hi {{ user.username }}</p>
-    <a href="/search" >Search for media</a>
+    <h1>hi {{ user.username }}</h1>
+
+    <a href="/search" >Search for media</a> 
+    
+    <p>Or view your lists below:</p>
+
+    <div>
+        <h2>Watched List:</h2>
+        <ul>
+        {% for media in user.watched_list %}
+            <li>
+                {{ media.title }}
+                {% for rating in media.ratings %}
+                    {% if rating.user_id == user.user_id %}
+                        Score: {{ rating.score }}
+                    {% endif %}
+                {% endfor %}
+                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div>
+        <h2>To Be Watched List:</h2>
+        <ul>
+        {% for media in user.to_be_watched_list %}
+            <li>
+                {{ media.title }}
+                {% for rating in media.ratings %}
+                    {% if rating.user_id == user.user_id %}
+                        {{ rating.score }}
+                    {% endif %}
+                {% endfor %}
+                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
       
 {% endblock %}

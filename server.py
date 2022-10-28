@@ -112,7 +112,6 @@ def login_user():
 
     return redirect("/")
 
-######### this needs work 10/26 after lunch############################
 @app.route("/user-profile")
 def display_user_profile():
     """Displays the user profile page"""
@@ -120,7 +119,6 @@ def display_user_profile():
     user = crud.get_user_by_email(user_email)
 
     return render_template("user_profile.html", user=user)
-############################################################
 
 
 @app.route("/media-info/<TMDB_id>/rating", methods=["POST"])
@@ -233,7 +231,7 @@ def add_movie_to_folder(TMDB_id):
                     flash("This movie has been added to your Watched List")
 
 
-            elif folder == "not_watched":
+            elif folder == "to_be_watched":
                 # check if user added to to_be_watched_list before:
                 if crud.user_sorted_ToBeWatched(movie, user):
                     flash("This movie is already in your To Be Watched List")
