@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Media, Rating, Playlist, PlaylistMedia, WatchedList, ToBeWatchedList, connect_to_db
+from model import db, User, Media, Rating, Playlist, PlaylistMedia, WatchedList, ToBeWatchedList, Genre, MediaGenre, connect_to_db
 
 
 def create_user(username, email, password):
@@ -30,7 +30,7 @@ def get_media_by_TMDB_id(TMDB_id):
 
 
 def add_movie_to_db(movie_info):
-    """Adds movie to db"""
+    """Adds movie to DB"""
 
     TMDB_id = movie_info["id"]
     media_type = "movie"
@@ -38,11 +38,21 @@ def add_movie_to_db(movie_info):
     overview = movie_info["overview"]
     release_date = movie_info["release_date"]
     poster_path = movie_info["poster_path"]
-     # genre = 
 
     return Media(TMDB_id=TMDB_id, media_type=media_type, title=title, overview=overview, release_date=release_date, poster_path=poster_path )
 
+def check_if_genre_in_db(genre):
+    """Checks if the genre mentioned is in DB"""
 
+    return Genre.query.filter(Genre.TMDB_genre_id == genre["id"]).first()
+
+def add_genre_to_db(genre):
+    """Adds genre to DB"""
+    TMDB_genre_id = genre["id"]
+    genre_name = genre["name"]
+
+    return Genre(TMDB_genre_id=TMDB_genre_id, genre_name=genre_name)
+    
 def add_rating_to_db(score, user_id, media_id):
     """Adds the rating to the DB"""
 

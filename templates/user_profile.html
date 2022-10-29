@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {% block title %} User Profile {% endblock %}
-
+{% block head %}<script src = "https://d3js.org/d3.v4.min.js"></script>{% endblock %}
 {% block body %} 
 
     <h1>hi {{ user.username }}</h1>
+
+    <div id="basic-demo">
+        <svg></svg>
+    </div>
 
     <a href="/search" >Search for media</a> 
     

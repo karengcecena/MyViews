@@ -115,11 +115,15 @@ def login_user():
 @app.route("/user-profile")
 def display_user_profile():
     """Displays the user profile page"""
-    user_email = session["email"]
-    user = crud.get_user_by_email(user_email)
 
-    return render_template("user_profile.html", user=user)
+    if "email" in session: 
+        user_email = session["email"]
+        user = crud.get_user_by_email(user_email)
+        return render_template("user_profile.html", user=user)
 
+    else:
+        flash("Sorry, please log in:")
+        return redirect("/")
 
 @app.route("/media-info/<TMDB_id>/rating", methods=["POST"])
 def rate_movie(TMDB_id):
@@ -141,7 +145,24 @@ def rate_movie(TMDB_id):
         movie = crud.add_movie_to_db(data)
         db.session.add(movie)
         db.session.commit()
-    
+
+        ### ADDING MOVIE GENRE INFORMATION ###
+        # add genres to movie that do not exist:
+        genres = data["genres"]
+        for genre in genres:
+            # check if genre in genres:
+            if crud.check_if_genre_in_db(genre):
+                # if yes: 
+                genre = crud.check_if_genre_in_db(genre)
+                movie.genres.append(genre)
+                db.session.commit()
+            else:
+                # if not, add to genre:
+                genre = crud.add_genre_to_db(genre)
+                db.session.add(genre)
+                movie.genres.append(genre)
+                db.session.commit()
+
     # check if a score was input:
     if score:   
 
@@ -157,7 +178,6 @@ def rate_movie(TMDB_id):
                 movie_rating = crud.user_rated(movie, user)
                 movie_rating.score = score
                 db.session.commit()
-
                 flash(f"Your score has been updated to {score}")
 
             else:
@@ -165,7 +185,7 @@ def rate_movie(TMDB_id):
                 rating = crud.add_rating_to_db(score, user.user_id, movie.media_id)
                 db.session.add(rating)
                 db.session.commit()
-                flash(f"You rated {data['original_title']} a {score} out of 5")
+                flash(f"You rated {movie.title} a {score} out of 5")
 
         else:
             flash("Sorry, only logged in users can rate movies")
@@ -194,6 +214,23 @@ def add_movie_to_folder(TMDB_id):
         movie = crud.add_movie_to_db(data)
         db.session.add(movie)
         db.session.commit()
+
+        ### ADDING MOVIE GENRE INFORMATION ###
+        # add genres to movie that do not exist:
+        genres = data["genres"]
+        for genre in genres:
+            # check if genre in genres:
+            if crud.check_if_genre_in_db(genre):
+                # if yes: 
+                genre = crud.check_if_genre_in_db(genre)
+                movie.genres.append(genre)
+                db.session.commit()
+            else:
+                # if not, add to genre:
+                genre = crud.add_genre_to_db(genre)
+                db.session.add(genre)
+                movie.genres.append(genre)
+                db.session.commit()
 
     # check if folder was selected:
     if folder:
@@ -258,13 +295,14 @@ def add_movie_to_folder(TMDB_id):
                     flash("This movie has been added to your Watched List")
 
         else:
-            flash("Sorry, only logged in users can rate movies")
+            flash("Sorry, only logged in users can add movies to folders")
 
     else:
         flash("Sorry, it seems no folder was selected.")
 
     return redirect(f"/media-info/{TMDB_id}")
 
+########################################################################################################################
 
 if __name__ == "__main__":
     connect_to_db(app)
