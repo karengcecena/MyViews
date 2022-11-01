@@ -104,4 +104,10 @@ def get_user_genres(user):
         for genre in media.genres:
             media_genres[genre] = media_genres.get(genre, 0) + 1
 
-    return media_genres
+    # to sort the dictionary values so the pie chart goes from smallest to largest, 
+    # adapted from https://www.tutorialsteacher.com/articles/sort-dict-by-value-in-python
+    media_genres_list = sorted(media_genres.items(), key=lambda x:x[1], reverse=True)
+    sort_media_genres_dict = dict(media_genres_list)
+
+    return sort_media_genres_dict
+    # return media_genres
