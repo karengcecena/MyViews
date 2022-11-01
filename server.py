@@ -1,7 +1,7 @@
 """Server for movie app."""
 
 from flask import (Flask, render_template, request, flash, session,
-                   redirect)
+                   redirect, jsonify)
 from model import connect_to_db, db
 import crud
 import os
@@ -301,6 +301,24 @@ def add_movie_to_folder(TMDB_id):
         flash("Sorry, it seems no folder was selected.")
 
     return redirect(f"/media-info/{TMDB_id}")
+
+@app.route("/user-profile/genres.json")
+def get_users_genres():
+    """Gets the users genres in their watched list"""
+
+    # get user object: 
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
+
+    # get users genres:
+    user_genres = crud.get_user_genres(user)
+    
+    genres = []
+
+    for genre, total in user_genres.items():
+        genres.append({'genre': genre.genre_name,'number_of_genre': total})
+
+    return jsonify({"data": genres})
 
 ########################################################################################################################
 

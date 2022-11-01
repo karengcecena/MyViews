@@ -1,12 +1,69 @@
-const svg = d3.select('#basic-demo svg');
+'use strict';
 
-svg
-  .selectAll('rect')
-  .data([50, 100, 200, 100, 50])
-  .enter()
-  .append('rect')
-  .attr('y', (num, idx) => idx * 40)
-  .attr('x', 0)
-  .attr('width', (num) => num)
-  .attr('height', 30)
-  .attr('fill', (num, idx) => d3.hsl(idx * 30, 1.0, 0.8));
+fetch('/user-profile/genres.json')
+.then(response => response.json())
+.then(responseJson => {
+
+  const xvalues = [];
+  const yvalues = [];
+  
+  // set colors
+  const barColors = [
+      "#b91d47",
+      "#00aba9",
+      "#2b5797",
+      "#e8c3b9",
+      "#1e7145"
+    ];
+
+  const barColorsDynamic = [];
+  
+  for (const value of responseJson.data){
+    xvalues.push(value["genre"]);
+    yvalues.push(value["number_of_genre"]);
+  }
+  
+  // dynamically generated colors
+  // adapted from user comment on 
+  // https://stackoverflow.com/questions/45771849/chartjs-random-colors-for-each-part-of-pie-chart-with-data-dynamically-from-data
+  const dynamicColors = () => {
+
+    const r = Math.floor(Math.random() * 255);
+    const g = Math.floor(Math.random() * 255);
+    const b = Math.floor(Math.random() * 255);
+    return "rgb(" + r + "," + g + "," + b + ")";
+  };
+
+  for (let i =0; i<(xvalues.length); i++){
+    barColorsDynamic.push(dynamicColors());
+  }
+
+  console.log(barColors)
+
+  new Chart(document.querySelector('#test-chart'), {
+    type: 'doughnut',
+
+    data: {
+      labels: xvalues,
+      datasets: [{
+        // backgroundColor: barColors,
+        backgroundColor: barColorsDynamic,
+        data: yvalues
+      }]
+    },
+
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Your Genres:'
+        }
+      }
+    },
+  });
+
+});

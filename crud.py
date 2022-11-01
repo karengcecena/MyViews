@@ -92,3 +92,16 @@ def add_to_ToBeWatchedList(media, user):
     movie_folder = ToBeWatchedList(user_id=user.user_id, media_id=media.media_id)
 
     return movie_folder
+
+def get_user_genres(user):
+    """Returns the genres the user has saved in a dictionary"""
+
+    media_genres = {}
+    
+    user_watched_list = user.watched_list
+
+    for media in user_watched_list:
+        for genre in media.genres:
+            media_genres[genre] = media_genres.get(genre, 0) + 1
+
+    return media_genres
