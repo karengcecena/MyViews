@@ -130,6 +130,7 @@ def rate_movie(TMDB_id):
     """Sets score user input in under ratings"""
     
     score = request.form.get("score")
+    comment = request.form.get("comment")
     movie = crud.get_media_by_TMDB_id(TMDB_id)
 
     # add movie to database if not in there already
@@ -175,17 +176,31 @@ def rate_movie(TMDB_id):
             if crud.user_rated(movie, user):
 
                 # update the score in db
-                movie_rating = crud.user_rated(movie, user)
-                movie_rating.score = score
-                db.session.commit()
-                flash(f"Your score has been updated to {score}")
-
+                if comment: 
+                    movie_rating = crud.user_rated(movie, user)
+                    movie_rating.score = score
+                    movie_rating.review_input = comment
+                    db.session.commit()
+                    flash(f"Your score has been updated to {score} and your comment was successfully added")
+                else:
+                    movie_rating = crud.user_rated(movie, user)
+                    movie_rating.score = score
+                    db.session.commit()
+                    flash(f"Your score has been updated to {score}")
             else:
                 # add rating to movie 
-                rating = crud.add_rating_to_db(score, user.user_id, movie.media_id)
+                rating = crud.add_rating_to_db(score, user.user_id, movie.media_id, comment)
                 db.session.add(rating)
                 db.session.commit()
-                flash(f"You rated {movie.title} a {score} out of 5")
+                flash(f"Your rating of {score} out of 5 and comment were successfully added for {movie.title}")
+
+                # add movie to watched list: 
+                if not crud.user_sorted_Watched(movie, user):
+                    # add to watched list
+                    movie_folder = crud.add_to_WatchedList(movie, user)
+                    db.session.add(movie_folder)
+                    db.session.commit()
+                    flash(f"Your media has been added to your watched list")
 
         else:
             flash("Sorry, only logged in users can rate movies")

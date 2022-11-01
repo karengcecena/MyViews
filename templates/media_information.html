@@ -33,8 +33,13 @@
         <input type="radio" name="score" value=5 id="5">
         <label for="5">5</label>
 
+        <!-- comment -->
+        Comment what you thought about the movie: 
+        <input type="text" name="comment" id="rating">
+
         <input type="submit">
     </form>
+
 
     <form action="/{{ TMDB_id }}/sort-folder" method="POST">
         Want to add this movie to your list?

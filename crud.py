@@ -53,10 +53,10 @@ def add_genre_to_db(genre):
 
     return Genre(TMDB_genre_id=TMDB_genre_id, genre_name=genre_name)
     
-def add_rating_to_db(score, user_id, media_id):
+def add_rating_to_db(score, user_id, media_id, comment=None):
     """Adds the rating to the DB"""
 
-    rating = Rating(score=score, user_id=user_id, media_id=media_id)
+    rating = Rating(score=score, user_id=user_id, media_id=media_id, review_input=comment)
 
     return rating
 
@@ -110,4 +110,3 @@ def get_user_genres(user):
     sort_media_genres_dict = dict(media_genres_list)
 
     return sort_media_genres_dict
-    # return media_genres

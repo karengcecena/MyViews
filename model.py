@@ -55,9 +55,8 @@ class Media(db.Model):
 
     def __repr__(self):
         """Show info about Media"""
-        ### possible add ons: TMDB_id: {self.TMDB_id}, genre: {self.genre}
 
-        return f"<Media media_id: {self.media_id} media_type: {self.media_type} media_title: {self.title}>"
+        return f"<Media media_id: {self.media_id} media_type: {self.media_type} media_title: {self.title} genres: {self.genres}>"
 
 class Rating(db.Model):
     
@@ -78,7 +77,7 @@ class Rating(db.Model):
     def __repr__(self):
         """Show info about Rating"""
 
-        return f"<Rating rating_id: {self.rating_id} movie_title: {self.media.title} score: {self.score} media_id: {self.media_id} user_id: {self.user_id}>"
+        return f"<Rating rating_id: {self.rating_id} movie_title: {self.media.title} score: {self.score} media_id: {self.media_id} user_id: {self.user_id} comment: {self.review_input}>"
 
 class Playlist(db.Model):
     
