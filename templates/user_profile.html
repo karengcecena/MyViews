@@ -44,7 +44,17 @@
                 {{ media.title }}
                 {% for rating in media.ratings %}
                     {% if rating.user_id == user.user_id %}
-                        Score: {{ rating.score }}
+                        {% if rating.score == 1 %}
+                            <div class="star">★</div>
+                        {% elif rating.score == 2 %}
+                            <div class="star">★★</div>
+                        {% elif rating.score == 3 %}
+                            <div class="star">★★★</div>
+                        {% elif rating.score == 4 %}
+                            <div class="star">★★★★</div>
+                        {% elif rating.score == 5 %}
+                            <div class="star">★★★★★</div>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">

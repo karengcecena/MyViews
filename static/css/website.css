@@ -51,3 +51,7 @@ opacity:1;
 .rating:hover > input:checked ~ label:before{ 
 opacity: 0.4;
     }
+
+.star {
+    color: #FFD700;
+}
