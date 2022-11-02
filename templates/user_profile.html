@@ -90,6 +90,25 @@
          </div>
         <!-- </ul> -->
     </div>
+
+    <div>
+        <div class="row">
+        {% for playlist in user.playlists %}
+            <h2>{{ playlist.name }}:</h2>
+            {% for media in playlist.medias %}
+                <div class="col">
+                {{ media.title }}
+                {% for rating in media.ratings %}
+                    {% if rating.user_id == user.user_id %}
+                        {{ rating.score }}
+                    {% endif %}
+                {% endfor %}
+                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                </div>
+            {% endfor %}
+        {% endfor %}
+         </div>
+    </div>
       
 {% endblock %}
 
