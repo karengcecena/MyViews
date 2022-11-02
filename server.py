@@ -58,7 +58,7 @@ def show_media(TMDB_id):
     res = requests.get(url, params=payload)
     data = res.json()
 
-    ##### problem here !!!!!!!
+    # check if user is logged in in order to display playlists correctly 
     if "email" in session:
         user = crud.get_user_by_email(session["email"])
         return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user)
@@ -145,6 +145,62 @@ def creates_playlist_for_user():
         flash(f"The playlist '{playlist_name}' has successfully been created")
 
     return redirect("/user-profile")
+
+# currently here:
+################################################################
+@app.route("/<TMDB_id>/add-to-playlist", methods=["POST"])
+def add_movie_to_playlist(TMDB_id):
+    movie = crud.get_media_by_TMDB_id(TMDB_id)
+    playlist_id = request.form.get("playlist")
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
+    # print(playlist_id)
+
+    # add movie to database if not in there already
+    if not movie:
+        #get movie information
+        url = f"https://api.themoviedb.org/3/movie/{TMDB_id}"
+        payload = {"api_key": API_KEY} 
+
+        res = requests.get(url, params=payload)
+        data = res.json()
+
+        # add movie to db
+        movie = crud.add_movie_to_db(data)
+        db.session.add(movie)
+        db.session.commit()
+
+        ### ADDING MOVIE GENRE INFORMATION ###
+        # add genres to movie that do not exist:
+        genres = data["genres"]
+        for genre in genres:
+            # check if genre in genres:
+            if crud.check_if_genre_in_db(genre):
+                # if yes: 
+                genre = crud.check_if_genre_in_db(genre)
+                movie.genres.append(genre)
+                db.session.commit()
+            else:
+                # if not, add to genre:
+                genre = crud.add_genre_to_db(genre)
+                db.session.add(genre)
+                movie.genres.append(genre)
+                db.session.commit()
+
+    # for playlist where playlist_id = ^
+    # grab playlist with that id? 
+    if playlist_id != "no":
+        playlist = crud.get_playlist_by_id(playlist_id, user)
+        movie.playlists.append(playlist)
+        # playlist.medias.append(movie)
+        db.session.commit()
+        flash(f"Movie successfully added to {playlist.name}")
+        # playlist.medias.append(movie)
+        return redirect (f"/media-info/{TMDB_id}")
+    else:
+        flash("Please log in")
+
+################################################################
 
 @app.route("/media-info/<TMDB_id>/rating", methods=["POST"])
 def rate_movie(TMDB_id):

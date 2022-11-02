@@ -115,3 +115,8 @@ def create_playlist(playlist_name, user):
     """Creates a playlist for user"""
 
     return Playlist(name=playlist_name, user_id=user.user_id)
+
+def get_playlist_by_id(playlist_id, user):
+    """Gets playlist by that id"""
+
+    return Playlist.query.filter(Playlist.playlist_id == playlist_id, Playlist.user_id== user.user_id).first()
