@@ -58,7 +58,13 @@ def show_media(TMDB_id):
     res = requests.get(url, params=payload)
     data = res.json()
 
-    return render_template("media_information.html", data=data, TMDB_id=TMDB_id)
+    ##### problem here !!!!!!!
+    if "email" in session:
+        user = crud.get_user_by_email(session["email"])
+        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user)
+
+    else:
+        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=False)
 
 @app.route("/create-user")
 def display_create_user():

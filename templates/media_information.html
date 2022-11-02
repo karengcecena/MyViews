@@ -9,7 +9,7 @@
 
     <form action="/media-info/{{ TMDB_id }}/rating" method="POST">
 
-        <!-- star ratings uodated:  -->
+        <!-- star ratings updated:  -->
         <div class="rating">
        
         <!-- score= 0 -->
@@ -63,16 +63,25 @@
 
     <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
 
-    <!-- working on displaying folders here -->
-    <!-- <form action="/add-to-playlist" method="POST">
-
-        or add your movie to an existing folder:
-        <input type="radio" name="playlist_name" value= id="">
-        <label for="">0</label>
+    <!-- working on displaying folders here -->  
     
+    <form action="/{{ TMDB_id }}/add-to-playlist" method="POST">
+
+        <label for="playlists">Add your movie to an existing folder:</label>
+        <select name="playlist" id="playlists">
+            {% if user %}
+            
+                {% for playlist in user.playlists %}
+                    <option value="{{ playlist.playlist_id }}">{{ playlist.name }}</option>
+                {% endfor %}
+
+            {% else %}
+                <option value="no">Sorry, you need to be logged in to view playlists</option>
+            {% endif %}
+        </select>
+
         <button type="submit">Add To Playlist</button>
-    
-    </form> -->
+        
+    </form>
 
-      
 {% endblock %}
