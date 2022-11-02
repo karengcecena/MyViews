@@ -10,9 +10,9 @@
     <ul>
         {% for result in results%}
             <li>
-                <a href="/media-info/{{ result['id'] }}"> {{ result["original_title"] }}: </a>
+                <a href="/media-info/{{ result['id'] }}"> {{ result["original_title"] }}: </a><br>
+                <img src="https://image.tmdb.org/t/p/original{{ result['poster_path'] }}">
                 <!-- <p>- {{ result["overview"] }}</p> -->
-                <!-- <img src="https://image.tmdb.org/t/p/original{{ result['poster_path'] }}"> -->
             </li>    
         {% endfor %}   
     </ul>

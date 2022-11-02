@@ -55,3 +55,12 @@ opacity: 0.4;
 .star {
     color: #FFD700;
 }
+
+/* still figuring this out */
+.center p{
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px; */
+    /* border: 3px solid green; */
+  }

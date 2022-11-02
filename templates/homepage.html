@@ -3,6 +3,8 @@
 
 {% block body %} 
 
+    <div class="center">
+
     <h1 >Login</h1>
 
     <form action="/login" method="POST">
@@ -15,12 +17,15 @@
         </p>
     
         <p>
-          <input type="submit">
+          <!-- <input type="submit"> -->
+          <button type="submit">Log In</button>
         </p>
       </form>
 
       <p>
         New? <a href="/create-user">Create a User</a> Or <a href="/search" >Browse as Guest</a>
       </p>
+    </div>
+
       
 {% endblock %}

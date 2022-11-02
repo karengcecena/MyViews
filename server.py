@@ -51,7 +51,7 @@ def show_search_results():
 def show_media(TMDB_id):
     """Shows specific media information for selected media"""
 
-     #get media information
+    #get media information
     url = f"https://api.themoviedb.org/3/movie/{TMDB_id}"
     payload = {"api_key": API_KEY} 
 
@@ -124,6 +124,21 @@ def display_user_profile():
     else:
         flash("Sorry, please log in:")
         return redirect("/")
+
+@app.route("/user-profile/create-playlist", methods=["POST"])
+def creates_playlist_for_user():
+    """Adds a playlist for user to store movies in"""
+    playlist_name = request.form.get("playlist_name")
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
+
+    if playlist_name: 
+        playlist = crud.create_playlist(playlist_name, user)
+        db.session.add(playlist)
+        db.session.commit()
+        flash(f"The playlist '{playlist_name}' has successfully been created")
+
+    return redirect("/user-profile")
 
 @app.route("/media-info/<TMDB_id>/rating", methods=["POST"])
 def rate_movie(TMDB_id):

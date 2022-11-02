@@ -110,3 +110,8 @@ def get_user_genres(user):
     sort_media_genres_dict = dict(media_genres_list)
 
     return sort_media_genres_dict
+
+def create_playlist(playlist_name, user):
+    """Creates a playlist for user"""
+
+    return Playlist(name=playlist_name, user_id=user.user_id)
