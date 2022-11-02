@@ -1,5 +1,53 @@
 #chart-wrapper {
+    /* display: inline-block; */
+    /* position: relative; */
+    width: 65%;
+}
+
+img {
     display: inline-block;
     position: relative;
-    width: 100%;
+    width: 125px;
 }
+
+/* star code adapted from  https://www.foolishdeveloper.com/2022/01/5-star-rating-html-css.html*/
+
+/* makes stars fill in correct order and puts it on left side of page */
+.rating {
+display: flex;
+flex-direction: row-reverse;
+justify-content: flex-end;
+}
+
+/* takes input bubble away */
+.rating > input{
+    display:none;
+}
+
+/* makes stars yellow */
+.rating > label {
+color: #FFD700;
+}
+
+/* makes star color fill in */
+.rating > label::before{
+content: "\2605";
+position: absolute;
+opacity: 0;
+}
+
+/* allows star color to fill when mouse hovers */
+.rating > label:hover:before,
+.rating > label:hover ~ label:before {
+opacity: 1 !important;
+}
+
+/* allows for star color to remain clicked */
+.rating > input:checked ~ label:before{
+opacity:1;
+}
+
+/* allows stars to unfill when mouse is not hovering */
+.rating:hover > input:checked ~ label:before{ 
+opacity: 0.4;
+    }

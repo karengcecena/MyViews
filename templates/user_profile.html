@@ -9,22 +9,38 @@
 
 {% block body %} 
 
-    <h1>hi {{ user.username }}</h1>
-
-    <!-- chart.js stuff -->
-    <div id="chart-wrapper">
-        <canvas id="test-chart"></canvas>
+    <div class="row">
+        <div class="col">
+            <h1>hi {{ user.username }}</h1>
+        </div>
     </div>
 
-    <a href="/search" >Search for media</a> 
+    <div class="row">
+        <div class="col">
+            <a href="/search" >Search for media</a> 
+        <!-- </div> -->
+
+        <!-- <div class="col"> -->
+            <p>Or view your lists below:</p>
+        </div>
+
+        <div class="col offset-12">
+        <!-- chart.js stuff -->
+            <div id="chart-wrapper">
+                <canvas id="test-chart"></canvas>
+            </div>
+        </div>
+    </div>
     
-    <p>Or view your lists below:</p>
+        
 
     <div>
+        <div class="row">
         <h2>Watched List:</h2>
-        <ul>
+        <!-- <ul> -->
         {% for media in user.watched_list %}
-            <li>
+            <!-- <li> -->
+                <div class="col">
                 {{ media.title }}
                 {% for rating in media.ratings %}
                     {% if rating.user_id == user.user_id %}
@@ -32,16 +48,20 @@
                     {% endif %}
                 {% endfor %}
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
-            </li>
+                </div>
+            <!-- </li> -->
         {% endfor %}
-        </ul>
+        </div>
+        <!-- </ul> -->
     </div>
 
     <div>
+        <div class="row">
         <h2>To Be Watched List:</h2>
-        <ul>
+        <!-- <ul> -->
         {% for media in user.to_be_watched_list %}
-            <li>
+            <!-- <li> -->
+                <div class="col">
                 {{ media.title }}
                 {% for rating in media.ratings %}
                     {% if rating.user_id == user.user_id %}
@@ -49,9 +69,11 @@
                     {% endif %}
                 {% endfor %}
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
-            </li>
+                </div>
+            <!-- </li> -->
         {% endfor %}
-        </ul>
+         </div>
+        <!-- </ul> -->
     </div>
       
 {% endblock %}
