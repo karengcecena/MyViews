@@ -14,7 +14,6 @@
                     <li>
                         <a href="/media-info/{{ result['id'] }}"> {{ result["original_title"] }}: </a><br>
                         <img src="https://image.tmdb.org/t/p/original{{ result['poster_path'] }}">
-                        <!-- <p>- {{ result["overview"] }}</p> -->
                     </li>    
                     {% endfor %}  
                 {% else %}
@@ -33,7 +32,6 @@
                         <li>
                             <a href="/media-info/{{ result['id'] }}"> {{ result["name"] }}: </a><br>
                             <img src="https://image.tmdb.org/t/p/original{{ result['poster_path'] }}">
-                            <!-- <p>- {{ result["overview"] }}</p> -->
                         </li>    
                     {% endfor %} 
                 {% else %}

@@ -37,31 +37,20 @@ def show_search_results():
     #for movies: 
     if media_type == "movie":
         url = "https://api.themoviedb.org/3/search/movie"
-        payload = {"api_key": API_KEY} 
-
-        # add movie title to payload
-        if search_text:
-            payload["query"]=search_text
-
-        res = requests.get(url, params=payload)
-        data = res.json()
-
-        results = data['results']
 
     #for tv shows:
     elif media_type == "show":
         url = "https://api.themoviedb.org/3/search/tv"
-        payload = {"api_key": API_KEY} 
+    payload = {"api_key": API_KEY} 
 
-        # add show title to payload
-        if search_text:
-            payload["query"]=search_text
+    # add media title to payload
+    if search_text:
+        payload["query"]=search_text
 
-        res = requests.get(url, params=payload)
-        data = res.json()
+    res = requests.get(url, params=payload)
+    data = res.json()
 
-        results = data['results']
-
+    results = data['results']
 
     return render_template("all_media.html", data=data, search_text=search_text, results=results, res=res, media_type=media_type)
 

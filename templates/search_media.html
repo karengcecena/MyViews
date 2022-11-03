@@ -7,12 +7,12 @@
 <h1> Search a movie by title using the search bar below</h1>
 
 <form action="/media-search-results" method="POST">
-    <input type="text" name="title">
+    <input type="text" name="title" required="required">
 
-    <input type="radio" name="media_type" value="movie" id="movie_button">
+    <input type="radio" name="media_type" value="movie" id="movie_button" required="required">
     <label for="movie_button">movie</label>
 
-    <input type="radio" name="media_type" value="show" id="show_button">
+    <input type="radio" name="media_type" value="show" id="show_button" required="required">
     <label for="show_button">tv show</label>
 
     <button type="submit">Search</button>
