@@ -32,20 +32,38 @@ def show_search_results():
     "Displays results from search bar query"
 
     search_text = request.form.get("title")
+    media_type = request.form.get("media_type")
 
-    url = "https://api.themoviedb.org/3/search/movie"
-    payload = {"api_key": API_KEY} 
+    #for movies: 
+    if media_type == "movie":
+        url = "https://api.themoviedb.org/3/search/movie"
+        payload = {"api_key": API_KEY} 
 
-    # add movie title to payload
-    if search_text:
-        payload["query"]=search_text
+        # add movie title to payload
+        if search_text:
+            payload["query"]=search_text
 
-    res = requests.get(url, params=payload)
-    data = res.json()
+        res = requests.get(url, params=payload)
+        data = res.json()
 
-    results = data['results']
+        results = data['results']
 
-    return render_template("all_media.html", data=data, search_text=search_text, results=results, res=res)
+    #for tv shows:
+    elif media_type == "show":
+        url = "https://api.themoviedb.org/3/search/tv"
+        payload = {"api_key": API_KEY} 
+
+        # add show title to payload
+        if search_text:
+            payload["query"]=search_text
+
+        res = requests.get(url, params=payload)
+        data = res.json()
+
+        results = data['results']
+
+
+    return render_template("all_media.html", data=data, search_text=search_text, results=results, res=res, media_type=media_type)
 
 @app.route("/media-info/<TMDB_id>")
 def show_media(TMDB_id):
@@ -146,15 +164,12 @@ def creates_playlist_for_user():
 
     return redirect("/user-profile")
 
-# currently here:
-################################################################
 @app.route("/<TMDB_id>/add-to-playlist", methods=["POST"])
 def add_movie_to_playlist(TMDB_id):
     movie = crud.get_media_by_TMDB_id(TMDB_id)
     playlist_id = request.form.get("playlist")
     user_email = session["email"]
     user = crud.get_user_by_email(user_email)
-    # print(playlist_id)
 
     # add movie to database if not in there already
     if not movie:
@@ -200,7 +215,6 @@ def add_movie_to_playlist(TMDB_id):
     else:
         flash("Please log in")
 
-################################################################
 
 @app.route("/media-info/<TMDB_id>/rating", methods=["POST"])
 def rate_movie(TMDB_id):

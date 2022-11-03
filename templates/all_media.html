@@ -6,17 +6,45 @@
 
 <h1> Showing Results for "{{ search_text }}": </h1>
 
-<div> 
-    <ul>
-        {% for result in results%}
-            <li>
-                <a href="/media-info/{{ result['id'] }}"> {{ result["original_title"] }}: </a><br>
-                <img src="https://image.tmdb.org/t/p/original{{ result['poster_path'] }}">
-                <!-- <p>- {{ result["overview"] }}</p> -->
-            </li>    
-        {% endfor %}   
-    </ul>
-</div>
+    {% if (media_type == "movie") %}
+        <div> 
+            <ul>
+                {% if results %}
+                    {% for result in results%}
+                    <li>
+                        <a href="/media-info/{{ result['id'] }}"> {{ result["original_title"] }}: </a><br>
+                        <img src="https://image.tmdb.org/t/p/original{{ result['poster_path'] }}">
+                        <!-- <p>- {{ result["overview"] }}</p> -->
+                    </li>    
+                    {% endfor %}  
+                {% else %}
+                    <li>
+                        Sorry, it seems we couldn't find the movie you were searching for. Try searching for it in tv shows. 
+                    </li>   
+                {% endif %}
+            </ul>
+        </div>
+
+    {% elif (media_type == "show") %}
+        <div> 
+            <ul>
+                {% if results %}
+                    {% for result in results%}
+                        <li>
+                            <a href="/media-info/{{ result['id'] }}"> {{ result["name"] }}: </a><br>
+                            <img src="https://image.tmdb.org/t/p/original{{ result['poster_path'] }}">
+                            <!-- <p>- {{ result["overview"] }}</p> -->
+                        </li>    
+                    {% endfor %} 
+                {% else %}
+                    <li>
+                        Sorry, it seems we couldn't find what you were searching for. Try searching for it in movies: 
+                    </li>   
+                {% endif %}  
+            </ul>
+        </div>
+
+    {% endif %} 
 
 
 {% endblock %}
