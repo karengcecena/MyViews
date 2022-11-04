@@ -9,6 +9,17 @@
 
 {% block body %} 
 
+    <nav>
+        <ul>
+            <li class="medialogo">Media Page Name</li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/search">Search</a></li>
+            <li><a class="active" href="/user-profile">Profile</a></li>
+            <li><a href="/search_friends">Friends</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
     <div class="row">
         <div class="col">
             <h1>hi {{ user.username }}</h1>

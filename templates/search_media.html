@@ -4,6 +4,17 @@
 
 {% block body %} 
 
+<nav>
+  <ul>
+      <li class="medialogo">Media Page Name</li>
+      <li><a href="/">Home</a></li>
+      <li><a class="active" href="/search">Search</a></li>
+      <li><a href="/user-profile">Profile</a></li>
+      <li><a href="/search_friends">Friends</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+</nav>
+
 <h1> Search a movie by title using the search bar below</h1>
 
 <form action="/media-search-results" method="POST">

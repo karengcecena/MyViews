@@ -56,6 +56,47 @@ opacity: 0.4;
     color: #FFD700;
 }
 
+/* navbar styling adapted from: https://www.w3schools.com/Css/css_navbar_horizontal.asp */
+
+nav>ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+  
+nav>ul>li {
+    float: left;
+}
+
+.medialogo {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav>ul>li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav>ul>li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #04AA6D;
+}
+
 /* still figuring this out */
 .center p{
     /* display: flex;
@@ -64,3 +105,4 @@ opacity: 0.4;
     height: 50px; */
     /* border: 3px solid green; */
   }
+
