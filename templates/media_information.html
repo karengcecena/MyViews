@@ -3,81 +3,169 @@
 
 {% block body %} 
 
-    <h1>{{data["original_title"]}}</h1>
-    <!-- <p>{{data}}</p> -->
-    <p>{{data["overview"]}}</p>
 
-    <form action="/media-info/{{ TMDB_id }}/rating" method="POST">
+    {% if (media_type == "movie") %}
 
-        <!-- star ratings updated:  -->
-        <div class="rating">
-       
-        <!-- score= 0 -->
-        <input type="radio" name="score" value=5 id="5">
-        <label for="5">☆</label>
+        <h1>{{data["original_title"]}}</h1>
+        <!-- <p>{{data}}</p> -->
+        <p>{{data["overview"]}}</p>
 
-        <!-- score= 1 -->
-        <input type="radio" name="score" value=4 id="4">
-        <label for="4">☆</label>
+        {% if user %}
 
-        <!-- score= 2 -->
-        <input type="radio" name="score" value=3 id="3">
-        <label for="3">☆</label>
+            <form action="/media-info/movie/{{ TMDB_id }}/rating" method="POST">
 
-        <!-- score= 3 -->
-        <input type="radio" name="score" value=2 id="2">
-        <label for="2">☆</label>
-
-        <!-- score= 4 -->
-        <input type="radio" name="score" value=1 id="1">
-        <label for="1">☆</label>
-        
-        Have you seen this movie? Rating: 
-
-        </div>
-    
-        <!-- comment -->
-        Any comments? 
-        <input type="text" name="comment" id="rating">
-
-        <button type="submit">Add Review</button>
-        <!-- <input type="submit"> -->
-    </form>
-
-
-    <form action="/{{ TMDB_id }}/sort-folder" method="POST">
-        Want to add this movie to your list?
-        <!-- Watched List-->
-        <input type="radio" name="list" value="watched" id="watched">
-        <label for="watched">Watched List</label>
-
-        <!-- To Be Watched List-->
-        <input type="radio" name="list" value="to_be_watched" id="tobeewatched">
-        <label for="tobeewatched">To Be Watched List</label>
-
-        <button type="submit">Add to list</button>
-        <!-- <input type="submit"> -->
-    </form>
-
-    <div><a href="/user-profile" >Go Back to User Profile</a> or <a href="/search">Search for a different media</a></div>
-
-    <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
-
-
-    {% if user %}
-    <form action="/{{ TMDB_id }}/add-to-playlist" method="POST">
-
-        <label for="playlists">Add your movie to an existing folder:</label>
-        <select name="playlist" id="playlists">
+                <!-- star ratings updated:  -->
+                <div class="rating">
             
-            {% for playlist in user.playlists %}
-                <option value="{{ playlist.playlist_id }}">{{ playlist.name }}</option>
-            {% endfor %}
+                <!-- score= 0 -->
+                <input type="radio" name="score" value=5 id="5">
+                <label for="5">☆</label>
 
-        </select>
-        <button type="submit">Add To Playlist</button>
+                <!-- score= 1 -->
+                <input type="radio" name="score" value=4 id="4">
+                <label for="4">☆</label>
+
+                <!-- score= 2 -->
+                <input type="radio" name="score" value=3 id="3">
+                <label for="3">☆</label>
+
+                <!-- score= 3 -->
+                <input type="radio" name="score" value=2 id="2">
+                <label for="2">☆</label>
+
+                <!-- score= 4 -->
+                <input type="radio" name="score" value=1 id="1">
+                <label for="1">☆</label>
+                
+                Have you seen this movie? Rating: 
+
+                </div>
+            
+                <!-- comment -->
+                Any comments? 
+                <input type="text" name="comment" id="rating">
+
+                <button type="submit">Add Review</button>
+                <!-- <input type="submit"> -->
+            </form>
+
+
+            <form action="/movie/{{ TMDB_id }}/sort-folder" method="POST">
+                Want to add this movie to your list?
+                <!-- Watched List-->
+                <input type="radio" name="list" value="watched" id="watched">
+                <label for="watched">Watched List</label>
+
+                <!-- To Be Watched List-->
+                <input type="radio" name="list" value="to_be_watched" id="tobeewatched">
+                <label for="tobeewatched">To Be Watched List</label>
+
+                <button type="submit">Add to list</button>
+                <!-- <input type="submit"> -->
+            </form>
+
+            <div><a href="/user-profile" >Go Back to User Profile</a> or <a href="/search">Search for a different media</a></div>
+
+            <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
         
-    </form>
+
+        <form action="/movie/{{ TMDB_id }}/add-to-playlist" method="POST">
+
+            <label for="playlists">Add your movie to an existing folder:</label>
+            <select name="playlist" id="playlists">
+                
+                {% for playlist in user.playlists %}
+                    <option value="{{ playlist.playlist_id }}">{{ playlist.name }}</option>
+                {% endfor %}
+
+            </select>
+            <button type="submit">Add To Playlist</button>
+            
+        </form>
+        {% else %}
+            <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
+            <div><a href="/">Go Back to Homepage</a> or <a href="/search">Search for a different media</a></div>
+        {% endif %}
+
+    {% elif (media_type == "show") %}
+
+        <h1>{{data["name"]}}</h1>
+        <!-- <p>{{data}}</p> -->
+        <p>{{data["overview"]}}</p>
+
+        {% if user %}
+            <form action="/media-info/tvshow/{{ TMDB_id }}/rating" method="POST">
+
+                <!-- star ratings updated:  -->
+                <div class="rating">
+            
+                <!-- score= 0 -->
+                <input type="radio" name="score" value=5 id="5">
+                <label for="5">☆</label>
+
+                <!-- score= 1 -->
+                <input type="radio" name="score" value=4 id="4">
+                <label for="4">☆</label>
+
+                <!-- score= 2 -->
+                <input type="radio" name="score" value=3 id="3">
+                <label for="3">☆</label>
+
+                <!-- score= 3 -->
+                <input type="radio" name="score" value=2 id="2">
+                <label for="2">☆</label>
+
+                <!-- score= 4 -->
+                <input type="radio" name="score" value=1 id="1">
+                <label for="1">☆</label>
+                
+                Have you seen this show? Rating: 
+
+                </div>
+            
+                <!-- comment -->
+                Any comments? 
+                <input type="text" name="comment" id="rating">
+
+                <button type="submit">Add Review</button>
+                <!-- <input type="submit"> -->
+            </form>
+
+
+            <form action="/tvshow/{{ TMDB_id }}/sort-folder" method="POST">
+                Want to add this show to your list?
+                <!-- Watched List-->
+                <input type="radio" name="list" value="watched" id="watched">
+                <label for="watched">Watched List</label>
+
+                <!-- To Be Watched List-->
+                <input type="radio" name="list" value="to_be_watched" id="tobeewatched">
+                <label for="tobeewatched">To Be Watched List</label>
+
+                <button type="submit">Add to list</button>
+                <!-- <input type="submit"> -->
+            </form>
+
+            <div><a href="/user-profile" >Go Back to User Profile</a> or <a href="/search">Search for a different media</a></div>
+
+            <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
+
+            <form action="/tvshow/{{ TMDB_id }}/add-to-playlist" method="POST">
+
+                <label for="playlists">Add your movie to an existing folder:</label>
+                <select name="playlist" id="playlists">
+                    
+                    {% for playlist in user.playlists %}
+                        <option value="{{ playlist.playlist_id }}">{{ playlist.name }}</option>
+                    {% endfor %}
+
+                </select>
+                <button type="submit">Add To Playlist</button>
+
+        {% else %}
+            <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
+            <div><a href="/" >Go Back to Homepage</a> or <a href="/search">Search for a different media</a></div>
+        {% endif %}
     {% endif %}
 
 {% endblock %}

@@ -23,10 +23,10 @@ def get_user_by_username(username):
     return User.query.filter(User.username == username).first()
 
 
-def get_media_by_TMDB_id(TMDB_id):
-    """Checks if media is in the db using TMDB_id"""
+def get_media_by_TMDB_id(TMDB_id, media_type):
+    """Checks if media is in the db using TMDB_id and media_type"""
 
-    return Media.query.filter(Media.TMDB_id == TMDB_id).first()
+    return Media.query.filter(Media.TMDB_id == TMDB_id, Media.media_type == media_type).first()
 
 
 def add_movie_to_db(movie_info):
@@ -40,6 +40,8 @@ def add_movie_to_db(movie_info):
     poster_path = movie_info["poster_path"]
 
     return Media(TMDB_id=TMDB_id, media_type=media_type, title=title, overview=overview, release_date=release_date, poster_path=poster_path )
+
+### NOTE: NEED ADD MOVIE TO DB
 
 def check_if_genre_in_db(genre):
     """Checks if the genre mentioned is in DB"""

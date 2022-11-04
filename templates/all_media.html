@@ -12,7 +12,7 @@
                 {% if results %}
                     {% for result in results%}
                     <li>
-                        <a href="/media-info/{{ result['id'] }}"> {{ result["original_title"] }}: </a><br>
+                        <a href="/media-info/movie/{{ result['id'] }}"> {{ result["original_title"] }}: </a><br>
                         <img src="https://image.tmdb.org/t/p/original{{ result['poster_path'] }}">
                     </li>    
                     {% endfor %}  
@@ -30,7 +30,7 @@
                 {% if results %}
                     {% for result in results%}
                         <li>
-                            <a href="/media-info/{{ result['id'] }}"> {{ result["name"] }}: </a><br>
+                            <a href="/media-info/tvshow/{{ result['id'] }}"> {{ result["name"] }}: </a><br>
                             <img src="https://image.tmdb.org/t/p/original{{ result['poster_path'] }}">
                         </li>    
                     {% endfor %} 

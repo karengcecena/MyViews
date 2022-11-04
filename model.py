@@ -34,7 +34,7 @@ class Media(db.Model):
     __tablename__ = "medias"
 
     media_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    TMDB_id = db.Column(db.Integer, unique=True, nullable=False)
+    TMDB_id = db.Column(db.Integer, nullable=False)
     media_type = db.Column(db.String(20), nullable=False)
     title = db.Column(db.String(50), nullable=False)
     overview = db.Column(db.Text)
