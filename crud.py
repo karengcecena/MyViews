@@ -41,7 +41,19 @@ def add_movie_to_db(movie_info):
 
     return Media(TMDB_id=TMDB_id, media_type=media_type, title=title, overview=overview, release_date=release_date, poster_path=poster_path )
 
-### NOTE: NEED ADD MOVIE TO DB
+def add_show_to_db(show_info):
+    """Adds show to DB"""
+
+    TMDB_id = show_info["id"]
+    media_type = "show"
+    title = show_info["name"]
+    overview = show_info["overview"]
+    release_date = show_info["first_air_date"]
+    poster_path = show_info["poster_path"]
+
+    return Media(TMDB_id=TMDB_id, media_type=media_type, title=title, overview=overview, release_date=release_date, poster_path=poster_path )
+
+
 
 def check_if_genre_in_db(genre):
     """Checks if the genre mentioned is in DB"""

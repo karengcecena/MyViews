@@ -60,7 +60,7 @@ fetch('/user-profile/genres.json')
         },
         title: {
           display: true,
-          text: 'Your Genres:'
+          text: 'Your Movie Watched List Genres:'
         }
       }
     },
