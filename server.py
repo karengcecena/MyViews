@@ -106,6 +106,26 @@ def creates_playlist_for_user():
 
     return redirect("/user-profile")
 
+######################################################################################################
+##### Currently working here
+
+# @app.route("/user-profile/<user_id>/friend", methods=["POST"])
+# def follow_friend(user_id):
+#     """Follows a friend for user"""
+
+#     user1_email = session["email"]
+#     user1 = crud.get_user_by_email(user1_email)
+
+#     user2 = crud.get_user_by_id(user_id)
+
+#     user1.following.append(user2)
+#     db.session.commit()
+
+#     return redirect("/user-profile/<user_id>/friend")
+
+######################################################################################################
+
+
 #### MOVIE AND TV SHOWS SEPARATED BELOW IN DIFFERENT ROUTES BECAUSE OF REPEATED TMDB_ID's ####   
 @app.route("/media-search-results", methods=["POST"])
 def show_search_results():

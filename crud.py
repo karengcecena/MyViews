@@ -22,6 +22,11 @@ def get_user_by_username(username):
 
     return User.query.filter(User.username == username).first()
 
+def get_user_by_id(user_id):
+    """Gets user by their user_id"""
+
+    return User.query.filter(User.user_id == user_id).first()
+
 
 def get_media_by_TMDB_id(TMDB_id, media_type):
     """Checks if media is in the db using TMDB_id and media_type"""

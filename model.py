@@ -4,6 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+friend = db.Table(
+    'friends',
+    db.Column('friend_id', db.Integer, primary_key=True),
+    db.Column('f1_id', db.Integer, db.ForeignKey('users.user_id')),
+    db.Column('f2_id', db.Integer, db.ForeignKey('users.user_id'))
+)
+
 class User(db.Model):
     """User information"""
 
@@ -21,12 +28,41 @@ class User(db.Model):
     # association tables:
     watched_list = db.relationship('Media', secondary="watched_lists", back_populates="watched_users")
     to_be_watched_list = db.relationship('Media', secondary="to_be_watched_lists", back_populates="to_be_watched_users")
+    following = db.relationship(
+        'User',
+        secondary=friend,
+        primaryjoin=user_id == friend.c.f1_id,
+        secondaryjoin=user_id == friend.c.f2_id,
+        backref='followers'
+    )
+
+    def get_all_friends(self):
+        """ Get all friends, those you are following AND those following you. """
+        return self.following + self.followers
 
 
     def __repr__(self):
         """Show info about User"""
 
         return f"<User user_id = {self.user_id} username = {self.username} email = {self.email}>"
+
+####################################################################################################
+
+# class Friend(db.Model):
+
+#     __tablename__ = "friends"
+
+#     friend_id = db.Column(db.Integer, primary_key=True),
+#     f1_id = db.Column(db.Integer, db.ForeignKey('users.user_id')),
+#     f2_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+
+#     # this is an association table, so it doesn't directly connect back to any table
+
+#     def __repr__(self):
+#         """Show info about Friend"""
+
+#         return f"<Friend friend_id: {self.friend_id} f1_id: {self.f1_id} f2_id: {self.f2_id}>"
+####################################################################################################
 
 class Media(db.Model):
     """Media information"""
@@ -193,4 +229,5 @@ def connect_to_db(flask_app, db_uri="postgresql:///project_db", echo=True):
 if __name__ == "__main__":
     from server import app
     connect_to_db(app)
+    # connect_to_db(app, echo=False)
     db.create_all()
