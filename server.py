@@ -78,6 +78,16 @@ def login_user():
 
     return redirect("/")
 
+@app.route("/logout")
+def logout_user():
+    """Logs out the user by clearing the session."""
+
+    session.clear()
+
+    flash("You've been logged out")
+
+    return redirect("/")
+
 @app.route("/user-profile")
 def display_user_profile():
     """Displays the user profile page"""
