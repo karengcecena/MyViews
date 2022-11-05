@@ -132,32 +132,48 @@ def creates_playlist_for_user():
 
 @app.route("/friend-search-results", methods=["POST"])
 def show_friend_search_results():
+    """Shows friend profile as search result it username exists"""
     
+    # if not user2: 
     search_text = request.form.get("friend_username")
 
-    friend = crud.get_user_by_username(search_text)
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
 
-    if friend: 
-        return render_template("/search_friend_result.html", friend=friend)
+    user2 = crud.get_user_by_username(search_text)
+
+    if user2: 
+        return render_template("/search_friend_result.html", user2=user2, user=user, user2_user_id= user2.user_id)
 
     else: 
         flash(f"Sorry, no user exists with the username '{search_text}'.")
         return redirect("/search-friends")
 
-######################################################################################################
-##### Currently working here
+@app.route("/friend/<user2_user_id>/follow-status", methods=["POST"])
+def follow_or_unfollow_friends(user2_user_id):
+    """Allows user to unfollow or follow a friend"""
 
-#     user1_email = session["email"]
-#     user1 = crud.get_user_by_email(user1_email)
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
 
-#     user2 = crud.get_user_by_id(user_id)
+    user2 = crud.get_user_by_id(user2_user_id)
 
-#     user1.following.append(user2)
-#     db.session.commit()
+    action = request.form.get("following")
+    print(action)
+    print("***********************************************************************************************")
 
-#     return redirect("/user-profile/<user_id>/friend")
+    if action == "follow": 
+        user.following.append(user2)
+        db.session.commit()
 
-######################################################################################################
+    elif action == "unfollow": 
+        ### figure out how to unfollow 
+        user.following.remove(user2)
+        db.session.commit()
+
+    return render_template("/search_friend_result.html", user2=user2, user=user, user2_user_id= user2.user_id)
+
+    # return redirect("/friend-search-results")
 
 
 #### MOVIE AND TV SHOWS SEPARATED BELOW IN DIFFERENT ROUTES BECAUSE OF REPEATED TMDB_ID's ####   

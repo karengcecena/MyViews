@@ -97,7 +97,15 @@ nav>ul>li a:hover:not(.active) {
     background-color: #04AA6D;
 }
 
-/* still figuring this out */
+/* follow buttons */
+    /* takes input bubble away */
+.following-status > input[type=radio]{
+    display:none;
+    /* visibility: hidden; */
+}
+
+
+/* still figuring this out for webpage layout */
 .center p{
     /* display: flex;
     justify-content: center;
