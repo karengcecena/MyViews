@@ -709,6 +709,26 @@ def get_users_genres():
 
     return jsonify({"data": genres})
 
+################## CODE BELOW I AM UNSURE OF ###########################################################################
+### to get friend profile genres (not sure yet): 
+# @app.route("/friend/genres.json")
+# def get_friend_genres():
+#     """Gets the users friends genres in their watched list"""
+
+#     # get user object: 
+#     user_email = session["email"]
+#     user = crud.get_user_by_email(user_email)
+
+#     # get users genres:
+#     user_genres = crud.get_user_genres(user)
+    
+#     genres = []
+
+#     for genre, total in user_genres.items():
+#         genres.append({'genre': genre.genre_name,'number_of_genre': total})
+
+#     return jsonify({"data": genres})
+
 ########################################################################################################################
 
 if __name__ == "__main__":

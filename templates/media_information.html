@@ -95,7 +95,7 @@
         </form>
         {% else %}
             <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
-            <div><a href="/">Go Back to Homepage</a> or <a href="/search">Search for a different media</a></div>
+            <!-- <div><a href="/">Go Back to Homepage</a> or <a href="/search">Search for a different media</a></div> -->
         {% endif %}
 
     {% elif (media_type == "show") %}
@@ -175,7 +175,7 @@
 
         {% else %}
             <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
-            <div><a href="/" >Go Back to Homepage</a> or <a href="/search">Search for a different media</a></div>
+            <!-- <div><a href="/" >Go Back to Homepage</a> or <a href="/search">Search for a different media</a></div> -->
         {% endif %}
     {% endif %}
 
