@@ -30,7 +30,14 @@ def display_search_bar():
 def display_search():
     """Displays search bar to search for friends"""
 
-    return render_template("/search_friends.html")
+    if "email" in session: 
+        user_email = session["email"]
+        user = crud.get_user_by_email(user_email)
+        return render_template("/search_friends.html", user=user)
+
+    else:
+        flash("Sorry, please log in:")
+        return redirect("/")
 
 @app.route("/create-user")
 def display_create_user():
@@ -121,6 +128,21 @@ def creates_playlist_for_user():
         flash(f"The playlist '{playlist_name}' has successfully been created")
 
     return redirect("/user-profile")
+
+
+@app.route("/friend-search-results", methods=["POST"])
+def show_friend_search_results():
+    
+    search_text = request.form.get("friend_username")
+
+    friend = crud.get_user_by_username(search_text)
+
+    if friend: 
+        return render_template("/search_friend_result.html", friend=friend)
+
+    else: 
+        flash(f"Sorry, no user exists with the username '{search_text}'.")
+        return redirect("/search-friends")
 
 ######################################################################################################
 ##### Currently working here
