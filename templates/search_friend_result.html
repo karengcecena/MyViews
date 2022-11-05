@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block title %} All Media {% endblock %}
+
+{% block body %} 
+
+    <nav>
+    <ul>
+        <li class="medialogo">Media Page Name</li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/search">Search</a></li>
+        <li><a href="/user-profile">Profile</a></li>
+        <li><a class="active" href="/search-friends">Friends</a></li>
+        <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+
+    <h1> {{ user2.username }} </h1>
+
+    <form action="/friend/{{ user2_user_id }}/follow-status" method="POST" class="following-status">
+
+        <!-- if user is following friend, give user option to unfollow -->
+        {% if user2 in user.following %}
+            <input type="radio" name="following" value="unfollow" id="unfollowing" checked>
+            <label for="unfollowing"><button type="submit">Unfollow</button></label>
+
+        {% else %}
+        <!-- if user is not following friend, give user option fo follow -->
+            <input type="radio" name="following" value="follow" id="following" checked>
+            <label for="following"><button type="submit">Follow</button></label>
+
+        {% endif %} 
+        
+    </form>
+
+    <!-- add friend chart(s)? -->
+
+    <!-- <div class="col"> 
+        <div class="col offset-12"> -->
+        <!-- chart.js stuff -->
+            <!-- <div id="chart-wrapper">
+                <canvas id="test-chart"></canvas>
+            </div>
+        </div>
+    </div> -->
+
+    <div>
+        <div class="row">
+        <h2>Watched List:</h2>
+        <!-- <ul> -->
+        {% for media in user2.watched_list %}
+            <!-- <li> -->
+                <div class="col">
+                {{ media.title }}
+                {% for rating in media.ratings %}
+                    {% if rating.user_id == user2.user_id %}
+                        {% if rating.score == 1 %}
+                            <div class="star">★</div>
+                        {% elif rating.score == 2 %}
+                            <div class="star">★★</div>
+                        {% elif rating.score == 3 %}
+                            <div class="star">★★★</div>
+                        {% elif rating.score == 4 %}
+                            <div class="star">★★★★</div>
+                        {% elif rating.score == 5 %}
+                            <div class="star">★★★★★</div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                </div>
+            <!-- </li> -->
+        {% endfor %}
+        </div>
+        <!-- </ul> -->
+    </div>
+
+    <div>
+        <div class="row">
+        <h2>To Be Watched List:</h2>
+        <!-- <ul> -->
+        {% for media in user2.to_be_watched_list %}
+            <!-- <li> -->
+                <div class="col">
+                {{ media.title }}
+                {% for rating in media.ratings %}
+                    {% if rating.user_id == user2.user_id %}
+                        {{ rating.score }}
+                    {% endif %}
+                {% endfor %}
+                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                </div>
+            <!-- </li> -->
+        {% endfor %}
+         </div>
+        <!-- </ul> -->
+    </div>
+
+    <div>
+        <div class="row">
+        {% for playlist in user2.playlists %}
+            <h2>{{ playlist.name }}:</h2>
+            {% for media in playlist.medias %}
+                <div class="col">
+                {{ media.title }}
+                {% for rating in media.ratings %}
+                    {% if rating.user_id == user2.user_id %}
+                        {{ rating.score }}
+                    {% endif %}
+                {% endfor %}
+                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                </div>
+            {% endfor %}
+        {% endfor %}
+         </div>
+    </div>
+      
+{% endblock %}
+
+{% block js %}
+  <script src="/static/js/visuals.js"></script>
+
+{% endblock %}

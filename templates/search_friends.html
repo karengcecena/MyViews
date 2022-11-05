@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %} All Media {% endblock %}
+
+{% block body %} 
+
+<nav>
+  <ul>
+      <li class="medialogo">Media Page Name</li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/search">Search</a></li>
+      <li><a href="/user-profile">Profile</a></li>
+      <li><a class="active" href="/search-friends">Friends</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+</nav>
+
+<h1> Search for a friend by their username: </h1>
+
+<form action="/friend-search-results" method="POST">
+    <input type="text" name="friend_username" required="required">
+
+    <button type="submit">Search</button>
+
+</form>
+
+{% endblock %}
