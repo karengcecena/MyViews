@@ -26,6 +26,12 @@ def display_search_bar():
 
     return render_template("search_media.html")
 
+@app.route("/search-friends")
+def display_search():
+    """Displays search bar to search for friends"""
+
+    return render_template("/search_friends.html")
+
 @app.route("/create-user")
 def display_create_user():
     """Shows the create user page"""
@@ -118,10 +124,6 @@ def creates_playlist_for_user():
 
 ######################################################################################################
 ##### Currently working here
-
-# @app.route("/user-profile/<user_id>/friend", methods=["POST"])
-# def follow_friend(user_id):
-#     """Follows a friend for user"""
 
 #     user1_email = session["email"]
 #     user1 = crud.get_user_by_email(user1_email)
