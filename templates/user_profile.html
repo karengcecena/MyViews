@@ -90,7 +90,17 @@
                 {{ media.title }}
                 {% for rating in media.ratings %}
                     {% if rating.user_id == user.user_id %}
-                        {{ rating.score }}
+                        {% if rating.score == 1 %}
+                        <div class="star">★</div>
+                        {% elif rating.score == 2 %}
+                            <div class="star">★★</div>
+                        {% elif rating.score == 3 %}
+                            <div class="star">★★★</div>
+                        {% elif rating.score == 4 %}
+                            <div class="star">★★★★</div>
+                        {% elif rating.score == 5 %}
+                            <div class="star">★★★★★</div>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
@@ -110,7 +120,51 @@
                 {{ media.title }}
                 {% for rating in media.ratings %}
                     {% if rating.user_id == user.user_id %}
-                        {{ rating.score }}
+                        {% if rating.score == 1 %}
+                            <div class="star">★</div>
+                        {% elif rating.score == 2 %}
+                            <div class="star">★★</div>
+                        {% elif rating.score == 3 %}
+                            <div class="star">★★★</div>
+                        {% elif rating.score == 4 %}
+                            <div class="star">★★★★</div>
+                        {% elif rating.score == 5 %}
+                            <div class="star">★★★★★</div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                </div>
+            {% endfor %}
+        {% endfor %}
+         </div>
+    </div>
+
+    <!-- display users friends playlists:  -->
+    <div>
+        <h2>View your friends activity below!</h2>
+    </div>
+
+    <div>
+        <div class="row">
+        {% for friend in user.following %}
+            <h2><a href="/display-friend/{{ friend.username }}">{{ friend.username }}:</a></h2>
+            {% for media in friend.watched_list %}
+                <div class="col">
+                {{ media.title }}
+                {% for rating in media.ratings %}
+                    {% if rating.user_id == friend.user_id %}
+                        {% if rating.score == 1 %}
+                            <div class="star">★</div>
+                        {% elif rating.score == 2 %}
+                            <div class="star">★★</div>
+                        {% elif rating.score == 3 %}
+                            <div class="star">★★★</div>
+                        {% elif rating.score == 4 %}
+                            <div class="star">★★★★</div>
+                        {% elif rating.score == 5 %}
+                            <div class="star">★★★★★</div>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">

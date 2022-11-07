@@ -159,8 +159,6 @@ def follow_or_unfollow_friends(user2_user_id):
     user2 = crud.get_user_by_id(user2_user_id)
 
     action = request.form.get("following")
-    print(action)
-    print("***********************************************************************************************")
 
     if action == "follow": 
         user.following.append(user2)
@@ -174,6 +172,18 @@ def follow_or_unfollow_friends(user2_user_id):
     return render_template("/search_friend_result.html", user2=user2, user=user, user2_user_id= user2.user_id)
 
     # return redirect("/friend-search-results")
+
+@app.route('/display-friend/<friend_username>')
+def display_friend_by_username(friend_username):
+    """Displays friend profile when user clicks on their name in user profile"""
+
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
+    
+    user2 = crud.get_user_by_username(friend_username)
+
+    # if user2: 
+    return render_template("/search_friend_result.html", user2=user2, user=user, user2_user_id= user2.user_id)
 
 
 #### MOVIE AND TV SHOWS SEPARATED BELOW IN DIFFERENT ROUTES BECAUSE OF REPEATED TMDB_ID's ####   

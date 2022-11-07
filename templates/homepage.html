@@ -3,7 +3,7 @@
 
 {% block body %} 
 
-    <div class="center">
+   
 
     <nav>
       <ul>
@@ -16,26 +16,28 @@
         </ul>
     </nav>
 
-    <h1 >Login</h1>
+    <div class="center">
 
-    <form action="/login" method="POST">
-        <p>
-          Email <input type="text" name="email">
-        </p>
-    
-        <p>
-          Password <input type="password" name="password">
-        </p>
-    
-        <p>
-          <!-- <input type="submit"> -->
-          <button type="submit">Log In</button>
-        </p>
-      </form>
+      <h1 >Login</h1>
 
-      <p>
-        New? <a href="/create-user">Create a User</a> Or <a href="/search" >Browse as Guest</a>
-      </p>
+      <form action="/login" method="POST">
+          <p>
+            Email <input type="text" name="email">
+          </p>
+      
+          <p>
+            Password <input type="password" name="password">
+          </p>
+      
+          <p>
+            <!-- <input type="submit"> -->
+            <button type="submit">Log In</button>
+          </p>
+        </form>
+
+        <p>
+          New? <a href="/create-user">Create a User</a> Or <a href="/search" >Browse as Guest</a>
+        </p>
     </div>
 
       
