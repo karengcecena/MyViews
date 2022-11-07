@@ -85,6 +85,10 @@ def user_rated(media, user):
 
     return Rating.query.filter(Rating.media_id == media.media_id, Rating.user_id == user.user_id).first()
 
+def get_all_ratings(media_id):
+    """Gets all ratings by media_id"""
+
+    return Rating.query.filter(Rating.media_id == media_id).all()
 
 def user_sorted_Watched(media, user):
     """Checks if user has sorted movie in folder previously"""

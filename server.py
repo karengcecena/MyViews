@@ -179,7 +179,7 @@ def display_friend_by_username(friend_username):
 
     user_email = session["email"]
     user = crud.get_user_by_email(user_email)
-    
+
     user2 = crud.get_user_by_username(friend_username)
 
     # if user2: 
@@ -228,14 +228,23 @@ def show_movie(TMDB_id):
 
     res = requests.get(url, params=payload)
     data = res.json()
+    
+    # filter for that movies ratings in db to display on media page
+    if crud.get_media_by_TMDB_id(TMDB_id, "movie"):
+        movie = crud.get_media_by_TMDB_id(TMDB_id, "movie")
+        movie_id = movie.media_id
+        all_ratings = crud.get_all_ratings(movie_id)
+
+    else: 
+        all_ratings = False
 
     # check if user is logged in in order to display playlists correctly 
     if "email" in session:
         user = crud.get_user_by_email(session["email"])
-        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user, media_type="movie")
+        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user, media_type="movie", all_ratings=all_ratings)
 
     else:
-        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=False, media_type="movie")
+        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=False, media_type="movie", all_ratings=all_ratings)
 
 #for tv show media_info 
 @app.route("/media-info/tvshow/<TMDB_id>")
@@ -252,13 +261,22 @@ def show_tv_show(TMDB_id):
     res = requests.get(url, params=payload)
     data = res.json()
 
+    # filter for that tv shows ratings in db to display on media page
+    if crud.get_media_by_TMDB_id(TMDB_id, "show"):
+        show = crud.get_media_by_TMDB_id(TMDB_id, "show")
+        show_id = show.media_id
+        all_ratings = crud.get_all_ratings(show_id)
+
+    else: 
+        all_ratings = False
+
     # check if user is logged in in order to display playlists correctly 
     if "email" in session:
         user = crud.get_user_by_email(session["email"])
-        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user, media_type="show")
+        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user, media_type="show", all_ratings=all_ratings)
 
     else:
-        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=False, media_type="show")
+        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=False, media_type="show", all_ratings=all_ratings)
 
 ##### ADDING MOVIE TO PLAYLIST
 @app.route("/movie/<TMDB_id>/add-to-playlist", methods=["POST"])

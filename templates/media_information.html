@@ -93,9 +93,44 @@
             <button type="submit">Add To Playlist</button>
             
         </form>
+
+        <!-- display ratings for FRIENDS ONLY:  -->
+        
+        {% if all_ratings %} 
+        <div>
+            <div class="row">
+            <h1> Ratings: </h1>
+    
+            {% for rating in all_ratings %}
+                <div class="col">
+                    {% for friend in user.following %}
+                        {% if rating.user_id == friend.user_id %}
+                        <h2><a href="/display-friend/{{ rating.user.username }}">{{ rating.user.username }}:</a></h2>
+                            {% if rating.score == 1 %}
+                                <div class="star">★</div>
+                            {% elif rating.score == 2 %}
+                                <div class="star">★★</div>
+                            {% elif rating.score == 3 %}
+                                <div class="star">★★★</div>
+                            {% elif rating.score == 4 %}
+                                <div class="star">★★★★</div>
+                            {% elif rating.score == 5 %}
+                                <div class="star">★★★★★</div>
+                            {% endif %}
+                        {{ rating.review_input }}
+                        {% endif %} 
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        
         {% else %}
             <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
             <!-- <div><a href="/">Go Back to Homepage</a> or <a href="/search">Search for a different media</a></div> -->
+
         {% endif %}
 
     {% elif (media_type == "show") %}
@@ -173,9 +208,42 @@
                 </select>
                 <button type="submit">Add To Playlist</button>
 
+            <!-- display ratings for FRIENDS ONLY:  -->
+         
+            {% if all_ratings %}
+            <div>
+                <div class="row">
+                <h1> Ratings: </h1>
+        
+                {% for rating in all_ratings %}
+                    <div class="col">
+                        {% for friend in user.following %}
+                            {% if rating.user_id == friend.user_id %}
+                            <h2><a href="/display-friend/{{ rating.user.username }}">{{ rating.user.username }}:</a></h2>
+                                {% if rating.score == 1 %}
+                                    <div class="star">★</div>
+                                {% elif rating.score == 2 %}
+                                    <div class="star">★★</div>
+                                {% elif rating.score == 3 %}
+                                    <div class="star">★★★</div>
+                                {% elif rating.score == 4 %}
+                                    <div class="star">★★★★</div>
+                                {% elif rating.score == 5 %}
+                                    <div class="star">★★★★★</div>
+                                {% endif %}
+                                {{ rating.review_input }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
         {% else %}
             <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
             <!-- <div><a href="/" >Go Back to Homepage</a> or <a href="/search">Search for a different media</a></div> -->
+
         {% endif %}
     {% endif %}
 
