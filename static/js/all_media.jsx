@@ -1,4 +1,3 @@
-
 // creates a media card for each media
 function MediaCard(props) {
     return (
@@ -13,7 +12,7 @@ function MediaCard(props) {
 // creates the search feature so the user can search for a media
 function SearchMedia(props) {
     const [search, setSearch] = React.useState("");
-    const [mediaType, setmediaType] = React.useState("");
+    let [mediaType, setmediaType] = React.useState("");
     const [mediaCards, setmediaCards] = React.useState([]);
     
     function searchMediaInfo() {
@@ -53,7 +52,7 @@ function SearchMedia(props) {
             key={currentmediaCard["id"]}
             title={currentmediaCard["name"]}
             posterPath={currentmediaCard['poster_path']}
-            mediaType={mediaType}
+            mediaType={`tv${mediaType}`}
             TMDB_id={currentmediaCard["id"]}
         />,
         );
@@ -85,7 +84,7 @@ function SearchMedia(props) {
                     type="radio"
                     value="movie"
                     name="mediaType"
-                    onChange={(event) => setmediaType(event.target.value)}
+                    onChange={(event) => mediaType = event.target.value}
                     id="movieInput"
                   /> movie 
                 </label>
@@ -94,7 +93,7 @@ function SearchMedia(props) {
                     type="radio"
                     value="show"
                     name="mediaType"
-                    onChange={(event) => setmediaType(event.target.value)}
+                    onChange={(event) => mediaType = event.target.value}
                     id="showInput"
                     /> tv show 
                 </label>
@@ -102,7 +101,6 @@ function SearchMedia(props) {
                     Search
                 </button>
             </div>
-            <h2>Search Results for "{search}":</h2>
             <div className="grid">{mediaCardsList}</div>
         </React.Fragment>
     );
