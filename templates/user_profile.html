@@ -4,7 +4,9 @@
 {% block head %}
     <!-- chart.js script tag -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script> 
-
+    <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0/dist/chartjs-adapter-luxon.min.js"></script>
+    
 {% endblock %}
 
 {% block body %} 
@@ -22,7 +24,27 @@
 
     <div class="row">
         <div class="col">
-            <h1>hi {{ user.username }}</h1>
+            <h1>{{ user.username }}'s profile</h1>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col">
+        <!-- chart.js stuff for genres-->
+            <div id="chart-wrapper">
+                <canvas id="genre-chart"></canvas>
+                <!-- <canvas id="watch-history-chart"></canvas> -->
+            </div>
+        </div>
+
+        <div class="col">
+            <!-- chart.js stuff for watch history-->
+            <!-- <label for = "watch-history-chart">
+                Your Label<br /> -->
+                <div id="chart-wrapper">
+                    <canvas id="watch-history-chart"></canvas>
+                </div>
         </div>
     </div>
 
@@ -38,13 +60,6 @@
             <!-- <a href="/search" >Search for media</a>  -->
 
             <p>Or view your lists below:</p>
-        </div>
-
-        <div class="col offset-12">
-        <!-- chart.js stuff -->
-            <div id="chart-wrapper">
-                <canvas id="test-chart"></canvas>
-            </div>
         </div>
     </div>
         

@@ -1,5 +1,7 @@
 'use strict';
 
+// for genres
+
 fetch('/user-profile/genres.json')
 .then(response => response.json())
 .then(responseJson => {
@@ -38,9 +40,9 @@ fetch('/user-profile/genres.json')
     barColorsDynamic.push(dynamicColors());
   }
 
-  console.log(barColors)
+  // console.log(barColors)
 
-  new Chart(document.querySelector('#test-chart'), {
+  new Chart(document.querySelector('#genre-chart'), {
     type: 'doughnut',
 
     data: {
@@ -69,73 +71,84 @@ fetch('/user-profile/genres.json')
 });
 
 
+
 // ################## CODE BELOW I AM UNSURE OF ###########################################################################
-// friend profile genres (not sure yet): 
 
-// fetch('/friend/genres.json')
-// .then(response => response.json())
-// .then(responseJson => {
+// for watch history
 
-//   const xvalues = [];
-//   const yvalues = [];
+fetch('/user-profile/watch_history.json')
+  .then(response => response.json())
+  .then(responseJson => {
+
+    let movievalues = [];
+    let showvalues = [];
   
-//   // set colors
-//   const barColors = [
-//       "#b91d47",
-//       "#00aba9",
-//       "#2b5797",
-//       "#e8c3b9",
-//       "#1e7145"
-//     ];
-
-//   const barColorsDynamic = [];
   
-//   for (const value of responseJson.data){
-//     xvalues.push(value["genre"]);
-//     yvalues.push(value["number_of_genre"]);
-//   }
-  
-//   // dynamically generated colors
-//   // adapted from user comment on 
-//   // https://stackoverflow.com/questions/45771849/chartjs-random-colors-for-each-part-of-pie-chart-with-data-dynamically-from-data
-//   const dynamicColors = () => {
+    for (const movie_value of responseJson.moviedata){
+        movievalues.push({
+          x: movie_value["day"],
+          y: movie_value["number_of_movies"]
+        })
+       
+    };
 
-//     const r = Math.floor(Math.random() * 255);
-//     const g = Math.floor(Math.random() * 255);
-//     const b = Math.floor(Math.random() * 255);
-//     return "rgb(" + r + "," + g + "," + b + ")";
-//   };
+    for (const show_value of responseJson.showdata){
+      showvalues.push({
+        x: show_value["day"],
+        y: show_value["number_of_shows"]
+      })
+    };
 
-//   for (let i =0; i<(xvalues.length); i++){
-//     barColorsDynamic.push(dynamicColors());
-//   }
+    console.log(movievalues)
+    console.log(showvalues)
 
-//   console.log(barColors)
+    new Chart(document.querySelector('#watch-history-chart'), {
+      type: 'line',
+      data: {
+        // labels: moviexvalues,
+        datasets: [{
+          label: "Movies",
+          data: movievalues,
+          fill: false,
+          borderColor: 'rgb(0, 100, 0)',
+          tension: 0.1
+        },
+        {
+            label: "TV Shows",
+            data: showvalues,
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+          },
+      ],
+      },
 
-//   new Chart(document.querySelector('#friend-chart'), {
-//     type: 'doughnut',
-
-//     data: {
-//       labels: xvalues,
-//       datasets: [{
-//         // backgroundColor: barColors,
-//         backgroundColor: barColorsDynamic,
-//         data: yvalues
-//       }]
-//     },
-
-//     options: {
-//       responsive: true,
-//       plugins: {
-//         legend: {
-//           position: 'top',
-//         },
-//         title: {
-//           display: true,
-//           text: 'Users Watched List Genres:'
-//         }
-//       }
-//     },
-//   });
-
-// });
+      options: {
+        scales: {
+          y: {
+            ticks: {
+              min:0,
+              beginAtZero: true,
+              stepSize: 1
+            }
+          },
+          x: {
+            type: 'time',
+            time: {
+              tooltipFormat: 'LLLL dd', // Luxon format string
+              unit: 'day',
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Your WatchList History:'
+          }
+        }
+      }
+  });
+});

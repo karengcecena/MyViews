@@ -78,6 +78,7 @@ class Media(db.Model):
     poster_path = db.Column(db.String(50))
     seasons = db.Column(db.Integer)
     episodes = db.Column(db.Integer)
+    time_watched = db.Column(db.DateTime)
 
     # middle table: 
     ratings = db.relationship('Rating', back_populates="media")

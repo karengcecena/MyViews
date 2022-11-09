@@ -171,7 +171,6 @@ def follow_or_unfollow_friends(user2_user_id):
 
     return render_template("/search_friend_result.html", user2=user2, user=user, user2_user_id= user2.user_id)
 
-    # return redirect("/friend-search-results")
 
 @app.route('/display-friend/<friend_username>')
 def display_friend_by_username(friend_username):
@@ -218,9 +217,6 @@ def show_search_results():
 @app.route("/media-search-results-react.json",  methods=["POST"])
 def get_search_results_react_json():
     """Return a JSON response with all media from search bar query"""
-
-    # search_text = request.form.get("title")
-    # media_type = request.form.get("media_type")
 
     # REACT getting version
     search_text = request.get_json().get("search")
@@ -378,6 +374,7 @@ def rate_movie(TMDB_id):
     score = request.form.get("score")
     comment = request.form.get("comment")
     movie = crud.get_media_by_TMDB_id(TMDB_id, "movie")
+    time_watched = request.form.get("watch_time")
 
     # add movie to database if not in there already
     if not movie:
@@ -427,17 +424,29 @@ def rate_movie(TMDB_id):
                     movie_rating.score = score
                     movie_rating.review_input = comment
                     db.session.commit()
+                    # add time watched if exists: 
+                    if time_watched:
+                        movie.time_watched = time_watched
+                        db.session.commit()
                     flash(f"Your score has been updated to {score} and your comment was successfully added")
                 else:
                     movie_rating = crud.user_rated(movie, user)
                     movie_rating.score = score
                     db.session.commit()
+                    # add time watched if exists: 
+                    if time_watched:
+                        movie.time_watched = time_watched
+                        db.session.commit()
                     flash(f"Your score has been updated to {score}")
             else:
                 # add rating to movie 
                 rating = crud.add_rating_to_db(score, user.user_id, movie.media_id, comment)
                 db.session.add(rating)
                 db.session.commit()
+                # add time watched if exists: 
+                if time_watched:
+                    movie.time_watched = time_watched
+                    db.session.commit()
                 flash(f"Your rating of {score} out of 5 and comment were successfully added for {movie.title}")
 
                 # add movie to watched list: 
@@ -462,6 +471,7 @@ def add_movie_to_folder(TMDB_id):
 
     folder = request.form.get("list")
     movie = crud.get_media_by_TMDB_id(TMDB_id, "movie")
+    time_watched = request.form.get("watch_time")
 
     # add movie to database if not in there already
     if not movie:
@@ -476,6 +486,11 @@ def add_movie_to_folder(TMDB_id):
         movie = crud.add_movie_to_db(data)
         db.session.add(movie)
         db.session.commit()
+
+        # add time watched if exists: 
+        if time_watched:
+            movie.time_watched = time_watched
+            db.session.commit()
 
         ### ADDING MOVIE GENRE INFORMATION ###
         # add genres to movie that do not exist:
@@ -606,6 +621,7 @@ def rate_show(TMDB_id):
     score = request.form.get("score")
     comment = request.form.get("comment")
     show = crud.get_media_by_TMDB_id(TMDB_id, "show")
+    time_watched = request.form.get("watch_time")
 
     # add show to database if not in there already
     if not show:
@@ -640,17 +656,29 @@ def rate_show(TMDB_id):
                     show_rating.score = score
                     show_rating.review_input = comment
                     db.session.commit()
+                    # add time watched if exists: 
+                    if time_watched:
+                        show.time_watched = time_watched
+                        db.session.commit()
                     flash(f"Your score has been updated to {score} and your comment was successfully added")
                 else:
                     show_rating = crud.user_rated(show, user)
                     show_rating.score = score
                     db.session.commit()
+                    # add time watched if exists: 
+                    if time_watched:
+                        show.time_watched = time_watched
+                        db.session.commit()
                     flash(f"Your score has been updated to {score}")
             else:
                 # add rating to show
                 rating = crud.add_rating_to_db(score, user.user_id, show.media_id, comment)
                 db.session.add(rating)
                 db.session.commit()
+                # add time watched if exists: 
+                if time_watched:
+                    show.time_watched = time_watched
+                    db.session.commit()
                 flash(f"Your rating of {score} out of 5 and comment were successfully added for {show.title}")
 
                 # add movie to watched list: 
@@ -668,13 +696,14 @@ def rate_show(TMDB_id):
 
     return redirect(f"/media-info/tvshow/{TMDB_id}")
 
-##### ADDING MOVIE TO FOLDER WATCHED VS NOT
+##### ADDING SHOW TO FOLDER WATCHED VS NOT
 @app.route("/tvshow/<TMDB_id>/sort-folder", methods=["POST"])
 def add_show_to_folder(TMDB_id):
     """Adds selected show to watched or to be watched list"""
 
     folder = request.form.get("list")
     show= crud.get_media_by_TMDB_id(TMDB_id, "show")
+    time_watched = request.form.get("watch_time")
 
     # add show to database if not in there already
     if not show:
@@ -689,6 +718,11 @@ def add_show_to_folder(TMDB_id):
         show = crud.add_show_to_db(data)
         db.session.add(show)
         db.session.commit()
+
+        # add time watched if exists: 
+        if time_watched:
+            show.time_watched = time_watched
+            db.session.commit()
 
         ### Note CANNOT ADD SHOW GENRE INFORMATION BC DB DOES NOT HAVE###
 
@@ -778,6 +812,29 @@ def get_users_genres():
         genres.append({'genre': genre.genre_name,'number_of_genre': total})
 
     return jsonify({"data": genres})
+
+@app.route("/user-profile/watch_history.json")
+def get_users_watch_history():
+    """Gets the users watch history"""
+
+    # get user object: 
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
+
+    # get users watch history
+    user_movie_watch_history = crud.get_user_movie_watch_history(user)
+    user_show_watch_history = crud.get_user_show_watch_history(user)
+    
+    movie_history = []
+    show_history = []
+
+    for day, total in user_movie_watch_history.items():
+        movie_history.append({'day': day.isoformat(),'number_of_movies': total})
+
+    for day, total in user_show_watch_history.items():
+        show_history.append({'day': day.isoformat(),'number_of_shows': total})
+
+    return jsonify({"moviedata": movie_history, "showdata": show_history})
 
 ################## CODE BELOW I AM UNSURE OF ###########################################################################
 ### to get friend profile genres (not sure yet): 

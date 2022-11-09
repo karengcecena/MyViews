@@ -48,13 +48,19 @@
                 <input type="radio" name="score" value=1 id="1">
                 <label for="1">☆</label>
                 
-                Have you seen this movie? Rating: 
+                Have you seen this movie? Rate it: 
 
                 </div>
             
                 <!-- comment -->
                 Any comments? 
                 <input type="text" name="comment" id="rating">
+
+                <!-- time input to add to watch list -->
+                <label for="watch_time">Enter when you watched it: </label>
+                <input type="date" id="watch_time" name="watch_time" required="required">
+                </label>
+
 
                 <button type="submit">Add Review</button>
                 <!-- <input type="submit"> -->
@@ -65,7 +71,11 @@
                 Want to add this movie to your list?
                 <!-- Watched List-->
                 <input type="radio" name="list" value="watched" id="watched">
-                <label for="watched">Watched List</label>
+                <label for="watched">
+                    <!-- time input to add to watch list -->
+                    <label for="watch_time">Watched List: Enter when you watched it: </label>
+                    <input type="date" id="watch_time" name="watch_time">
+                    </label>
 
                 <!-- To Be Watched List-->
                 <input type="radio" name="list" value="to_be_watched" id="tobeewatched">
@@ -93,6 +103,14 @@
             <button type="submit">Add To Playlist</button>
             
         </form>
+
+        <!-- <form action="" method="POST">
+
+            <label for="watch_graph">When did you watch this movie?</label>
+            <input type="date" id="watch_graph" name="watch_graph">
+            <button type="submit">Add To Watch Graph</button>
+            
+        </form> -->
 
         <!-- display ratings for FRIENDS ONLY:  -->
         
@@ -173,6 +191,11 @@
                 Any comments? 
                 <input type="text" name="comment" id="rating">
 
+                <!-- time input to add to watch list -->
+                <label for="watch_time">Enter when you watched it: </label>
+                <input type="date" id="watch_time" name="watch_time" required="required">
+                </label>
+
                 <button type="submit">Add Review</button>
                 <!-- <input type="submit"> -->
             </form>
@@ -182,7 +205,14 @@
                 Want to add this show to your list?
                 <!-- Watched List-->
                 <input type="radio" name="list" value="watched" id="watched">
-                <label for="watched">Watched List</label>
+                <label for="watched">
+                    <!-- time input to add to watch list -->
+                    <label for="watch_time">Watched List: Enter when you watched it: </label>
+                    <input type="date" id="watch_time" name="watch_time">
+                    </label>
+                <!-- Watched List
+                <input type="radio" name="list" value="watched" id="watched">
+                <label for="watched">Watched List</label> -->
 
                 <!-- To Be Watched List-->
                 <input type="radio" name="list" value="to_be_watched" id="tobeewatched">

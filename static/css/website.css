@@ -1,7 +1,17 @@
-#chart-wrapper {
-    /* display: inline-block; */
+/* #chart-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+} */
+
+#genre-chart {
+    width: 20%;
     /* position: relative; */
-    width: 65%;
+}
+
+#watch-history-chart {
+    width: 50%;
+    /* position: relative; */
 }
 
 img {

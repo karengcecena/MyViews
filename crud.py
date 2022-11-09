@@ -134,6 +134,32 @@ def get_user_genres(user):
 
     return sort_media_genres_dict
 
+def get_user_movie_watch_history(user):
+    """Returns the movie watch history data the user has saved in a dictionary"""
+   
+    all_movies = Media.query.filter(Media.media_type == "movie").all()
+
+    # sort watch history by date: amount of media
+    movie_watch_history = {}
+
+    for movie in all_movies:
+        movie_watch_history[movie.time_watched] = movie_watch_history.get(movie.time_watched, 0) + 1
+
+    return movie_watch_history
+
+def get_user_show_watch_history(user):
+    """Returns the show watch history data the user has saved in a dictionary"""
+
+    all_shows = Media.query.filter(Media.media_type == "show").all()
+
+    # sort watch history by date: amount of media
+    show_watch_history = {}
+
+    for show in all_shows:
+        show_watch_history[show.time_watched] = show_watch_history.get(show.time_watched, 0) + 1
+
+    return show_watch_history
+
 def create_playlist(playlist_name, user):
     """Creates a playlist for user"""
 
