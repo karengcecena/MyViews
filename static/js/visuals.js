@@ -146,7 +146,7 @@ fetch('/user-profile/watch_history.json')
           },
           title: {
             display: true,
-            text: 'Your WatchList History:'
+            text: 'Your Watched List History:'
           }
         }
       }

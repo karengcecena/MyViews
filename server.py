@@ -33,7 +33,8 @@ def display_search():
     if "email" in session: 
         user_email = session["email"]
         user = crud.get_user_by_email(user_email)
-        return render_template("/search_friends.html", user=user)
+        all_users_not_user = crud.get_all_users_not_user(user)
+        return render_template("/search_friends.html", user=user, all_users_not_user=all_users_not_user)
 
     else:
         flash("Sorry, please log in:")

@@ -160,6 +160,11 @@ def get_user_show_watch_history(user):
 
     return show_watch_history
 
+def get_all_users_not_user(user):
+    """gets all users in database that are not the user"""
+
+    return User.query.filter(User.user_id != user.user_id).all()
+
 def create_playlist(playlist_name, user):
     """Creates a playlist for user"""
 

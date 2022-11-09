@@ -24,4 +24,12 @@
 
 </form>
 
+<h1> Or search for them below in other users: </h1>
+{% for user in all_users_not_user %}
+<ul>
+  <li><a href="/display-friend/{{ user.username }}">{{ user.username }}</a></li>
+</ul>
+
+{% endfor %}
+
 {% endblock %}
