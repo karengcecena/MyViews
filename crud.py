@@ -137,25 +137,32 @@ def get_user_genres(user):
 def get_user_movie_watch_history(user):
     """Returns the movie watch history data the user has saved in a dictionary"""
    
-    all_movies = Media.query.filter(Media.media_type == "movie").all()
+    users_movies = []
 
-    # sort watch history by date: amount of media
+    for media in user.watched_list:
+        if media.media_type == "movie":
+            users_movies.append(media)
+
     movie_watch_history = {}
 
-    for movie in all_movies:
+    for movie in users_movies:
         movie_watch_history[movie.time_watched] = movie_watch_history.get(movie.time_watched, 0) + 1
 
     return movie_watch_history
 
+
 def get_user_show_watch_history(user):
     """Returns the show watch history data the user has saved in a dictionary"""
 
-    all_shows = Media.query.filter(Media.media_type == "show").all()
+    users_shows = []
 
-    # sort watch history by date: amount of media
+    for media in user.watched_list:
+        if media.media_type == "show":
+            users_shows.append(media)
+
     show_watch_history = {}
 
-    for show in all_shows:
+    for show in users_shows:
         show_watch_history[show.time_watched] = show_watch_history.get(show.time_watched, 0) + 1
 
     return show_watch_history

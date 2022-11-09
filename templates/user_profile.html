@@ -130,6 +130,12 @@
         <div class="row">
         {% for playlist in user.playlists %}
             <h2>{{ playlist.name }}:</h2>
+            <form action="/user-profile/delete-playlist" method="POST" class="deleting-playlist">
+                <p>
+                    <input type="radio" name="delete_playlist" value="delete" id="deletingplaylist" checked>
+                    <label for="deletingplaylist"><button type="submit">Delete Playlist</button></label>
+                </p>
+            </form>
             {% for media in playlist.medias %}
                 <div class="col">
                 {{ media.title }}
