@@ -8,14 +8,14 @@
   <ul>
       <li class="medialogo">Media Page Name</li>
       <li><a href="/">Home</a></li>
-      <li><a class="active" href="/search">Search</a></li>
+      <li><a class="active" href="/media-search-results-react">Search</a></li>
       <li><a href="/user-profile">Profile</a></li>
       <li><a href="/search-friends">Friends</a></li>
       <li><a href="/logout">Logout</a></li>
     </ul>
 </nav>
 
-<h1> Search a movie by title using the search bar below</h1>
+<h1> Search a movie or tv show by title using the search bar below</h1>
 
 <form action="/media-search-results" method="POST">
     <input type="text" name="title" required="required">
@@ -30,4 +30,12 @@
     <!-- <input type="submit"> -->
   </form>
 
+
+<!-- for REACT page -->
+  <a href="/media-search-results-react">Search for things using REACT</a>
+
+{% endblock %}
+
+{% block js %}
+    <script src="/static/js/all_media.jsx" type="text/jsx"></script>
 {% endblock %}

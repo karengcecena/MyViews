@@ -214,6 +214,48 @@ def show_search_results():
 
     return render_template("all_media.html", data=data, search_text=search_text, results=results, res=res, media_type=media_type)
 
+################################################# REACT #################################################
+@app.route("/media-search-results-react.json",  methods=["POST"])
+def get_search_results_react_json():
+    """Return a JSON response with all media from search bar query"""
+
+    # search_text = request.form.get("title")
+    # media_type = request.form.get("media_type")
+
+    # REACT getting version
+    search_text = request.get_json().get("search")
+    media_type = request.get_json().get("mediaType")
+    
+
+    #for movies: 
+    if media_type == "movie":
+        url = "https://api.themoviedb.org/3/search/movie"
+
+    #for tv shows:
+    elif media_type == "show":
+        url = "https://api.themoviedb.org/3/search/tv"
+    payload = {"api_key": API_KEY} 
+
+    # add media title to payload
+    if search_text:
+        payload["query"]=search_text
+
+    res = requests.get(url, params=payload)
+    data = res.json()
+
+    results = data['results']
+
+    # return render_template("all_media.html", data=data, search_text=search_text, results=results, res=res, media_type=media_type)
+    return jsonify({"media": results, "search_text": search_text, "media_type": media_type })
+
+@app.route("/media-search-results-react")
+def show_react_search_results():
+    """Show all media using REACT"""
+
+    return render_template("all_media_react.html")
+
+################################################# REACT #################################################
+
 #for movie media_info 
 @app.route("/media-info/movie/<TMDB_id>")
 def show_movie(TMDB_id):
