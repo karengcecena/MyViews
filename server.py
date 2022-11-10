@@ -95,11 +95,14 @@ def login_user():
 @app.route("/logout")
 def logout_user():
     """Logs out the user by clearing the session."""
+    if "email" in session: 
+        session.clear()
+        flash("You've been logged out")
 
-    session.clear()
-
-    flash("You've been logged out")
-
+    else:
+        flash("Sorry, please log in:")
+        return redirect("/")
+    
     return redirect("/")
 
 @app.route("/user-profile")

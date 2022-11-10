@@ -93,7 +93,7 @@
         <form action="/movie/{{ TMDB_id }}/add-to-playlist" method="POST">
 
             <label for="playlists">Add your movie to an existing folder:</label>
-            <select name="playlist" id="playlists">
+            <select name="playlist" id="playlists" required="required">
                 
                 {% for playlist in user.playlists %}
                     <option value="{{ playlist.playlist_id }}">{{ playlist.name }}</option>
