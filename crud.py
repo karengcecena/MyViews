@@ -59,7 +59,6 @@ def add_show_to_db(show_info):
     return Media(TMDB_id=TMDB_id, media_type=media_type, title=title, overview=overview, release_date=release_date, poster_path=poster_path )
 
 
-
 def check_if_genre_in_db(genre):
     """Checks if the genre mentioned is in DB"""
 
@@ -89,6 +88,11 @@ def get_all_ratings(media_id):
     """Gets all ratings by media_id"""
 
     return Rating.query.filter(Rating.media_id == media_id).all()
+
+def get_rating_by_id(rating_id, user):
+    """Gets users rating by id"""
+
+    return Rating.query.filter(Rating.rating_id == rating_id, Rating.user_id== user.user_id).first()
 
 def user_sorted_Watched(media, user):
     """Checks if user has sorted movie in folder previously"""

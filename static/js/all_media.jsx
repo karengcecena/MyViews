@@ -64,7 +64,7 @@ function SearchMedia(props) {
             <nav>
               <ul>
                   <li class="medialogo">MyViews</li>
-                  <li><a href="/">Home</a></li>
+                  {/* <li><a href="/">Home</a></li> */}
                   <li><a class="active" href="/media-search-results-react">Search</a></li>
                   <li><a href="/user-profile">Profile</a></li>
                   <li><a href="/search-friends">Friends</a></li>

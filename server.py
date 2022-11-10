@@ -133,12 +133,10 @@ def creates_playlist_for_user():
 @app.route("/user-profile/delete-playlist", methods=["POST"])
 def deletes_playlist_for_user():
     """Deletes a playlist for user"""
-    # playlist_name = request.form.get("playlist_name")
     playlist_id = request.form.get("playlist_id")
     user_email = session["email"]
     user = crud.get_user_by_email(user_email)
 
-    # if playlist_name: 
     if playlist_id:
         playlist = crud.get_playlist_by_id(playlist_id, user)
         db.session.delete(playlist)
@@ -146,6 +144,37 @@ def deletes_playlist_for_user():
         flash(f"The playlist '{playlist.name}' has successfully been deleted")
 
     return redirect("/user-profile")
+
+@app.route("/user-profile/delete-rating", methods=["POST"])
+def deletes_rating_for_user():
+    """Deletes a rating for user on the user's profile"""
+    rating_id = request.form.get("rating_id")
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
+
+    if rating_id:
+        rating = crud.get_rating_by_id(rating_id, user)
+        db.session.delete(rating)
+        db.session.commit()
+        flash(f"The rating has successfully been deleted")
+
+    return redirect("/user-profile")
+
+# i am here!!!!!@@@@@@@@@@@!!!!!!!!!!!!!@@@@@@@@@@@@!!!!!!!!!!@@@@@@
+# @app.route("/media-info/movie/delete-rating", methods=["POST"])
+# def deletes_rating_for_user_media_page():
+#     """Deletes a rating for user on the media page"""
+#     rating_id = request.form.get("rating_id")
+#     user_email = session["email"]
+#     user = crud.get_user_by_email(user_email)
+
+#     if rating_id:
+#         rating = crud.get_rating_by_id(rating_id, user)
+#         db.session.delete(rating)
+#         db.session.commit()
+#         flash(f"The rating has successfully been deleted")
+
+#     return redirect("/media-info/movie/<TMDB_id>")
 
 
 @app.route("/friend-search-results", methods=["POST"])

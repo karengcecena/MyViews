@@ -14,7 +14,7 @@
     <nav>
         <ul>
             <li class="medialogo">MyViews</li>
-            <li><a href="/">Home</a></li>
+            <!-- <li><a href="/">Home</a></li> -->
             <li><a href="/media-search-results-react">Search</a></li>
             <li><a class="active" href="/user-profile">Profile</a></li>
             <li><a href="/search-friends">Friends</a></li>
@@ -85,6 +85,11 @@
                         {% elif rating.score == 5 %}
                             <div class="star">★★★★★</div>
                         {% endif %}
+                    <!-- give option to delete rating -->
+                    <form action="/user-profile/delete-rating" method="POST" class="deleting-rating">
+                            <input type="radio" name="rating_id" value="{{ rating.rating_id }}" id="deletingrating" checked>
+                            <label for="deletingrating"><button type="submit">Delete Rating</button></label>
+                    </form>
                     {% endif %}
                 {% endfor %}
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
@@ -103,7 +108,7 @@
             <!-- <li> -->
                 <div class="col">
                 {{ media.title }}
-                {% for rating in media.ratings %}
+                <!-- {% for rating in media.ratings %}
                     {% if rating.user_id == user.user_id %}
                         {% if rating.score == 1 %}
                         <div class="star">★</div>
@@ -117,7 +122,7 @@
                             <div class="star">★★★★★</div>
                         {% endif %}
                     {% endif %}
-                {% endfor %}
+                {% endfor %} -->
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                 </div>
             <!-- </li> -->
@@ -130,6 +135,7 @@
         <div class="row">
         {% for playlist in user.playlists %}
             <h2>{{ playlist.name }}:</h2>
+            <!-- gives option to delete playlist -->
             <form action="/user-profile/delete-playlist" method="POST" class="deleting-playlist">
                     <input type="radio" name="playlist_id" value="{{ playlist.playlist_id }}" id="deletingplaylist" checked>
                     <label for="deletingplaylist"><button type="submit">Delete Playlist</button></label>
@@ -161,7 +167,7 @@
 
     <!-- display users friends watchlist and link to their profile:  -->
     <div>
-        <h2>Friend's Watchlists: </h2>
+        <h2>Friend's Watched Lists: </h2>
     </div>
 
     <div>
