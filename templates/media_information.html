@@ -23,6 +23,10 @@
 
         {% if user %}
 
+            <!-- <div><a href="/user-profile" >Go Back to User Profile</a> or <a href="/search">Search for a different media</a></div> -->
+
+            <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
+
             <form action="/media-info/movie/{{ TMDB_id }}/rating" method="POST">
 
                 <!-- star ratings updated:  -->
@@ -66,7 +70,6 @@
                 <!-- <input type="submit"> -->
             </form>
 
-
             <form action="/movie/{{ TMDB_id }}/sort-folder" method="POST">
                 Want to add this movie to your list?
                 <!-- Watched List-->
@@ -84,10 +87,6 @@
                 <button type="submit">Add to list</button>
                 <!-- <input type="submit"> -->
             </form>
-
-            <!-- <div><a href="/user-profile" >Go Back to User Profile</a> or <a href="/search">Search for a different media</a></div> -->
-
-            <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
         
 
         <form action="/movie/{{ TMDB_id }}/add-to-playlist" method="POST">
@@ -181,6 +180,11 @@
         <p>{{data["overview"]}}</p>
 
         {% if user %}
+            
+            <!-- <div><a href="/user-profile" >Go Back to User Profile</a> or <a href="/search">Search for a different media</a></div> -->
+
+            <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
+
             <form action="/media-info/tvshow/{{ TMDB_id }}/rating" method="POST">
 
                 <!-- star ratings updated:  -->
@@ -223,7 +227,6 @@
                 <!-- <input type="submit"> -->
             </form>
 
-
             <form action="/tvshow/{{ TMDB_id }}/sort-folder" method="POST">
                 Want to add this show to your list?
                 <!-- Watched List-->
@@ -244,10 +247,6 @@
                 <button type="submit">Add to list</button>
                 <!-- <input type="submit"> -->
             </form>
-
-            <!-- <div><a href="/user-profile" >Go Back to User Profile</a> or <a href="/search">Search for a different media</a></div> -->
-
-            <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
 
             <form action="/tvshow/{{ TMDB_id }}/add-to-playlist" method="POST">
 
