@@ -891,32 +891,43 @@ def remove_media_from_watchedlist():
     media_id = request.form.get("media_id")
 
     if media_id:
-        media = crud.get_list_media_by_id(media_id, user, "WatchedList")
+        media = crud.get_watchlist_media_by_id(media_id, user)
         db.session.delete(media)
         db.session.commit()
-        # flash(f"The playlist '{playlist.name}' has successfully been deleted")
+        flash(f"Removed from watched list")
 
     return redirect("/user-profile")
 
-@app.route("/user-profile/delete-from-to-be-watched-list")
+@app.route("/user-profile/delete-from-to-be-watched-list", methods=['POST'])
 def remove_media_from_tobe_watchedlist():
     """Allows user to remove media from their to be watched list"""
-    pass
     user_email = session["email"]
     user = crud.get_user_by_email(user_email)
     media_id = request.form.get("media_id")
-     # if media_id:
-    #     media = crud.get_media_by_id(media_id, user)
-    #     media.watchedlist.remove(playlist)
-        
-    #     db.session.commit()
 
-@app.route("/user-profile/delete-from/<playlist_id>")
+    if media_id:
+        media = crud.get_tobewatchlist_media_by_id(media_id, user)
+        db.session.delete(media)
+        db.session.commit()
+        flash(f"Removed from to be watched list")
+
+    return redirect("/user-profile")
+
+@app.route("/user-profile/delete-from/<playlist_id>", methods=['POST'])
 def remove_media_from_playlist(playlist_id):
     """Allows user to remove media from their playlist"""
-    playlist = crud.get_playlist_by_id(playlist_id)
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
+    playlist = crud.get_playlist_by_id(playlist_id, user)
     media_id = request.form.get("media_id")
-    pass
+    
+    if media_id:
+        media = crud.get_media_by_id(media_id)
+        media.playlists.remove(playlist)
+        db.session.commit()
+        flash(f"Removed from playlist")
+
+    return redirect("/user-profile")
 
 if __name__ == "__main__":
     connect_to_db(app)

@@ -186,7 +186,17 @@ def get_playlist_by_id(playlist_id, user):
 
     return Playlist.query.filter(Playlist.playlist_id == playlist_id, Playlist.user_id== user.user_id).first()
 
-def get_list_media_by_id(media_id, user, folder):
-    """Gets a media in a folder and returns it"""
+def get_watchlist_media_by_id(media_id, user):
+    """Gets a media in watch list and returns it"""
 
-    return folder.query.filter(folder.media_id == media_id, folder.user_id ==user.user_id).first()
+    return WatchedList.query.filter(WatchedList.media_id == media_id, WatchedList.user_id ==user.user_id).first()
+
+def get_tobewatchlist_media_by_id(media_id, user):
+    """Gets a media in to be watched list and returns it"""
+
+    return ToBeWatchedList.query.filter(ToBeWatchedList.media_id == media_id, ToBeWatchedList.user_id ==user.user_id).first()
+
+def get_media_by_id(media_id):
+    """Returns media where user saved"""
+
+    return Media.query.filter(Media.media_id == media_id).first()
