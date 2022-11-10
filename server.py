@@ -883,27 +883,40 @@ def get_users_watch_history():
 
     return jsonify({"moviedata": movie_history, "showdata": show_history})
 
-################## CODE BELOW I AM UNSURE OF ###########################################################################
-### to get friend profile genres (not sure yet): 
-# @app.route("/friend/genres.json")
-# def get_friend_genres():
-#     """Gets the users friends genres in their watched list"""
+@app.route("/user-profile/delete-from-watched-list", methods=['POST'])
+def remove_media_from_watchedlist():
+    """Allows user to remove media from their watched list"""
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
+    media_id = request.form.get("media_id")
 
-#     # get user object: 
-#     user_email = session["email"]
-#     user = crud.get_user_by_email(user_email)
+    if media_id:
+        media = crud.get_list_media_by_id(media_id, user, "WatchedList")
+        db.session.delete(media)
+        db.session.commit()
+        # flash(f"The playlist '{playlist.name}' has successfully been deleted")
 
-#     # get users genres:
-#     user_genres = crud.get_user_genres(user)
-    
-#     genres = []
+    return redirect("/user-profile")
 
-#     for genre, total in user_genres.items():
-#         genres.append({'genre': genre.genre_name,'number_of_genre': total})
+@app.route("/user-profile/delete-from-to-be-watched-list")
+def remove_media_from_tobe_watchedlist():
+    """Allows user to remove media from their to be watched list"""
+    pass
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
+    media_id = request.form.get("media_id")
+     # if media_id:
+    #     media = crud.get_media_by_id(media_id, user)
+    #     media.watchedlist.remove(playlist)
+        
+    #     db.session.commit()
 
-#     return jsonify({"data": genres})
-
-########################################################################################################################
+@app.route("/user-profile/delete-from/<playlist_id>")
+def remove_media_from_playlist(playlist_id):
+    """Allows user to remove media from their playlist"""
+    playlist = crud.get_playlist_by_id(playlist_id)
+    media_id = request.form.get("media_id")
+    pass
 
 if __name__ == "__main__":
     connect_to_db(app)

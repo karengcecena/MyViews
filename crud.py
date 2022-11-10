@@ -185,3 +185,8 @@ def get_playlist_by_id(playlist_id, user):
     """Gets playlist by that id"""
 
     return Playlist.query.filter(Playlist.playlist_id == playlist_id, Playlist.user_id== user.user_id).first()
+
+def get_list_media_by_id(media_id, user, folder):
+    """Gets a media in a folder and returns it"""
+
+    return folder.query.filter(folder.media_id == media_id, folder.user_id ==user.user_id).first()

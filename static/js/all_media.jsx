@@ -16,19 +16,23 @@ function SearchMedia(props) {
     const [mediaCards, setmediaCards] = React.useState([]);
     
     function searchMediaInfo() {
-      fetch("/media-search-results-react.json", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ search, mediaType })
-      })
-        // data returned from fetch request
-        .then((response) => response.json())
-        .then((mediaCardsData) => {
-          setmediaCards(mediaCardsData.media)
-          setmediaType(mediaCardsData.media_type)
-        });
+      if (mediaType != "" && search != ""){
+        
+        fetch("/media-search-results-react.json", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ search, mediaType })
+        })
+          // data returned from fetch request
+          .then((response) => response.json())
+          .then((mediaCardsData) => {
+            setmediaCards(mediaCardsData.media)
+            setmediaType(mediaCardsData.media_type)
+          });
+
+      }   
     };
 
     const mediaCardsList = [];

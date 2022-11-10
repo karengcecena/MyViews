@@ -116,14 +116,15 @@ nav>ul>li a:hover:not(.active) {
 
 /* delete playlist buttons */
     /* takes input bubble away */
-.deleting-playlist> input[type=radio]{
+/* .deleting-playlist> input[type=radio]{
     display:none;
-}
+} */
 /* delete rating buttons */
     /* takes input bubble away */
-.deleting-rating> input[type=radio]{
+.deleting> input[type=radio]{
     display:none;
 }
+
 
 /* still figuring this out for webpage layout */
 .center {
