@@ -22,7 +22,7 @@ def homepage():
 
 @app.route("/search")
 def display_search_bar():
-    """Displays search bar for media page"""
+    """Displays search bar for media page before REACT"""
 
     return render_template("search_media.html")
 
@@ -163,21 +163,21 @@ def deletes_rating_for_user():
 
     return redirect("/user-profile")
 
-# i am here!!!!!@@@@@@@@@@@!!!!!!!!!!!!!@@@@@@@@@@@@!!!!!!!!!!@@@@@@
-# @app.route("/media-info/movie/delete-rating", methods=["POST"])
-# def deletes_rating_for_user_media_page():
-#     """Deletes a rating for user on the media page"""
-#     rating_id = request.form.get("rating_id")
-#     user_email = session["email"]
-#     user = crud.get_user_by_email(user_email)
+@app.route("/media-info/<media_type>/delete-rating", methods=["POST"])
+def deletes_rating_for_user_media_page(media_type):
+    """Deletes a rating for user on the media page"""
+    rating_id = request.form.get("rating_id")
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
 
-#     if rating_id:
-#         rating = crud.get_rating_by_id(rating_id, user)
-#         db.session.delete(rating)
-#         db.session.commit()
-#         flash(f"The rating has successfully been deleted")
+    if rating_id:
+        rating = crud.get_rating_by_id(rating_id, user)
+        media = crud.get_media_by_rating(rating)
+        db.session.delete(rating)
+        db.session.commit()
+        flash(f"The rating has successfully been deleted")
 
-#     return redirect("/media-info/movie/<TMDB_id>")
+    return redirect(f"/media-info/{media_type}/{media.TMDB_id}")
 
 
 @app.route("/friend-search-results", methods=["POST"])

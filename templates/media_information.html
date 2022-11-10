@@ -134,7 +134,7 @@
                         <!-- give option to delete rating -->
                         <br> 
 
-                        <form action="/user-profile/delete-rating" method="POST" class="deleting">
+                        <form action="/media-info/movie/delete-rating" method="POST" class="deleting">
                             <input type="radio" name="rating_id" value="{{ rating.rating_id }}" id="deletingrating" checked>
                             <label for="deletingrating"><button type="submit">Delete Rating</button></label>
                         </form>
@@ -293,9 +293,9 @@
                             <!-- give option to delete rating -->
                             <br> 
 
-                            <form action="/user-profile/delete-rating" method="POST" class="deleting">
-                                <input type="radio" name="rating_id" value="{{ rating.rating_id }}" id="deletingrating" checked>
-                                <label for="deletingrating"><button type="submit">Delete Rating</button></label>
+                            <form action="/media-info/tvshow/delete-rating" method="POST" class="deleting" id="deletingrating_mediapage" >
+                                <input type="radio" name="rating_id" value="{{ rating.rating_id }}" id="deletingrating_mediapage" checked>
+                                <label for="deletingrating_mediapage"><button type="submit" id="deletingrating_mediapage">Delete Rating</button></label>
                             </form>
 
                         {% endif %}

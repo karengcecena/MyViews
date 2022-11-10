@@ -94,6 +94,11 @@ def get_rating_by_id(rating_id, user):
 
     return Rating.query.filter(Rating.rating_id == rating_id, Rating.user_id== user.user_id).first()
 
+def get_media_by_rating(rating):
+    """Gets the media TMBD id by rating id"""
+    
+    return Media.query.filter(Media.media_id == rating.media_id).first()
+
 def user_sorted_Watched(media, user):
     """Checks if user has sorted movie in folder previously"""
 
