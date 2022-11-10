@@ -13,7 +13,7 @@
 
     <nav>
         <ul>
-            <li class="medialogo">Media Page Name</li>
+            <li class="medialogo">MyViews</li>
             <li><a href="/">Home</a></li>
             <li><a href="/media-search-results-react">Search</a></li>
             <li><a class="active" href="/user-profile">Profile</a></li>
@@ -131,10 +131,8 @@
         {% for playlist in user.playlists %}
             <h2>{{ playlist.name }}:</h2>
             <form action="/user-profile/delete-playlist" method="POST" class="deleting-playlist">
-                <p>
-                    <input type="radio" name="delete_playlist" value="delete" id="deletingplaylist" checked>
+                    <input type="radio" name="playlist_id" value="{{ playlist.playlist_id }}" id="deletingplaylist" checked>
                     <label for="deletingplaylist"><button type="submit">Delete Playlist</button></label>
-                </p>
             </form>
             {% for media in playlist.medias %}
                 <div class="col">

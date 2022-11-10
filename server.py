@@ -130,6 +130,23 @@ def creates_playlist_for_user():
 
     return redirect("/user-profile")
 
+@app.route("/user-profile/delete-playlist", methods=["POST"])
+def deletes_playlist_for_user():
+    """Deletes a playlist for user"""
+    # playlist_name = request.form.get("playlist_name")
+    playlist_id = request.form.get("playlist_id")
+    user_email = session["email"]
+    user = crud.get_user_by_email(user_email)
+
+    # if playlist_name: 
+    if playlist_id:
+        playlist = crud.get_playlist_by_id(playlist_id, user)
+        db.session.delete(playlist)
+        db.session.commit()
+        flash(f"The playlist '{playlist.name}' has successfully been deleted")
+
+    return redirect("/user-profile")
+
 
 @app.route("/friend-search-results", methods=["POST"])
 def show_friend_search_results():
