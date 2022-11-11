@@ -71,7 +71,8 @@
         {% for media in user.watched_list %}
             <!-- <li> -->
                 <div class="col">
-                {{ media.title }}
+                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+                
                 {% for rating in media.ratings %}
                     {% if rating.user_id == user.user_id %}
                         {% if rating.score == 1 %}
@@ -112,7 +113,7 @@
         {% for media in user.to_be_watched_list %}
             <!-- <li> -->
                 <div class="col">
-                {{ media.title }}
+                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                 <!-- give option to from to be watched list-->
                 <form action="/user-profile/delete-from-to-be-watched-list" method="POST" class="deleting">
@@ -137,7 +138,7 @@
             </form>
             {% for media in playlist.medias %}
                 <div class="col">
-                {{ media.title }}
+                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
                 {% for rating in media.ratings %}
                     {% if rating.user_id == user.user_id %}
                         {% if rating.score == 1 %}
@@ -176,7 +177,7 @@
             <h2><a href="/display-friend/{{ friend.username }}">{{ friend.username }}:</a></h2>
             {% for media in friend.watched_list %}
                 <div class="col">
-                {{ media.title }}
+                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
                 {% for rating in media.ratings %}
                     {% if rating.user_id == friend.user_id %}
                         {% if rating.score == 1 %}
