@@ -23,14 +23,16 @@
         {% if user %}
 
             <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
+            
+            <!-- Rating modal -->
             <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">
                 Rate Movie
             </button>
 
             <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -86,24 +88,44 @@
                 </div>
 
             
+            <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
 
-            <form action="/movie/{{ TMDB_id }}/sort-folder" method="POST">
-                Want to add this movie to your list?
-                <!-- Watched List-->
-                <input type="radio" name="list" value="watched" id="watched">
-                <label for="watched">
-                    <!-- time input to add to watch list -->
-                    <label for="watch_time">Watched List: Enter when you watched it: </label>
-                    <input type="date" id="watch_time" name="watch_time">
-                    </label>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal2">
+                Add to List
+            </button>
 
-                <!-- To Be Watched List-->
-                <input type="radio" name="list" value="to_be_watched" id="tobeewatched">
-                <label for="tobeewatched">To Be Watched List</label>
-
-                <button type="submit">Add to list</button>
-                <!-- <input type="submit"> -->
-            </form>
+            <!-- Modal -->
+            <div class="modal fade" id="modal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Add this movie to a list</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/movie/{{ TMDB_id }}/sort-folder" method="POST">
+                            <!-- Watched List-->
+                            <input type="radio" name="list" value="watched" id="watched">
+                            <label for="watched">
+                                <!-- time input to add to watch list -->
+                                <label for="watch_time">Watched List</label>
+                                <input type="date" id="watch_time" name="watch_time">
+                                </label>
+            
+                            <!-- To Be Watched List-->
+                            <input type="radio" name="list" value="to_be_watched" id="tobeewatched">
+                            <label for="tobeewatched">To Be Watched List</label>
+            
+                    </div>
+                        <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                            <button type="submit" class="btn btn-primary">Add to List</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                </div>
         
 
         <form action="/movie/{{ TMDB_id }}/add-to-playlist" method="POST">
