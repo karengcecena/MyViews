@@ -18,57 +18,74 @@
     {% if (media_type == "movie") %}
 
         <h1>{{data["original_title"]}}</h1>
-        <!-- <p>{{data}}</p> -->
         <p>{{data["overview"]}}</p>
 
         {% if user %}
 
-            <!-- <div><a href="/user-profile" >Go Back to User Profile</a> or <a href="/search">Search for a different media</a></div> -->
-
             <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
+            <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Rate Movie
+            </button>
 
-            <form action="/media-info/movie/{{ TMDB_id }}/rating" method="POST">
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Add a Rating</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/media-info/movie/{{ TMDB_id }}/rating" method="POST">
 
-                <!-- star ratings updated:  -->
-                <div class="rating">
+                            <!-- star ratings updated:  -->
+                            <div class="rating">
+                        
+                            <!-- score= 0 -->
+                            <input type="radio" name="score" value=5 id="5">
+                            <label for="5">☆</label>
             
-                <!-- score= 0 -->
-                <input type="radio" name="score" value=5 id="5">
-                <label for="5">☆</label>
-
-                <!-- score= 1 -->
-                <input type="radio" name="score" value=4 id="4">
-                <label for="4">☆</label>
-
-                <!-- score= 2 -->
-                <input type="radio" name="score" value=3 id="3">
-                <label for="3">☆</label>
-
-                <!-- score= 3 -->
-                <input type="radio" name="score" value=2 id="2">
-                <label for="2">☆</label>
-
-                <!-- score= 4 -->
-                <input type="radio" name="score" value=1 id="1">
-                <label for="1">☆</label>
-                
-                Have you seen this movie? Rate it: 
-
+                            <!-- score= 1 -->
+                            <input type="radio" name="score" value=4 id="4">
+                            <label for="4">☆</label>
+            
+                            <!-- score= 2 -->
+                            <input type="radio" name="score" value=3 id="3">
+                            <label for="3">☆</label>
+            
+                            <!-- score= 3 -->
+                            <input type="radio" name="score" value=2 id="2">
+                            <label for="2">☆</label>
+            
+                            <!-- score= 4 -->
+                            <input type="radio" name="score" value=1 id="1">
+                            <label for="1">☆</label>
+                            
+                            Have you seen this movie? Rate it: 
+            
+                            </div>
+                        
+                            <!-- comment -->
+                            Any comments? 
+                            <input type="text" name="comment" id="rating">
+            
+                            <!-- time input to add to watch list -->
+                            <label for="watch_time">Enter when you watched it: </label>
+                            <input type="date" id="watch_time" name="watch_time" required="required">
+                            </label>    
+                    </div>
+                        <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                            <button type="submit" class="btn btn-primary">Add Review</button>
+                        </div>
+                        </form>
+                    </div>
                 </div>
+                </div>
+
             
-                <!-- comment -->
-                Any comments? 
-                <input type="text" name="comment" id="rating">
-
-                <!-- time input to add to watch list -->
-                <label for="watch_time">Enter when you watched it: </label>
-                <input type="date" id="watch_time" name="watch_time" required="required">
-                </label>
-
-
-                <button type="submit">Add Review</button>
-                <!-- <input type="submit"> -->
-            </form>
 
             <form action="/movie/{{ TMDB_id }}/sort-folder" method="POST">
                 Want to add this movie to your list?
@@ -176,13 +193,10 @@
     {% elif (media_type == "show") %}
 
         <h1>{{data["name"]}}</h1>
-        <!-- <p>{{data}}</p> -->
         <p>{{data["overview"]}}</p>
 
         {% if user %}
             
-            <!-- <div><a href="/user-profile" >Go Back to User Profile</a> or <a href="/search">Search for a different media</a></div> -->
-
             <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
 
             <form action="/media-info/tvshow/{{ TMDB_id }}/rating" method="POST">
