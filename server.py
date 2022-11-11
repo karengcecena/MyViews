@@ -9,6 +9,9 @@ import requests
 
 from jinja2 import StrictUndefined
 
+# importing hashing passwords
+from passlib.hash import argon2
+
 app = Flask(__name__)
 app.secret_key = "forsession"
 app.jinja_env.undefined = StrictUndefined
@@ -20,11 +23,13 @@ def homepage():
 
     return render_template("homepage.html")
 
+######## Not used currently after implementing REACT
 @app.route("/search")
 def display_search_bar():
     """Displays search bar for media page before REACT"""
 
     return render_template("search_media.html")
+###################################################
 
 @app.route("/search-friends")
 def display_search():
@@ -53,6 +58,8 @@ def register_user():
     username = request.form.get("username")
     email = request.form.get("email")
     password = request.form.get("password")
+    # to hash the password 
+    password_hashed = argon2.hash(password)
 
     if crud.get_user_by_username(username):
         flash("Sorry, that username is already taken.")
@@ -61,7 +68,9 @@ def register_user():
         flash("Sorry, that email is already taken")
 
     else:
-        user = crud.create_user(username=username, email=email, password=password)
+        # user = crud.create_user(username=username, email=email, password=password)
+        # store the hashed password in the database instead
+        user = crud.create_user(username=username, email=email, password=password_hashed)
         db.session.add(user)
         db.session.commit()
         flash ("Succesfully created user")
@@ -79,7 +88,9 @@ def login_user():
     user = crud.get_user_by_email(email)
 
     if user:
-        if password == user.password:
+        # if password == user.password:
+        # do it getting the hashed password: 
+        if argon2.verify(password, user.password):
             session["username"] = user.username
             session['email'] = email
             flash("You have successfully logged in")
