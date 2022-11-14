@@ -1,6 +1,8 @@
 """Models for movie app."""
 
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin, LoginManager
+from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 
 db = SQLAlchemy()
 
@@ -11,15 +13,15 @@ friend = db.Table(
     db.Column('f2_id', db.Integer, db.ForeignKey('users.user_id'))
 )
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     """User information"""
 
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    email = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(50), unique=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(), nullable=False)
+    password = db.Column(db.String())
 
     # middle tables:
     ratings = db.relationship('Rating', back_populates="user")
@@ -36,6 +38,9 @@ class User(db.Model):
         backref='followers'
     )
 
+    def get_id(self):
+        return (self.user_id)
+
     def get_all_friends(self):
         """ Get all friends, those you are following AND those following you. """
         return self.following + self.followers
@@ -46,6 +51,18 @@ class User(db.Model):
 
         return f"<User user_id = {self.user_id} username = {self.username} email = {self.email}>"
 
+
+class OAuth(OAuthConsumerMixin, db.Model):
+    user_id = db.Column(db.Integer, db.ForeignKey(User.user_id))
+    user = db.relationship(User)
+
+login_manager = LoginManager()
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+    
 ####################################################################################################
 
 # class Friend(db.Model):

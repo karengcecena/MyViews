@@ -1,8 +1,8 @@
 """Server for movie app."""
 
 from flask import (Flask, render_template, request, flash, session,
-                   redirect, jsonify)
-from model import connect_to_db, db
+                   redirect, jsonify, url_for)
+from model import connect_to_db, db, login_manager, OAuth, User
 import crud
 import os
 import requests
@@ -17,19 +17,94 @@ app.secret_key = "forsession"
 app.jinja_env.undefined = StrictUndefined
 API_KEY = os.environ['TMDB_KEY']
 
+#### implementing github oauth: 
+from flask_dance.contrib.github import github, make_github_blueprint
+from flask_login import current_user, login_user, logout_user, login_required,
+from flask_dance.consumer import oauth_authorized
+from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
+from sqlalchemy.orm.exc import NoResultFound
+# from oauth import github_blueprint
+
+
+db.init_app(app)
+login_manager.init_app(app)
+
+with app.app_context():
+    db.create_all()
+
+
+@app.route("/github")
+def login():
+    if not github.authorized:
+        return redirect(url_for("github.login"))
+    res = github.get("/user")
+    username = res.json()["login"]
+
+    session['username'] = username
+    # return f"You are @{username} on GitHub"
+    return redirect("/user-profile")
+
+
+###########################################################
+
+github_blueprint = make_github_blueprint(
+    client_id = os.environ['GITHUB_ID'],
+    client_secret = os.environ['GITHUB_SECRET'],
+    storage=SQLAlchemyStorage(
+        OAuth,
+        db.session,
+        user=current_user,
+        user_required=False,
+    ),
+)
+
+app.register_blueprint(github_blueprint, url_prefix="/login")
+
+@oauth_authorized.connect_via(github_blueprint)
+def github_logged_in(blueprint, token):
+    info = github.get("/user")
+    if info.ok:
+        account_info = info.json()
+        # print(account_info)
+        username = account_info["login"]
+        # email = account_info["email"]
+
+        query = User.query.filter_by(username=username)
+        try:
+            user = query.one()
+        except NoResultFound:
+            user = User(username=username)
+            db.session.add(user)
+            db.session.commit()
+        
+        session["username"] = username
+        # login_user(user)
+        return redirect("/user-profile")
+
+
+##############################################################################################
+# @app.route("/logout")
+# @login_required
+# def logout():
+#     logout_user()
+#     return redirect(url_for("homepage"))
+
 @app.route("/")
 def homepage():
     """Displays homepage"""
 
+    if "username" in session:
+        return redirect("/user-profile")
+
     return render_template("homepage.html")
 
-######## Not used currently after implementing REACT
+######## Search BEFORE React Search Was Implemented#######
 @app.route("/search")
 def display_search_bar():
     """Displays search bar for media page before REACT"""
 
     return render_template("search_media.html")
-###################################################
+##########################################################
 
 @app.route("/search-friends")
 def display_search():
@@ -38,6 +113,12 @@ def display_search():
     if "email" in session: 
         user_email = session["email"]
         user = crud.get_user_by_email(user_email)
+        all_users_not_user = crud.get_all_users_not_user(user)
+        return render_template("/search_friends.html", user=user, all_users_not_user=all_users_not_user)
+
+    elif "username" in session: 
+        user_username= session["username"]
+        user = crud.get_user_by_username(user_username)
         all_users_not_user = crud.get_all_users_not_user(user)
         return render_template("/search_friends.html", user=user, all_users_not_user=all_users_not_user)
 
@@ -109,7 +190,9 @@ def logout_user():
     if "email" in session: 
         session.clear()
         flash("You've been logged out")
-
+    elif "username" in session: 
+        session.clear()
+        flash("You've been logged out")
     else:
         flash("Sorry, please log in:")
         return redirect("/")
@@ -123,6 +206,11 @@ def display_user_profile():
     if "email" in session: 
         user_email = session["email"]
         user = crud.get_user_by_email(user_email)
+        return render_template("user_profile.html", user=user)
+    
+    elif "username" in session: 
+        user_username= session["username"]
+        user = crud.get_user_by_username(user_username)
         return render_template("user_profile.html", user=user)
 
     else:
