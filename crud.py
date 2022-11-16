@@ -50,7 +50,7 @@ def add_show_to_db(show_info):
     """Adds show to DB"""
 
     TMDB_id = show_info["id"]
-    media_type = "show"
+    media_type = "tv"
     title = show_info["name"]
     overview = show_info["overview"]
     release_date = show_info["first_air_date"]
@@ -166,7 +166,7 @@ def get_user_show_watch_history(user):
     users_shows = []
 
     for media in user.watched_list:
-        if media.media_type == "show":
+        if media.media_type == "tv":
             users_shows.append(media)
 
     show_watch_history = {}
