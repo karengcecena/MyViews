@@ -51,35 +51,9 @@ class User(UserMixin, db.Model):
 
         return f"<User user_id = {self.user_id} username = {self.username} email = {self.email}>"
 
-
 class OAuth(OAuthConsumerMixin, db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(User.user_id))
     user = db.relationship(User)
-
-login_manager = LoginManager()
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
-    
-####################################################################################################
-
-# class Friend(db.Model):
-
-#     __tablename__ = "friends"
-
-#     friend_id = db.Column(db.Integer, primary_key=True),
-#     f1_id = db.Column(db.Integer, db.ForeignKey('users.user_id')),
-#     f2_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-
-#     # this is an association table, so it doesn't directly connect back to any table
-
-#     def __repr__(self):
-#         """Show info about Friend"""
-
-#         return f"<Friend friend_id: {self.friend_id} f1_id: {self.f1_id} f2_id: {self.f2_id}>"
-####################################################################################################
 
 class Media(db.Model):
     """Media information"""
@@ -234,7 +208,7 @@ class MediaGenre(db.Model):
         return f"<MediaGenre media_genre_id: {self.media_genre_id} movie_title: {media.title}>"
 
 
-def connect_to_db(flask_app, db_uri="postgresql:///project_db", echo=True):
+def connect_to_db(flask_app, db_uri="postgresql:///project_db", echo=False):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -243,6 +217,12 @@ def connect_to_db(flask_app, db_uri="postgresql:///project_db", echo=True):
     db.init_app(flask_app)
 
     print("Successfully connected to DB")
+
+login_manager = LoginManager()
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 if __name__ == "__main__":
     from server import app

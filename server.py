@@ -12,8 +12,9 @@ from jinja2 import StrictUndefined
 from passlib.hash import argon2
 
 #### imports to implement github oauth: 
+# from flask_dance.contrib.github import github
 from flask_dance.contrib.github import github, make_github_blueprint
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import current_user
 from flask_dance.consumer import oauth_authorized
 from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
 from sqlalchemy.orm.exc import NoResultFound
@@ -24,14 +25,8 @@ app.secret_key = "forsession"
 app.jinja_env.undefined = StrictUndefined
 API_KEY = os.environ['TMDB_KEY']
 
-
 ###########################################################
-# Github Login Stuff
-db.init_app(app)
-login_manager.init_app(app)
-
-with app.app_context():
-    db.create_all()
+# OAuth for Github Implemented Using https://testdriven.io/blog/flask-social-auth/#oauth
 
 github_blueprint = make_github_blueprint(
     client_id = os.environ['GITHUB_ID'],
@@ -64,7 +59,6 @@ def github_logged_in(blueprint, token):
         session["username"] = username
         return redirect("/user-profile")
 
-    
 @app.route("/github")
 def login():
     if not github.authorized:
@@ -75,12 +69,6 @@ def login():
     session['username'] = username
     return redirect("/user-profile")
 
-##############################################################################################
-# @app.route("/logout")
-# @login_required
-# def logout():
-#     logout_user()
-#     return redirect(url_for("homepage"))
 
 @app.route("/")
 def homepage():
@@ -91,23 +79,9 @@ def homepage():
 
     return render_template("homepage.html")
 
-######## Search BEFORE React Search Was Implemented#######
-# @app.route("/search")
-# def display_search_bar():
-#     """Displays search bar for media page before REACT"""
-
-#     return render_template("search_media.html")
-##########################################################
-
 @app.route("/search-friends")
 def display_search():
     """Displays search bar to search for friends"""
-
-    # if "email" in session: 
-    #     user_email = session["email"]
-    #     user = crud.get_user_by_email(user_email)
-    #     all_users_not_user = crud.get_all_users_not_user(user)
-    #     return render_template("/search_friends.html", user=user, all_users_not_user=all_users_not_user)
 
     if "username" in session: 
         user_username= session["username"]
@@ -142,15 +116,12 @@ def register_user():
         flash("Sorry, that email is already taken")
 
     else:
-        # user = crud.create_user(username=username, email=email, password=password)
-        # store the hashed password in the database instead
         user = crud.create_user(username=username, email=email, password=password_hashed)
         db.session.add(user)
         db.session.commit()
         session["username"] = username
         flash ("Succesfully created user")
         return redirect("/user-profile")
-        # return redirect ("/")
 
     return redirect ("/create-user")
    
@@ -164,11 +135,9 @@ def login_user():
     user = crud.get_user_by_email(email)
 
     if user:
-        # if password == user.password:
-        # do it getting the hashed password: 
+        # verify hashed password input is equal to one in DB
         if argon2.verify(password, user.password):
             session["username"] = user.username
-            # session['email'] = email
             flash("You have successfully logged in")
             return redirect ("/user-profile")
         else:
@@ -182,9 +151,7 @@ def login_user():
 @app.route("/logout")
 def logout_user():
     """Logs out the user by clearing the session."""
-    # if "email" in session: 
-    #     session.clear()
-        # flash("You've been logged out")
+    
     if "username" in session: 
         session.clear()
         flash("You've been logged out")
@@ -197,11 +164,6 @@ def logout_user():
 @app.route("/user-profile")
 def display_user_profile():
     """Displays the user profile page"""
-
-    # if "email" in session: 
-    #     user_email = session["email"]
-    #     user = crud.get_user_by_email(user_email)
-    #     return render_template("user_profile.html", user=user)
     
     if "username" in session: 
         user_username= session["username"]
@@ -217,8 +179,7 @@ def creates_playlist_for_user():
     """Adds a playlist for user to store movies in"""
     playlist_name = request.form.get("playlist_name")
     user_username = session["username"]
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
+
     user = crud.get_user_by_username(user_username)
 
     if playlist_name: 
@@ -233,8 +194,6 @@ def creates_playlist_for_user():
 def deletes_playlist_for_user():
     """Deletes a playlist for user"""
     playlist_id = request.form.get("playlist_id")
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
 
@@ -250,8 +209,6 @@ def deletes_playlist_for_user():
 def deletes_rating_for_user():
     """Deletes a rating for user on the user's profile"""
     rating_id = request.form.get("rating_id")
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
 
@@ -267,8 +224,6 @@ def deletes_rating_for_user():
 def deletes_rating_for_user_media_page(media_type):
     """Deletes a rating for user on the media page"""
     rating_id = request.form.get("rating_id")
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
 
@@ -286,14 +241,10 @@ def deletes_rating_for_user_media_page(media_type):
 def show_friend_search_results():
     """Shows friend profile as search result it username exists"""
     
-    # if not user2: 
     search_text = request.form.get("friend_username")
-
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
     user_username = session["username"]
-    user = crud.get_user_by_username(user_username)
 
+    user = crud.get_user_by_username(user_username)
     user2 = crud.get_user_by_username(search_text)
 
     if user2: 
@@ -307,8 +258,6 @@ def show_friend_search_results():
 def follow_or_unfollow_friends(user2_user_id):
     """Allows user to unfollow or follow a friend"""
 
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
 
@@ -321,7 +270,6 @@ def follow_or_unfollow_friends(user2_user_id):
         db.session.commit()
 
     elif action == "unfollow": 
-        ### figure out how to unfollow 
         user.following.remove(user2)
         db.session.commit()
 
@@ -332,8 +280,6 @@ def follow_or_unfollow_friends(user2_user_id):
 def display_friend_by_username(friend_username):
     """Displays friend profile when user clicks on their name in user profile"""
 
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
 
@@ -435,9 +381,6 @@ def show_movie(TMDB_id):
         all_ratings = False
 
     # check if user is logged in in order to display playlists correctly 
-    # if "email" in session:
-    #     user = crud.get_user_by_email(session["email"])
-
     if "username" in session:
         user = crud.get_user_by_username(session["username"])
         return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user, media_type="movie", all_ratings=all_ratings)
@@ -470,8 +413,6 @@ def show_tv_show(TMDB_id):
         all_ratings = False
 
     # check if user is logged in in order to display playlists correctly 
-    # if "email" in session:
-    #     user = crud.get_user_by_email(session["email"])
     if "username" in session:
         user = crud.get_user_by_username(session["username"])
         return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user, media_type="show", all_ratings=all_ratings)
@@ -485,8 +426,6 @@ def add_movie_to_playlist(TMDB_id):
     """Adds movie to selected playlist"""
     movie = crud.get_media_by_TMDB_id(TMDB_id, "movie")
     playlist_id = request.form.get("playlist")
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
 
@@ -576,9 +515,6 @@ def rate_movie(TMDB_id):
     if score:   
 
         # check if user is logged in: 
-        # if "email" in session:
-        #     user_email = session["email"]
-        #     user = crud.get_user_by_email(user_email)
         if "username" in session:
             user_username = session["username"]
             user = crud.get_user_by_username(user_username)
@@ -680,9 +616,6 @@ def add_movie_to_folder(TMDB_id):
     # check if folder was selected:
     if folder:
         # check is user is logged in:
-        # if "email" in session:
-        #     user_email = session["email"]
-        #     user = crud.get_user_by_email(user_email)
         if "username" in session:
             user_username = session["username"]
             user = crud.get_user_by_username(user_username)
@@ -755,8 +688,6 @@ def add_show_to_playlist(TMDB_id):
     """Adds show to selected playlist"""
     show = crud.get_media_by_TMDB_id(TMDB_id, "show")
     playlist_id = request.form.get("playlist")
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
  
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
@@ -817,9 +748,6 @@ def rate_show(TMDB_id):
     if score:   
 
         # check if user is logged in: 
-        # if "email" in session:
-        #     user_email = session["email"]
-        #     user = crud.get_user_by_email(user_email)
         if "username" in session:
             user_username = session["username"]
             user = crud.get_user_by_username(user_username)
@@ -906,9 +834,6 @@ def add_show_to_folder(TMDB_id):
     # check if folder was selected:
     if folder:
         # check is user is logged in:
-        # if "email" in session:
-        #     user_email = session["email"]
-        #     user = crud.get_user_by_email(user_email)
         if "username" in session:
             user_username = session["username"]
             user = crud.get_user_by_username(user_username)
@@ -980,9 +905,6 @@ def get_users_genres():
     """Gets the users genres in their watched list"""
 
     # get user object: 
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
-
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
 
@@ -1001,9 +923,6 @@ def get_users_watch_history():
     """Gets the users watch history"""
 
     # get user object: 
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
-
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
 
@@ -1025,8 +944,6 @@ def get_users_watch_history():
 @app.route("/user-profile/delete-from-watched-list", methods=['POST'])
 def remove_media_from_watchedlist():
     """Allows user to remove media from their watched list"""
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
     media_id = request.form.get("media_id")
@@ -1042,8 +959,6 @@ def remove_media_from_watchedlist():
 @app.route("/user-profile/delete-from-to-be-watched-list", methods=['POST'])
 def remove_media_from_tobe_watchedlist():
     """Allows user to remove media from their to be watched list"""
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
     media_id = request.form.get("media_id")
@@ -1059,8 +974,6 @@ def remove_media_from_tobe_watchedlist():
 @app.route("/user-profile/delete-from/<playlist_id>", methods=['POST'])
 def remove_media_from_playlist(playlist_id):
     """Allows user to remove media from their playlist"""
-    # user_email = session["email"]
-    # user = crud.get_user_by_email(user_email)
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
     playlist = crud.get_playlist_by_id(playlist_id, user)
@@ -1075,5 +988,12 @@ def remove_media_from_playlist(playlist_id):
     return redirect("/user-profile")
 
 if __name__ == "__main__":
-    connect_to_db(app)
+    connect_to_db(app)  
+
+    db.init_app(app)
+    login_manager.init_app(app)
+
+    with app.app_context():
+        db.create_all()
+
     app.run(host="0.0.0.0", debug=True)
