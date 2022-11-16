@@ -12,20 +12,18 @@ from jinja2 import StrictUndefined
 from passlib.hash import argon2
 
 #### imports to implement github oauth: 
-# from flask_dance.contrib.github import github
 from flask_dance.contrib.github import github, make_github_blueprint
 from flask_login import current_user
 from flask_dance.consumer import oauth_authorized
 from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
 from sqlalchemy.orm.exc import NoResultFound
-# from oauth import github_blueprint
 
 app = Flask(__name__)
 app.secret_key = "forsession"
 app.jinja_env.undefined = StrictUndefined
 API_KEY = os.environ['TMDB_KEY']
 
-###########################################################
+#################################################################################################
 # OAuth for Github Implemented Using https://testdriven.io/blog/flask-social-auth/#oauth
 
 github_blueprint = make_github_blueprint(
@@ -69,6 +67,7 @@ def login():
     session['username'] = username
     return redirect("/user-profile")
 
+#####################End of GitHub OAuth Implementation ###########################################
 
 @app.route("/")
 def homepage():
@@ -93,11 +92,6 @@ def display_search():
         flash("Sorry, please log in:")
         return redirect("/")
 
-@app.route("/create-user")
-def display_create_user():
-    """Shows the create user page"""
-
-    return render_template("create_user.html")
 
 @app.route("/register-user", methods=["POST"])
 def register_user():
@@ -130,13 +124,16 @@ def register_user():
 def login_user():
     """Logs in the user"""
 
-    email = request.form.get("email")
+    username = request.form.get("username")
     password = request.form.get("password")
-    user = crud.get_user_by_email(email)
+    user = crud.get_user_by_username(username)
 
     if user:
-        # verify hashed password input is equal to one in DB
-        if argon2.verify(password, user.password):
+       # see if they are a github user
+        if not user.password: 
+            flash("Sorry, that password was incorrect. Try logging in with GitHub")
+        # if not github user, verify hashed password input is equal to one in DB
+        elif argon2.verify(password, user.password):
             session["username"] = user.username
             flash("You have successfully logged in")
             return redirect ("/user-profile")
@@ -174,7 +171,7 @@ def display_user_profile():
         flash("Sorry, please log in:")
         return redirect("/")
 
-@app.route("/user-profile/create-playlist", methods=["POST"])
+@app.route("/create-playlist", methods=["POST"])
 def creates_playlist_for_user():
     """Adds a playlist for user to store movies in"""
     playlist_name = request.form.get("playlist_name")
@@ -190,7 +187,7 @@ def creates_playlist_for_user():
 
     return redirect("/user-profile")
 
-@app.route("/user-profile/delete-playlist", methods=["POST"])
+@app.route("/delete-playlist", methods=["POST"])
 def deletes_playlist_for_user():
     """Deletes a playlist for user"""
     playlist_id = request.form.get("playlist_id")
@@ -290,32 +287,6 @@ def display_friend_by_username(friend_username):
 
 
 #### MOVIE AND TV SHOWS SEPARATED BELOW IN DIFFERENT ROUTES BECAUSE OF REPEATED TMDB_ID's ####   
-@app.route("/media-search-results", methods=["POST"])
-def show_search_results():
-    "Displays results from search bar query"
-
-    search_text = request.form.get("title")
-    media_type = request.form.get("media_type")
-
-    #for movies: 
-    if media_type == "movie":
-        url = "https://api.themoviedb.org/3/search/movie"
-
-    #for tv shows:
-    elif media_type == "show":
-        url = "https://api.themoviedb.org/3/search/tv"
-    payload = {"api_key": API_KEY} 
-
-    # add media title to payload
-    if search_text:
-        payload["query"]=search_text
-
-    res = requests.get(url, params=payload)
-    data = res.json()
-
-    results = data['results']
-
-    return render_template("all_media.html", data=data, search_text=search_text, results=results, res=res, media_type=media_type)
 
 ################################################# REACT #################################################
 @app.route("/media-search-results-react.json",  methods=["POST"])
@@ -328,12 +299,13 @@ def get_search_results_react_json():
     
 
     #for movies: 
-    if media_type == "movie":
-        url = "https://api.themoviedb.org/3/search/movie"
+    # if media_type == "movie":
+    #     url = "https://api.themoviedb.org/3/search/movie"
 
-    #for tv shows:
-    elif media_type == "show":
-        url = "https://api.themoviedb.org/3/search/tv"
+    # #for tv shows:
+    # elif media_type == "tv":
+    url = f"https://api.themoviedb.org/3/search/{media_type}"
+    
     payload = {"api_key": API_KEY} 
 
     # add media title to payload
@@ -354,28 +326,25 @@ def show_react_search_results():
 
     return render_template("all_media_react.html")
 
-################################################# REACT #################################################
+##############################################End REACT #################################################
 
-#for movie media_info 
-@app.route("/media-info/movie/<TMDB_id>")
-def show_movie(TMDB_id):
+@app.route("/media-info/<media_type>/<TMDB_id>")
+def show_movie(media_type, TMDB_id):
     """Shows specific movie information for selected movie"""
 
     #get media information
-    # for movie: 
-    url = f"https://api.themoviedb.org/3/movie/{TMDB_id}"
+    url = f"https://api.themoviedb.org/3/{media_type}/{TMDB_id}"
 
-    #for tv show: 
     payload = {"api_key": API_KEY} 
 
     res = requests.get(url, params=payload)
     data = res.json()
     
     # filter for that movies ratings in db to display on media page
-    if crud.get_media_by_TMDB_id(TMDB_id, "movie"):
-        movie = crud.get_media_by_TMDB_id(TMDB_id, "movie")
-        movie_id = movie.media_id
-        all_ratings = crud.get_all_ratings(movie_id)
+    if crud.get_media_by_TMDB_id(TMDB_id, media_type):
+        media = crud.get_media_by_TMDB_id(TMDB_id, media_type)
+        media_id = media.media_id
+        all_ratings = crud.get_all_ratings(media_id)
 
     else: 
         all_ratings = False
@@ -383,42 +352,10 @@ def show_movie(TMDB_id):
     # check if user is logged in in order to display playlists correctly 
     if "username" in session:
         user = crud.get_user_by_username(session["username"])
-        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user, media_type="movie", all_ratings=all_ratings)
+        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user, media_type=media_type, all_ratings=all_ratings)
 
     else:
-        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=False, media_type="movie", all_ratings=all_ratings)
-
-#for tv show media_info 
-@app.route("/media-info/tvshow/<TMDB_id>")
-def show_tv_show(TMDB_id):
-    """Shows specific tv show information for selected tv show"""
-
-    #get media information
-    # for movie: 
-    url = f"https://api.themoviedb.org/3/tv/{TMDB_id}"
-
-    #for tv show: 
-    payload = {"api_key": API_KEY} 
-
-    res = requests.get(url, params=payload)
-    data = res.json()
-
-    # filter for that tv shows ratings in db to display on media page
-    if crud.get_media_by_TMDB_id(TMDB_id, "show"):
-        show = crud.get_media_by_TMDB_id(TMDB_id, "show")
-        show_id = show.media_id
-        all_ratings = crud.get_all_ratings(show_id)
-
-    else: 
-        all_ratings = False
-
-    # check if user is logged in in order to display playlists correctly 
-    if "username" in session:
-        user = crud.get_user_by_username(session["username"])
-        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user, media_type="show", all_ratings=all_ratings)
-
-    else:
-        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=False, media_type="show", all_ratings=all_ratings)
+        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=False, media_type=media_type, all_ratings=all_ratings)
 
 ##### ADDING MOVIE TO PLAYLIST
 @app.route("/movie/<TMDB_id>/add-to-playlist", methods=["POST"])

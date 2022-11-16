@@ -50,7 +50,7 @@
 
     <div class="row">
         <div class="col">
-            <form action="/user-profile/create-playlist" method="POST">
+            <form action="/create-playlist" method="POST">
                 <p>
                   Want to create your own folder? Type in the name: <input type="text" name="playlist_name" required="required">
                   <button type="submit">Create Playlist</button>
@@ -132,7 +132,7 @@
         {% for playlist in user.playlists %}
             <h2>{{ playlist.name }}:</h2>
             <!-- gives option to delete playlist -->
-            <form action="/user-profile/delete-playlist" method="POST" class="deleting">
+            <form action="/delete-playlist" method="POST" class="deleting">
                     <input type="radio" name="playlist_id" value="{{ playlist.playlist_id }}" id="deletingplaylist" checked>
                     <label for="deletingplaylist"><button type="submit">Delete Playlist</button></label>
             </form>

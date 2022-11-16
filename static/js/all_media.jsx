@@ -49,14 +49,14 @@ function SearchMedia(props) {
         />,
         );
     }
-    } else if (mediaType == "show"){
+    } else if (mediaType == "tv"){
       for (const currentmediaCard of mediaCards) {
         mediaCardsList.push(
         <MediaCard
             key={currentmediaCard["id"]}
             title={currentmediaCard["name"]}
             posterPath={currentmediaCard['poster_path']}
-            mediaType={`tv${mediaType}`}
+            mediaType={`${mediaType}`}
             TMDB_id={currentmediaCard["id"]}
         />,
         );
@@ -95,7 +95,7 @@ function SearchMedia(props) {
                 <label htmlFor="showInput">
                   <input
                     type="radio"
-                    value="show"
+                    value="tv"
                     name="mediaType"
                     onChange={(event) => mediaType = event.target.value}
                     id="showInput"
