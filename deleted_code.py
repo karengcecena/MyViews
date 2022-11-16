@@ -191,3 +191,189 @@
 #     else:
 #         flash("Please log in")
 
+
+# ##### ADDING MOVIE RATING
+# @app.route("/media-info/movie/<TMDB_id>/rating", methods=["POST"])
+# def rate_movie(TMDB_id):
+#     """Sets score user input under ratings"""
+    
+#     score = request.form.get("score")
+#     comment = request.form.get("comment")
+#     movie = crud.get_media_by_TMDB_id(TMDB_id, "movie")
+#     time_watched = request.form.get("watch_time")
+
+#     # add movie to database if not in there already
+#     if not movie:
+#         #get movie information
+#         url = f"https://api.themoviedb.org/3/movie/{TMDB_id}"
+#         payload = {"api_key": API_KEY} 
+
+#         res = requests.get(url, params=payload)
+#         data = res.json()
+
+#         # add movie to db
+#         movie = crud.add_movie_to_db(data)
+#         db.session.add(movie)
+#         db.session.commit()
+
+#         ### ADDING MOVIE GENRE INFORMATION ###
+#         # add genres to movie that do not exist:
+#         genres = data["genres"]
+#         for genre in genres:
+#             # check if genre in genres:
+#             if crud.check_if_genre_in_db(genre):
+#                 # if yes: 
+#                 genre = crud.check_if_genre_in_db(genre)
+#                 movie.genres.append(genre)
+#                 db.session.commit()
+#             else:
+#                 # if not, add to genre:
+#                 genre = crud.add_genre_to_db(genre)
+#                 db.session.add(genre)
+#                 movie.genres.append(genre)
+#                 db.session.commit()
+
+#     # check if a score was input:
+#     if score:   
+
+#         # check if user is logged in: 
+#         if "username" in session:
+#             user_username = session["username"]
+#             user = crud.get_user_by_username(user_username)
+
+#             # check if user has rated this media before:
+#             if crud.user_rated(movie, user):
+
+#                 # update the score in db
+#                 if comment: 
+#                     movie_rating = crud.user_rated(movie, user)
+#                     movie_rating.score = score
+#                     movie_rating.review_input = comment
+#                     db.session.commit()
+#                     # add time watched if exists: 
+#                     if time_watched:
+#                         movie.time_watched = time_watched
+#                         db.session.commit()
+#                     flash(f"Your score has been updated to {score} and your comment was successfully added")
+#                 else:
+#                     movie_rating = crud.user_rated(movie, user)
+#                     movie_rating.score = score
+#                     db.session.commit()
+#                     # add time watched if exists: 
+#                     if time_watched:
+#                         movie.time_watched = time_watched
+#                         db.session.commit()
+#                     flash(f"Your score has been updated to {score}")
+#             else:
+#                 # add rating to movie 
+#                 rating = crud.add_rating_to_db(score, user.user_id, movie.media_id, comment)
+#                 db.session.add(rating)
+#                 db.session.commit()
+#                 # add time watched if exists: 
+#                 if time_watched:
+#                     movie.time_watched = time_watched
+#                     db.session.commit()
+#                 flash(f"Your rating of {score} out of 5 and comment were successfully added for {movie.title}")
+
+#                 # add movie to watched list: 
+#                 if not crud.user_sorted_Watched(movie, user):
+#                     # add to watched list
+#                     movie_folder = crud.add_to_WatchedList(movie, user)
+#                     db.session.add(movie_folder)
+#                     db.session.commit()
+#                     flash(f"Your media has been added to your watched list")
+
+#         else:
+#             flash("Sorry, only logged in users can rate movies")
+#     else: 
+#         flash("Sorry, it seems no score was selected.")
+
+#     return redirect(f"/media-info/movie/{TMDB_id}")
+
+
+# ##### ADDING SHOW RATING
+# @app.route("/media-info/tv/<TMDB_id>/rating", methods=["POST"])
+# def rate_show(TMDB_id):
+#     """Sets score user input under ratings"""
+    
+#     score = request.form.get("score")
+#     comment = request.form.get("comment")
+#     show = crud.get_media_by_TMDB_id(TMDB_id, "tv")
+#     time_watched = request.form.get("watch_time")
+
+#     # add show to database if not in there already
+#     if not show:
+#         #get show information
+#         url = f"https://api.themoviedb.org/3/tv/{TMDB_id}"
+#         payload = {"api_key": API_KEY} 
+
+#         res = requests.get(url, params=payload)
+#         data = res.json()
+
+#         # add show to db
+#         show = crud.add_show_to_db(data)
+#         db.session.add(show)
+#         db.session.commit()
+
+#         ### Note CANNOT ADD SHOW GENRE INFORMATION BC DB DOES NOT HAVE###
+
+#     # check if a score was input:
+#     if score:   
+
+#         # check if user is logged in: 
+#         if "username" in session:
+#             user_username = session["username"]
+#             user = crud.get_user_by_username(user_username)
+
+#             # check if user has rated this media before:
+#             if crud.user_rated(show, user):
+
+#                 # update the score in db
+#                 if comment: 
+#                     show_rating = crud.user_rated(show, user)
+#                     show_rating.score = score
+#                     show_rating.review_input = comment
+#                     db.session.commit()
+#                     # add time watched if exists: 
+#                     if time_watched:
+#                         show.time_watched = time_watched
+#                         db.session.commit()
+#                     flash(f"Your score has been updated to {score} and your comment was successfully added")
+#                 else:
+#                     show_rating = crud.user_rated(show, user)
+#                     show_rating.score = score
+#                     db.session.commit()
+#                     # add time watched if exists: 
+#                     if time_watched:
+#                         show.time_watched = time_watched
+#                         db.session.commit()
+#                     flash(f"Your score has been updated to {score}")
+#             else:
+#                 # add rating to show
+#                 rating = crud.add_rating_to_db(score, user.user_id, show.media_id, comment)
+#                 db.session.add(rating)
+#                 db.session.commit()
+#                 # add time watched if exists: 
+#                 if time_watched:
+#                     show.time_watched = time_watched
+#                     db.session.commit()
+#                 flash(f"Your rating of {score} out of 5 and comment were successfully added for {show.title}")
+
+#                 # add movie to watched list: 
+#                 if not crud.user_sorted_Watched(show, user):
+#                     # add to watched list
+#                     show_folder = crud.add_to_WatchedList(show, user)
+#                     db.session.add(show_folder)
+#                     db.session.commit()
+#                     flash(f"Your show has been added to your watched list")
+
+#         else:
+#             flash("Sorry, only logged in users can rate shows")
+#     else: 
+#         flash("Sorry, it seems no score was selected.")
+
+#     return redirect(f"/media-info/tv/{TMDB_id}")
+
+
+##############################################################################################
+# I am here
