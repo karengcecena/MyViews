@@ -368,11 +368,16 @@ def add_media_to_playlist(media_type, TMDB_id):
         # add media to db
         if media_type == "movie":
             media = crud.add_movie_to_db(data)
-            db.session.add(media)
-            db.session.commit()
+        
+        elif media_type == "tv":
+            media = crud.add_show_to_db(data)
 
-            ### ADDING MOVIE GENRE INFORMATION ###
-            # add genres to movie that do not exist:
+        db.session.add(media)
+        db.session.commit()
+
+        ### ADDING MEDIA GENRE INFORMATION ###
+        # add genres to media that do not exist:
+        if data["genres"]: 
             genres = data["genres"]
             for genre in genres:
                 # check if genre in genres:
@@ -387,13 +392,6 @@ def add_media_to_playlist(media_type, TMDB_id):
                     db.session.add(genre)
                     media.genres.append(genre)
                     db.session.commit()
-        
-        elif media_type == "tv":
-            media = crud.add_show_to_db(data)
-            db.session.add(media)
-            db.session.commit()
-
-            ### Note CANNOT ADD SHOW GENRE INFORMATION BC DB DOES NOT HAVE###
 
     # add media to playlist
     if playlist_id != "no":
@@ -427,11 +425,16 @@ def rate_media(media_type, TMDB_id):
         # add media to db
         if media_type == "movie":
             media = crud.add_movie_to_db(data)
-            db.session.add(media)
-            db.session.commit()
 
-            ### ADDING MOVIE GENRE INFORMATION ###
-            # add genres to movie that do not exist:
+        elif media_type == "tv":
+            media = crud.add_show_to_db(data)
+
+        db.session.add(media)
+        db.session.commit()
+
+        ### ADDING MEDIA GENRE INFORMATION ###
+        # add genres to media that do not exist:
+        if data["genres"]: 
             genres = data["genres"]
             for genre in genres:
                 # check if genre in genres:
@@ -446,18 +449,6 @@ def rate_media(media_type, TMDB_id):
                     db.session.add(genre)
                     media.genres.append(genre)
                     db.session.commit()
-
-        elif media_type == "tv":
-            media = crud.add_show_to_db(data)
-            db.session.add(media)
-            db.session.commit()
-
-            ### Note CANNOT ADD SHOW GENRE INFORMATION BC DB DOES NOT HAVE###
-
-    #  add time watched if exists: 
-    # if time_watched:
-    # media.time_watched = time_watched
-    # db.session.commit()
 
     # add time watched 
     if time_watched:
@@ -544,11 +535,16 @@ def add_media_to_folder(media_type, TMDB_id):
         # add media to db
         if media_type == "movie":
             media = crud.add_movie_to_db(data)
-            db.session.add(media)
-            db.session.commit()
 
-            ### ADDING MOVIE GENRE INFORMATION ###
-            # add genres to movie that do not exist:
+        elif media_type == "tv":
+            media = crud.add_show_to_db(data)
+
+        db.session.add(media)
+        db.session.commit()
+
+        ### ADDING MEDIA GENRE INFORMATION ###
+        # add genres to media that do not exist:
+        if data["genres"]: 
             genres = data["genres"]
             for genre in genres:
                 # check if genre in genres:
@@ -563,13 +559,6 @@ def add_media_to_folder(media_type, TMDB_id):
                     db.session.add(genre)
                     media.genres.append(genre)
                     db.session.commit()
-
-        elif media_type == "tv":
-            media = crud.add_show_to_db(data)
-            db.session.add(media)
-            db.session.commit()
-
-            ### Note CANNOT ADD SHOW GENRE INFORMATION BC DB DOES NOT HAVE###
 
     # add time watched 
     if time_watched:
@@ -774,7 +763,25 @@ def display_recommended_media():
             show_data = None
             show_results = None
 
-        return render_template("/recommended.html", movie_data=movie_data, show_data=show_data, movie_results=movie_results, show_results=show_results)
+        # get trending movies: 
+        url = f"https://api.themoviedb.org/3/trending/movie/day"
+
+        payload = {"api_key": API_KEY} 
+
+        trending_movie_res = requests.get(url, params=payload)
+        trending_movie_data = trending_movie_res.json()
+        trending_movie_results = trending_movie_data["results"]
+
+        # get trending shows: 
+        url = f"https://api.themoviedb.org/3/trending/tv/day"
+
+        payload = {"api_key": API_KEY} 
+
+        trending_show_res = requests.get(url, params=payload)
+        trending_show_data = trending_show_res.json()
+        trending_show_results = trending_show_data["results"]
+
+        return render_template("/recommended.html", movie_results=movie_results, show_results=show_results, trending_movie_results=trending_movie_results,trending_show_results=trending_show_results)
 
     else:
         flash("Sorry, please log in.")

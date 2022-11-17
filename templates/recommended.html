@@ -39,7 +39,19 @@
         {% endfor %}
     {% else%}
         <p>Sorry, there are no shows in your recommended at the moment. Try adding more to your watched list.</p>
-
     {% endif %}
 
+    <h1>Movies Trending Today:</h1>
+    {% for movie in trending_movie_results %}
+        <a href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }}: </a><br>
+        <img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}">
+        <br>
+    {% endfor %}
+
+    <h1>Shows Trending Today:</h1>
+    {% for show in trending_show_results %}
+        <a href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }}: </a><br>
+        <img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}">
+        <br>
+    {% endfor %}
 {% endblock %}
