@@ -85,10 +85,7 @@ def display_search():
     """Displays search bar to search for friends"""
 
     if "username" in session: 
-        user_username= session["username"]
-        user = crud.get_user_by_username(user_username)
-        all_users_not_user = crud.get_all_users_not_user(user)
-        return render_template("/search_friends.html", user=user, all_users_not_user=all_users_not_user)
+        return render_template("/search_friends.html")
 
     else:
         flash("Sorry, please log in:")

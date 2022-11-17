@@ -39,15 +39,47 @@ class FlaskTestsLoggedOut(TestCase):
         result = self.client.get("/user-profile")
         self.assertIn(b'redirected automatically to the target URL: <a href="/">/</a>', result.data)
 
+    # def test_log_out(self):
+    #     """Tests guests cannot log out if not logged in"""
+       
+    #     result = self.client.get("/logout", follow_redirects=True)
+    #     self.assertIn(b'Login', result.data)
+
+class FlaskTestsLoggedIn(TestCase):
+    """Flask tests with user logged in to session."""
+
+    def setUp(self):
+        """Stuff to do before every test."""
+
+        app.config['TESTING'] = True
+        app.config['SECRET_KEY'] = 'key'
+        self.client = app.test_client()
+
+        # Start each test with a user ID stored in the session.
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['username'] = "test_profile"
+
+    # def test_homepage(self):
+    #     """Tests user cannot see the homepage, redirected to profile"""
+
+    #     result = self.client.get("/", follow_redirects=True)
+    #     self.assertNotIn(b"Login", result.data)
+
+    def test_friends_search(self):
+        """Tests user can see friends search bar"""
+        
+        result = self.client.get("/search-friends")
+        self.assertIn(b'Search for a friend', result.data)
+
     def test_log_out(self):
-        """Tests guests cannot log out if not logged in"""
+        """Tests user can log out"""
        
         result = self.client.get("/logout", follow_redirects=True)
         self.assertIn(b'Login', result.data)
         
 
 if __name__ == "__main__":
-    # how do I get this page to run tests?
     import unittest
 
     unittest.main()

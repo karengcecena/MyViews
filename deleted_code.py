@@ -591,3 +591,19 @@
 #         flash("Sorry, it seems no folder was selected.")
 
 #     return redirect(f"/media-info/tv/{TMDB_id}")
+
+
+# code from: 
+# @app.route("/search-friends")
+# def display_search():
+#     """Displays search bar to search for friends"""
+
+#     if "username" in session: 
+
+        # user_username= session["username"]
+        # user = crud.get_user_by_username(user_username)
+        # all_users_not_user = crud.get_all_users_not_user(user)
+
+        # the three lines above let the users be displayed under the search feature, before I decided to take that out
+
+        # return render_template("/search_friends.html", user=user, all_users_not_user=all_users_not_user)
