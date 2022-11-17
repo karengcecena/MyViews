@@ -479,7 +479,7 @@ def rate_media(media_type, TMDB_id):
                     if time_watched:
                         media.time_watched = time_watched
                         db.session.commit()
-                    flash(f"Your score has been updated to {score} and your comment was successfully added")
+                    flash(f"Your score has been updated to {score} and your comment was successfully added to {media.title}")
                 else:
                     media_rating = crud.user_rated(media, user)
                     media_rating.score = score
@@ -488,7 +488,7 @@ def rate_media(media_type, TMDB_id):
                     if time_watched:
                         media.time_watched = time_watched
                         db.session.commit()
-                    flash(f"Your score has been updated to {score}")
+                    flash(f"Your score has been updated to {score} for {media.title}")
             else:
                 # add rating to media
                 rating = crud.add_rating_to_db(score, user.user_id, media.media_id, comment)
@@ -506,7 +506,7 @@ def rate_media(media_type, TMDB_id):
                     media_folder = crud.add_to_WatchedList(media, user)
                     db.session.add(media_folder)
                     db.session.commit()
-                    flash(f"Your media has been added to your watched list")
+                    flash(f"{media.title} has been added to your watched list")
 
         else:
             flash("Sorry, only logged in users can rate media")
@@ -515,53 +515,56 @@ def rate_media(media_type, TMDB_id):
 
     return redirect(f"/media-info/{media_type}/{TMDB_id}")
 
-
-#### MOVIE AND TV SHOWS SEPARATED BELOW IN DIFFERENT ROUTES BECAUSE OF REPEATED TMDB_ID's ####  
-##### ADDING MOVIE TO FOLDER WATCHED VS NOT
-@app.route("/movie/<TMDB_id>/sort-folder", methods=["POST"])
-def add_movie_to_folder(TMDB_id):
+@app.route("/<media_type>/<TMDB_id>/sort-folder", methods=["POST"])
+def add_media_to_folder(media_type, TMDB_id):
     """Adds selected movie to watched or to be watched list"""
 
     folder = request.form.get("list")
-    movie = crud.get_media_by_TMDB_id(TMDB_id, "movie")
+    media = crud.get_media_by_TMDB_id(TMDB_id, media_type)
     time_watched = request.form.get("watch_time")
 
-    # add movie to database if not in there already
-    if not movie:
-        #get movie information
-        url = f"https://api.themoviedb.org/3/movie/{TMDB_id}"
+    # add media to database if not in there already
+    if not media:
+        #get mmdia information
+        url = f"https://api.themoviedb.org/3/{media_type}/{TMDB_id}"
         payload = {"api_key": API_KEY} 
 
         res = requests.get(url, params=payload)
         data = res.json()
 
-        # add movie to db
-        movie = crud.add_movie_to_db(data)
-        db.session.add(movie)
-        db.session.commit()
+        # add media to db
+        if media_type == "movie":
+            media = crud.add_movie_to_db(data)
+            db.session.add(media)
+            db.session.commit()
+
+            ### ADDING MOVIE GENRE INFORMATION ###
+            # add genres to movie that do not exist:
+            genres = data["genres"]
+            for genre in genres:
+                # check if genre in genres:
+                if crud.check_if_genre_in_db(genre):
+                    # if yes: 
+                    genre = crud.check_if_genre_in_db(genre)
+                    media.genres.append(genre)
+                    db.session.commit()
+                else:
+                    # if not, add to genre:
+                    genre = crud.add_genre_to_db(genre)
+                    db.session.add(genre)
+                    media.genres.append(genre)
+                    db.session.commit()
+
+        elif media_type == "tv":
+            media = crud.add_show_to_db(data)
+            db.session.add(media)
+            db.session.commit()
 
         # add time watched if exists: 
         if time_watched:
-            movie.time_watched = time_watched
+            media.time_watched = time_watched
             db.session.commit()
-
-        ### ADDING MOVIE GENRE INFORMATION ###
-        # add genres to movie that do not exist:
-        genres = data["genres"]
-        for genre in genres:
-            # check if genre in genres:
-            if crud.check_if_genre_in_db(genre):
-                # if yes: 
-                genre = crud.check_if_genre_in_db(genre)
-                movie.genres.append(genre)
-                db.session.commit()
-            else:
-                # if not, add to genre:
-                genre = crud.add_genre_to_db(genre)
-                db.session.add(genre)
-                movie.genres.append(genre)
-                db.session.commit()
-
+        
     # check if folder was selected:
     if folder:
         # check is user is logged in:
@@ -573,55 +576,55 @@ def add_movie_to_folder(TMDB_id):
             if folder == "watched":
                 
                 # check if user added to watched_list before:
-                if crud.user_sorted_Watched(movie, user):
-                    flash("This movie is already in your Watched List")
+                if crud.user_sorted_Watched(media, user):
+                    flash(f"{media.title} is already in your Watched List")
 
                 # check if user added to to_be_watched_list before:
-                elif crud.user_sorted_ToBeWatched(movie, user):
+                elif crud.user_sorted_ToBeWatched(media, user):
                     # delete from to_be_watched_list
-                    movie_folder = crud.user_sorted_ToBeWatched(movie, user)
-                    db.session.delete(movie_folder)
+                    media_folder = crud.user_sorted_ToBeWatched(media, user)
+                    db.session.delete(media_folder)
                     db.session.commit()
 
                     # add to watched list
-                    movie_folder = crud.add_to_WatchedList(movie, user)
-                    db.session.add(movie_folder)
+                    media_folder = crud.add_to_WatchedList(media, user)
+                    db.session.add(media_folder)
                     db.session.commit()
-                    flash("This movie has been switched from your To Be Watched List to your Watched List")
+                    flash(f"{media.title} has been switched from your To Be Watched List to your Watched List")
 
                 else:
                     # add to watched list:
-                    movie_folder = crud.add_to_WatchedList(movie, user)
-                    db.session.add(movie_folder)
+                    media_folder = crud.add_to_WatchedList(media, user)
+                    db.session.add(media_folder)
                     db.session.commit()
-                    flash("This movie has been added to your Watched List")
+                    flash(f"{media.title} has been added to your Watched List")
 
 
             elif folder == "to_be_watched":
                 # check if user added to to_be_watched_list before:
-                if crud.user_sorted_ToBeWatched(movie, user):
-                    flash("This movie is already in your To Be Watched List")
+                if crud.user_sorted_ToBeWatched(media, user):
+                    flash(f"{media.title} is already in your To Be Watched List")
 
                 # check if user added to watched_list before:
-                elif crud.user_sorted_Watched(movie, user):
-                    flash("This movie is already in your Watched List")
+                elif crud.user_sorted_Watched(media, user):
+                    flash(f"{media.title} is already in your Watched List")
                     # delete from watched_list
-                    movie_folder = crud.user_sorted_Watched(movie, user)
-                    db.session.delete(movie_folder)
+                    media_folder = crud.user_sorted_Watched(media, user)
+                    db.session.delete(media_folder)
                     db.session.commit()
 
                     # add to to_be_watched list
-                    movie_folder = crud.add_to_ToBeWatchedList(movie, user)
-                    db.session.add(movie_folder)
+                    media_folder = crud.add_to_ToBeWatchedList(media, user)
+                    db.session.add(media_folder)
                     db.session.commit()
-                    flash("This movie has been switched from your Watched List to your To Be Watched List")
+                    flash(f"{media.title} has been switched from your Watched List to your To Be Watched List")
 
                 else:
                     # add to to_be_watched list:
-                    movie_folder = crud.add_to_ToBeWatchedList(movie, user)
-                    db.session.add(movie_folder)
+                    media_folder = crud.add_to_ToBeWatchedList(media, user)
+                    db.session.add(media_folder)
                     db.session.commit()
-                    flash("This movie has been added to your Watched List")
+                    flash(f"{media.title} has been added to your Watched List")
 
         else:
             flash("Sorry, only logged in users can add movies to folders")
@@ -629,113 +632,7 @@ def add_movie_to_folder(TMDB_id):
     else:
         flash("Sorry, it seems no folder was selected.")
 
-    return redirect(f"/media-info/movie/{TMDB_id}")
-
-
-
-##### ADDING SHOW TO FOLDER WATCHED VS NOT
-@app.route("/tv/<TMDB_id>/sort-folder", methods=["POST"])
-def add_show_to_folder(TMDB_id):
-    """Adds selected show to watched or to be watched list"""
-
-    folder = request.form.get("list")
-    show= crud.get_media_by_TMDB_id(TMDB_id, "tv")
-    time_watched = request.form.get("watch_time")
-
-    # add show to database if not in there already
-    if not show:
-        #get show information
-        url = f"https://api.themoviedb.org/3/tv/{TMDB_id}"
-        payload = {"api_key": API_KEY} 
-
-        res = requests.get(url, params=payload)
-        data = res.json()
-
-        # add show to db
-        show = crud.add_show_to_db(data)
-        db.session.add(show)
-        db.session.commit()
-
-        # add time watched if exists: 
-        if time_watched:
-            show.time_watched = time_watched
-            db.session.commit()
-
-        ### Note CANNOT ADD SHOW GENRE INFORMATION BC DB DOES NOT HAVE###
-
-    # check if folder was selected:
-    if folder:
-        # check is user is logged in:
-        if "username" in session:
-            user_username = session["username"]
-            user = crud.get_user_by_username(user_username)
-
-            # sort into folder depending on value:
-            if folder == "watched":
-                
-                # check if user added to watched_list before:
-                if crud.user_sorted_Watched(show, user):
-                    flash("This show is already in your Watched List")
-
-                # check if user added to to_be_watched_list before:
-                elif crud.user_sorted_ToBeWatched(show, user):
-                    # delete from to_be_watched_list
-                    show_folder = crud.user_sorted_ToBeWatched(show, user)
-                    db.session.delete(show_folder)
-                    db.session.commit()
-
-                    # add to watched list
-                    show_folder = crud.add_to_WatchedList(show, user)
-                    db.session.add(show_folder)
-                    db.session.commit()
-                    flash("This show has been switched from your To Be Watched List to your Watched List")
-
-                else:
-                    # add to watched list:
-                    show_folder = crud.add_to_WatchedList(show, user)
-                    db.session.add(show_folder)
-                    db.session.commit()
-                    flash("This show has been added to your Watched List")
-
-
-            elif folder == "to_be_watched":
-                # check if user added to to_be_watched_list before:
-                if crud.user_sorted_ToBeWatched(show, user):
-                    flash("This show is already in your To Be Watched List")
-
-                # check if user added to to be watched_list before:
-                elif crud.user_sorted_Watched(show, user):
-                    # flash("This show is already in your Watched List")
-                    # delete from watched_list
-                    show_folder = crud.user_sorted_Watched(show, user)
-                    db.session.delete(show_folder)
-                    db.session.commit()
-
-                    # add to to_be_watched list
-                    show_folder = crud.add_to_ToBeWatchedList(show, user)
-                    db.session.add(show_folder)
-                    db.session.commit()
-                    flash("This show has been switched from your Watched List to your To Be Watched List")
-
-                else:
-                    # add to to_be_watched list:
-                    show_folder = crud.add_to_ToBeWatchedList(show, user)
-                    db.session.add(show_folder)
-                    db.session.commit()
-                    flash("This show has been added to your To Be Watched List")
-
-        else:
-            flash("Sorry, only logged in users can add shows to folders")
-
-    else:
-        flash("Sorry, it seems no folder was selected.")
-
-    return redirect(f"/media-info/tv/{TMDB_id}")
-
-
-##############################################################################################
-
-
+    return redirect(f"/media-info/{media_type}/{TMDB_id}")
 
 @app.route("/user-profile/genres.json")
 def get_users_genres():
