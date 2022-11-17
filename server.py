@@ -785,6 +785,7 @@ def display_recommended_media():
 
     else:
         flash("Sorry, please log in.")
+        return redirect("/")
 
 if __name__ == "__main__":
     connect_to_db(app)  

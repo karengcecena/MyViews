@@ -56,7 +56,7 @@ function SearchMedia(props) {
             key={currentmediaCard["id"]}
             title={currentmediaCard["name"]}
             posterPath={currentmediaCard['poster_path']}
-            mediaType={`${mediaType}`}
+            mediaType={{mediaType}}
             TMDB_id={currentmediaCard["id"]}
         />,
         );
@@ -68,7 +68,6 @@ function SearchMedia(props) {
             <nav>
               <ul>
                   <li class="medialogo">MyViews</li>
-                  {/* <li><a href="/">Home</a></li> */}
                   <li><a class="active" href="/media-search-results-react">Search</a></li>
                   <li><a href="/user-profile">Profile</a></li>
                   <li><a href="/search-friends">Friends</a></li>
@@ -77,7 +76,7 @@ function SearchMedia(props) {
                 </ul>
             </nav>
             <div>
-              <h1> Search a movie or tv show by title using the search bar below: using REACT!!! </h1>
+              <h1> Search a movie or tv show by title below: </h1>
               <label htmlFor="searchInput"></label>
                   <input
                       name="search"

@@ -224,6 +224,7 @@ login_manager = LoginManager()
 def load_user(user_id):
     return User.query.get(user_id)
 
+
 if __name__ == "__main__":
     from server import app
     connect_to_db(app)
