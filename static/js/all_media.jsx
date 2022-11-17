@@ -72,6 +72,7 @@ function SearchMedia(props) {
                   <li><a class="active" href="/media-search-results-react">Search</a></li>
                   <li><a href="/user-profile">Profile</a></li>
                   <li><a href="/search-friends">Friends</a></li>
+                  <li><a href="/recommended">Your Recommended</a></li>
                   <li><a href="/logout">Logout</a></li>
                 </ul>
             </nav>

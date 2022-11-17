@@ -10,6 +10,7 @@
             <li><a href="/media-search-results-react">Search</a></li>
             <li><a href="/user-profile">Profile</a></li>
             <li><a href="/search-friends">Friends</a></li>
+            <li><a href="/recommended">Your Recommended</a></li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
@@ -35,7 +36,7 @@
             <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">
-                Rate Movie
+                Rate
             </button>
 
             <!-- Modal -->
@@ -72,7 +73,7 @@
                             <input type="radio" name="score" value=1 id="1">
                             <label for="1">☆</label>
                             
-                            Have you seen this movie? Rate it: 
+                            Have you seen this? Rate it: 
             
                             </div>
                         
@@ -108,7 +109,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Add this movie to a list</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Add this to your list</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -148,7 +149,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Add this movie to your playlist</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Add this to your playlist</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -238,7 +239,6 @@
         
         {% else %}
             <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
-            <!-- <div><a href="/">Go Back to Homepage</a> or <a href="/search">Search for a different media</a></div> -->
 
         {% endif %}
 

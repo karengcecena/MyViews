@@ -67,7 +67,7 @@ def login():
     session['username'] = username
     return redirect("/user-profile")
 
-#####################End of GitHub OAuth Implementation ###########################################
+##################### End of GitHub OAuth Implementation ###########################################
 
 @app.route("/")
 def homepage():
@@ -294,13 +294,6 @@ def get_search_results_react_json():
     search_text = request.get_json().get("search")
     media_type = request.get_json().get("mediaType")
     
-
-    #for movies: 
-    # if media_type == "movie":
-    #     url = "https://api.themoviedb.org/3/search/movie"
-
-    # #for tv shows:
-    # elif media_type == "tv":
     url = f"https://api.themoviedb.org/3/search/{media_type}"
     
     payload = {"api_key": API_KEY} 
@@ -314,7 +307,6 @@ def get_search_results_react_json():
 
     results = data['results']
 
-    # return render_template("all_media.html", data=data, search_text=search_text, results=results, res=res, media_type=media_type)
     return jsonify({"media": results, "search_text": search_text, "media_type": media_type })
 
 @app.route("/media-search-results-react")
@@ -720,6 +712,45 @@ def remove_media_from_playlist(playlist_id):
         flash(f"Removed from playlist")
 
     return redirect("/user-profile")
+
+@app.route("/recommended")
+def display_recommended_media():
+
+    if "username" in session:
+        # get user:
+        user_username = session["username"]
+        user = crud.get_user_by_username(user_username)
+
+        # get last things added to watched list
+        last_movie = crud.get_last_movie_added_to_watched_list(user)
+        last_show = crud.get_last_show_added_to_watched_list(user)
+
+        #get movie recommended
+        if last_movie != False:
+            url = f"https://api.themoviedb.org/3/movie/{last_movie.TMDB_id}/recommendations"
+
+            payload = {"api_key": API_KEY} 
+
+            movie_res = requests.get(url, params=payload)
+            movie_data = movie_res.json()
+        else:
+            movie_data = None
+
+        #get show recommended
+        if last_show != False:
+            url = f"https://api.themoviedb.org/3/tv/{last_show.TMDB_id}/recommendations"
+
+            payload = {"api_key": API_KEY} 
+
+            show_res = requests.get(url, params=payload)
+            show_data = show_res.json()
+        else:
+            show_data = None
+
+        return render_template("/recommended.html", movie_data=movie_data, show_data=show_data, movie_results=movie_data["results"], show_results=show_data["results"])
+
+    else:
+        flash("Sorry, please log in.")
 
 if __name__ == "__main__":
     connect_to_db(app)  

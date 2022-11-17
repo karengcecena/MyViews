@@ -205,3 +205,29 @@ def get_media_by_id(media_id):
     """Returns media where user saved"""
 
     return Media.query.filter(Media.media_id == media_id).first()
+
+def get_last_movie_added_to_watched_list(user):
+
+    movies_in_watched_list = []
+
+    for media in user.watched_list:
+        if media.media_type == "movie":
+            movies_in_watched_list.append(media)
+
+    if movies_in_watched_list:
+        return movies_in_watched_list.pop()
+    
+    return False
+
+def get_last_show_added_to_watched_list(user):
+    
+    shows_in_watched_list = []
+
+    for media in user.watched_list:
+        if media.media_type == "tv":
+            shows_in_watched_list.append(media)
+    
+    if shows_in_watched_list:
+        return shows_in_watched_list.pop()
+   
+    return False

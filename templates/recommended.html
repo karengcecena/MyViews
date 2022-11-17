@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %} Recommended Media {% endblock %}
+
+{% block body %} 
+
+    <nav>
+        <ul>
+            <li class="medialogo">MyViews</li>
+            <li><a href="/media-search-results-react">Search</a></li>
+            <li><a href="/user-profile">Profile</a></li>
+            <li><a href="/search-friends">Friends</a></li>
+            <li><a class="active" href="/recommended">Your Recommended</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <h1>Movie Recommendations:</h1>
+    {% for movie in movie_results %}
+        <!-- <h1>{{movie["original_title"]}}</h1> -->
+        <a href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }}: </a><br>
+        <!-- <p>{{movie["overview"]}}</p> -->
+        <img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}">
+        <br>
+    {% endfor %}
+
+    <br>
+
+    <h1>Show Recommendations:</h1>
+    {% for show in show_results %}
+        <!-- <h1>{{show["name"]}}</h1> -->
+        <a href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }}: </a><br>
+        <!-- <p>{{show["overview"]}}</p> -->
+        <img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}">
+        <br>
+    {% endfor %}
+
+{% endblock %}
