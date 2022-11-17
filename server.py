@@ -450,6 +450,13 @@ def rate_media(media_type, TMDB_id):
             db.session.add(media)
             db.session.commit()
 
+            ### Note CANNOT ADD SHOW GENRE INFORMATION BC DB DOES NOT HAVE###
+
+    #  add time watched if exists: 
+    # if time_watched:
+    media.time_watched = time_watched
+    db.session.commit()
+
     # check if a score was input:
     if score:   
 
@@ -552,10 +559,12 @@ def add_media_to_folder(media_type, TMDB_id):
             db.session.add(media)
             db.session.commit()
 
-        # add time watched if exists: 
-        if time_watched:
-            media.time_watched = time_watched
-            db.session.commit()
+            ### Note CANNOT ADD SHOW GENRE INFORMATION BC DB DOES NOT HAVE###
+
+    # add time watched 
+        # if time_watched:
+    media.time_watched = time_watched
+    db.session.commit()
         
     # check if folder was selected:
     if folder:
@@ -733,8 +742,10 @@ def display_recommended_media():
 
             movie_res = requests.get(url, params=payload)
             movie_data = movie_res.json()
+            movie_results=movie_data["results"]
         else:
             movie_data = None
+            movie_results = None
 
         #get show recommended
         if last_show != False:
@@ -744,10 +755,13 @@ def display_recommended_media():
 
             show_res = requests.get(url, params=payload)
             show_data = show_res.json()
+            show_results = show_data["results"]
+
         else:
             show_data = None
+            show_results = None
 
-        return render_template("/recommended.html", movie_data=movie_data, show_data=show_data, movie_results=movie_data["results"], show_results=show_data["results"])
+        return render_template("/recommended.html", movie_data=movie_data, show_data=show_data, movie_results=movie_results, show_results=show_results)
 
     else:
         flash("Sorry, please log in.")

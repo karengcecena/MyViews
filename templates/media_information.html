@@ -114,13 +114,13 @@
                     </div>
                     <div class="modal-body">
                         <form action="/{{ media_type }}/{{ TMDB_id }}/sort-folder" method="POST">
+                            <!-- time input to of adding to list-->
+                            <input type="date" id="watch_time" name="watch_time" required="required">
+                            <label for="watch_time"></label>
+                            
                             <!-- Watched List-->
                             <input type="radio" name="list" value="watched" id="watched">
-                            <label for="watched">
-                                <!-- time input to add to watch list -->
-                                <label for="watch_time">Watched List</label>
-                                <input type="date" id="watch_time" name="watch_time">
-                                </label>
+                            <label for="watched"> Watched List </label>
             
                             <!-- To Be Watched List-->
                             <input type="radio" name="list" value="to_be_watched" id="tobeewatched">
