@@ -25,25 +25,25 @@ class FlaskTestsBasic(TestCase):
         """Tests guests cannot see friends search bar"""
         
         result = self.client.get("/search-friends")
-        self.assertIn(b"redirected", result.data)
+        self.assertIn(b'redirected automatically to the target URL: <a href="/">/</a>', result.data)
 
     def test_your_recommended(self):
         """Tests guests cannot see recommended media page"""
         
         result = self.client.get("/recommended")
-        self.assertIn(b"redirected", result.data)
+        self.assertIn(b'redirected automatically to the target URL: <a href="/">/</a>', result.data)
 
     def test_user_profile(self):
         """Test guests cannot see a profile page"""
         
         result = self.client.get("/user-profile")
-        self.assertIn(b"redirected", result.data)
+        self.assertIn(b'redirected automatically to the target URL: <a href="/">/</a>', result.data)
 
     def test_log_out(self):
         """Tests guests cannot log out if not logged in"""
        
         result = self.client.get("/logout")
-        self.assertIn(b"redirected", result.data)
+        self.assertIn(b'redirected automatically to the target URL: <a href="/">/</a>', result.data)
 
     def test_search(self):
         """Test guests can use the search bar for media"""
