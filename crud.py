@@ -157,7 +157,10 @@ def get_user_movie_watch_history(user):
     for movie in users_movies:
         movie_watch_history[movie.time_watched] = movie_watch_history.get(movie.time_watched, 0) + 1
 
-    return movie_watch_history
+    # code adapted from https://www.geeksforgeeks.org/python-sort-a-dictionary/
+    sorted_movie_watch_history = {key: val for key, val in sorted(movie_watch_history.items(), key = lambda ele: ele[0])}
+
+    return sorted_movie_watch_history
 
 
 def get_user_show_watch_history(user):
@@ -174,7 +177,10 @@ def get_user_show_watch_history(user):
     for show in users_shows:
         show_watch_history[show.time_watched] = show_watch_history.get(show.time_watched, 0) + 1
 
-    return show_watch_history
+    # code adapted from https://www.geeksforgeeks.org/python-sort-a-dictionary/
+    sorted_show_watch_history = {key: val for key, val in sorted(show_watch_history.items(), key = lambda ele: ele[0])}
+
+    return sorted_show_watch_history
 
 def get_all_users_not_user(user):
     """gets all users in database that are not the user"""

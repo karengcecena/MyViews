@@ -136,7 +136,7 @@ fetch('/user-profile/watch_history.json')
             type: 'time',
             time: {
               tooltipFormat: 'LLLL dd', // Luxon format string
-              unit: 'week',
+              unit: 'day',
             },
           },
         },

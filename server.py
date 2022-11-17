@@ -18,6 +18,8 @@ from flask_dance.consumer import oauth_authorized
 from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
 from sqlalchemy.orm.exc import NoResultFound
 
+from datetime import date
+
 app = Flask(__name__)
 app.secret_key = "forsession"
 app.jinja_env.undefined = StrictUndefined
@@ -454,8 +456,16 @@ def rate_media(media_type, TMDB_id):
 
     #  add time watched if exists: 
     # if time_watched:
-    media.time_watched = time_watched
-    db.session.commit()
+    # media.time_watched = time_watched
+    # db.session.commit()
+
+    # add time watched 
+    if time_watched:
+        media.time_watched = time_watched
+    else:
+        # auto set time watched to day when added
+        media.time_watched = date.today()
+        db.session.commit()
 
     # check if a score was input:
     if score:   
@@ -562,9 +572,12 @@ def add_media_to_folder(media_type, TMDB_id):
             ### Note CANNOT ADD SHOW GENRE INFORMATION BC DB DOES NOT HAVE###
 
     # add time watched 
-        # if time_watched:
-    media.time_watched = time_watched
-    db.session.commit()
+    if time_watched:
+        media.time_watched = time_watched
+    else:
+        # auto set time watched to day when added
+        media.time_watched = date.today()
+        db.session.commit()
         
     # check if folder was selected:
     if folder:

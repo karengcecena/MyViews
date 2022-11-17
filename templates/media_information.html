@@ -83,7 +83,7 @@
             
                             <!-- time input to add to watch list -->
                             <label for="watch_time">Enter when you watched it: </label>
-                            <input type="date" id="watch_time" name="watch_time" required="required">
+                            <input type="date" id="watch_time" name="watch_time">
                             </label>    
                     </div>
                         <div class="modal-footer">
@@ -115,7 +115,7 @@
                     <div class="modal-body">
                         <form action="/{{ media_type }}/{{ TMDB_id }}/sort-folder" method="POST">
                             <!-- time input to of adding to list-->
-                            <input type="date" id="watch_time" name="watch_time" required="required">
+                            <input type="date" id="watch_time" name="watch_time">
                             <label for="watch_time"></label>
                             
                             <!-- Watched List-->
