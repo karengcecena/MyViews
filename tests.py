@@ -21,7 +21,34 @@ class FlaskTestsBasic(TestCase):
         result = self.client.get("/")
         self.assertIn(b"Login", result.data)
 
-    # don't need a tear down?
+    def test_search(self):
+        """Test guests can use the search bar for media"""
+        # can I test search if uses react????
+        pass
+    
+    def test_media_info(self):
+        """Tests guests can see media info for media search"""
+        pass
+
+    def test_media_info_rating(self):
+        """Tests guests cannot see rating in media info for media search"""
+        pass
+
+    def test_friends_search(self):
+        """Tests guests cannot see friends search bar"""
+        pass
+
+    def test_your_recommended(self):
+        """Tests guests cannot see recommended media page"""
+        pass
+
+    def test_user_profile(self):
+        """Test guests cannot see a profile page"""
+        pass
+
+    def test_log_out(self):
+        """Tests guests cannot log out if not logged in"""
+        pass
 
 if __name__ == "__main__":
     # how do I get this page to run tests?
