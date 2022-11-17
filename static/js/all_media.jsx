@@ -12,18 +12,21 @@ function MediaCard(props) {
 // creates the search feature so the user can search for a media
 function SearchMedia(props) {
     const [search, setSearch] = React.useState("");
-    let [mediaType, setmediaType] = React.useState("");
+    const [mediaType, setmediaType] = React.useState("");
     const [mediaCards, setmediaCards] = React.useState([]);
+    const [mediaTypeToSearch, setMediaTypeToSearch] = React.useState("");
     
     function searchMediaInfo() {
-      if (mediaType != "" && search != ""){
-        
+      console.log(mediaTypeToSearch)
+      console.log(search)
+      if (mediaTypeToSearch != "" && search != ""){
+
         fetch("/media-search-results-react.json", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ search, mediaType })
+          body: JSON.stringify({ "search": search, "mediaType": mediaTypeToSearch })
         })
           // data returned from fetch request
           .then((response) => response.json())
@@ -56,7 +59,7 @@ function SearchMedia(props) {
             key={currentmediaCard["id"]}
             title={currentmediaCard["name"]}
             posterPath={currentmediaCard['poster_path']}
-            mediaType={{mediaType}}
+            mediaType={mediaType}
             TMDB_id={currentmediaCard["id"]}
         />,
         );
@@ -87,8 +90,8 @@ function SearchMedia(props) {
                   <input
                     type="radio"
                     value="movie"
-                    name="mediaType"
-                    onChange={(event) => mediaType = event.target.value}
+                    name="mediaTypeToSearch"
+                    onChange={(event) => setMediaTypeToSearch(event.target.value)}
                     id="movieInput"
                   /> movie 
                 </label>
@@ -96,8 +99,8 @@ function SearchMedia(props) {
                   <input
                     type="radio"
                     value="tv"
-                    name="mediaType"
-                    onChange={(event) => mediaType = event.target.value}
+                    name="mediaTypeToSearch"
+                    onChange={(event) => setMediaTypeToSearch(event.target.value)}
                     id="showInput"
                     /> tv show 
                 </label>

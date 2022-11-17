@@ -309,7 +309,7 @@ def get_search_results_react_json():
 
     results = data['results']
 
-    return jsonify({"media": results, "search_text": search_text, "media_type": media_type })
+    return jsonify({"media": results, "search_text": search_text, "media_type": media_type})
 
 @app.route("/media-search-results-react")
 def show_react_search_results():
