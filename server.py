@@ -210,21 +210,6 @@ def creates_playlist_for_user():
 
 ####################################################
 
-# @app.route("/delete-playlist", methods=["POST"])
-# def deletes_playlist_for_user():
-#     """Deletes a playlist for user"""
-#     playlist_id = request.form.get("playlist_id")
-#     user_username = session["username"]
-#     user = crud.get_user_by_username(user_username)
-
-#     if playlist_id:
-#         playlist = crud.get_playlist_by_id(playlist_id, user)
-#         db.session.delete(playlist)
-#         db.session.commit()
-#         flash(f"The playlist '{playlist.name}' has successfully been deleted")
-
-#     return redirect("/user-profile")
-
 @app.route("/delete-playlist.json", methods=["POST"])
 def deletes_playlist_for_user():
     """Deletes a playlist for user"""
@@ -241,8 +226,6 @@ def deletes_playlist_for_user():
     # return redirect("/user-profile")
     return jsonify({"success": f"The playlist has successfully been deleted"})
 
-########################### above needs AJAX work #############################
-
 @app.route("/user-profile/delete-rating", methods=["POST"])
 def deletes_rating_for_user():
     """Deletes a rating for user on the user's profile"""
@@ -257,22 +240,6 @@ def deletes_rating_for_user():
         flash(f"The rating has successfully been deleted")
 
     return redirect("/user-profile")
-
-# @app.route("/media-info/<media_type>/delete-rating", methods=["POST"])
-# def deletes_rating_for_user_media_page(media_type):
-#     """Deletes a rating for user on the media page"""
-#     rating_id = request.form.get("rating_id")
-#     user_username = session["username"]
-#     user = crud.get_user_by_username(user_username)
-
-#     if rating_id:
-#         rating = crud.get_rating_by_id(rating_id, user)
-#         media = crud.get_media_by_rating(rating)
-#         db.session.delete(rating)
-#         db.session.commit()
-#         flash(f"The rating has successfully been deleted")
-
-#     return redirect(f"/media-info/{media_type}/{media.TMDB_id}")
 
 @app.route("/media-info/delete-rating.json", methods=["POST"])
 def deletes_rating_for_user_media_page():
@@ -734,22 +701,6 @@ def get_users_watch_history():
 
     return jsonify({"moviedata": movie_history, "showdata": show_history})
 
-# @app.route("/user-profile/delete-from-watched-list", methods=['POST'])
-# def remove_media_from_watchedlist():
-#     """Allows user to remove media from their watched list"""
-#     user_username = session["username"]
-#     user = crud.get_user_by_username(user_username)
-#     media_id = request.form.get("media_id")
-
-#     if media_id:
-#         media = crud.get_watchlist_media_by_id(media_id, user)
-#         db.session.delete(media)
-#         db.session.commit()
-#         flash(f"Removed from watched list")
-
-#     return redirect("/user-profile")
-
-######### AJAX VERSION OF ABOVE ####################################
 @app.route("/user-profile/delete-from-watched-list.json", methods=['POST'])
 def remove_media_from_watchedlist():
     """Allows user to remove media from their watched list"""
@@ -764,22 +715,6 @@ def remove_media_from_watchedlist():
         # flash(f"Removed from watched list")
 
     return jsonify({"success": "Removed from watched list"})
-########################################################################
-
-# @app.route("/user-profile/delete-from-to-be-watched-list", methods=['POST'])
-# def remove_media_from_tobe_watchedlist():
-#     """Allows user to remove media from their to be watched list"""
-#     user_username = session["username"]
-#     user = crud.get_user_by_username(user_username)
-#     media_id = request.form.get("media_id")
-
-#     if media_id:
-#         media = crud.get_tobewatchlist_media_by_id(media_id, user)
-#         db.session.delete(media)
-#         db.session.commit()
-#         flash(f"Removed from to be watched list")
-
-#     return redirect("/user-profile")
 
 @app.route("/user-profile/delete-from-to-be-watched-list.json", methods=['POST'])
 def remove_media_from_tobe_watchedlist():
@@ -796,27 +731,7 @@ def remove_media_from_tobe_watchedlist():
 
     return jsonify({"success": "Removed from to be watched list"})
 
-
-
-
-
 ################### NEED TO WORK ON THESE GUYS BELOW ###########################
-@app.route("/user-profile/delete-from/<playlist_id>", methods=['POST'])
-def remove_media_from_playlist(playlist_id):
-    """Allows user to remove media from their playlist"""
-    user_username = session["username"]
-    user = crud.get_user_by_username(user_username)
-    playlist = crud.get_playlist_by_id(playlist_id, user)
-    media_id = request.form.get("media_id")
-    
-    if media_id:
-        media = crud.get_media_by_id(media_id)
-        media.playlists.remove(playlist)
-        db.session.commit()
-        flash(f"Removed from playlist")
-
-    return redirect("/user-profile")
-
 # @app.route("/user-profile/delete-from/<playlist_id>", methods=['POST'])
 # def remove_media_from_playlist(playlist_id):
 #     """Allows user to remove media from their playlist"""
@@ -832,6 +747,33 @@ def remove_media_from_playlist(playlist_id):
 #         flash(f"Removed from playlist")
 
 #     return redirect("/user-profile")
+
+@app.route("/user-profile/edit-playlist/<playlist_id>", methods=['POST'])
+def edit_playlist(playlist_id):
+
+    user_username = session["username"]
+    user = crud.get_user_by_username(user_username)
+    playlist = crud.get_playlist_by_id(playlist_id, user)
+    
+    return render_template("/individual_playlist.html", playlist=playlist)
+
+@app.route("/user-profile/delete-from-playlist.json", methods=['POST'])
+def remove_media_from_playlist():
+    """Allows user to remove media from their playlist"""
+    user_username = session["username"]
+    user = crud.get_user_by_username(user_username)
+    
+    playlist_id = request.json.get("playlistID")
+    playlist = crud.get_playlist_by_id(playlist_id, user)
+    
+    media_id = request.json.get("mediaID")
+    
+    if media_id:
+        media = crud.get_media_by_id(media_id)
+        media.playlists.remove(playlist)
+        db.session.commit()
+
+    return jsonify({"success": "Removed from to be watched list"})
 
 @app.route("/recommended")
 def display_recommended_media():

@@ -114,34 +114,24 @@
             <h2>{{ playlist.name }}:</h2>
             <!-- gives option to delete playlist -->
             <button type="button" class="deleting-playlist-btn" value="{{ playlist.playlist_id }}">Delete Playlist</button>
+            <!-- give option to edit playlist -->
+            <form action="/user-profile/edit-playlist/{{ playlist.playlist_id }}" method="POST">
+                <button type="submit">Edit this playlist</button>
+            </form> 
+            
 
             <div class="row">
             {% for media in playlist.medias %}
-                <div class="col" id="playlist_media_div_{{ media.media_id }}">
-                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
-                <!-- {% for rating in media.ratings %}
-                    {% if rating.user_id == user.user_id %}
-                        {% if rating.score == 1 %}
-                            <div class="star">★</div>
-                        {% elif rating.score == 2 %}
-                            <div class="star">★★</div>
-                        {% elif rating.score == 3 %}
-                            <div class="star">★★★</div>
-                        {% elif rating.score == 4 %}
-                            <div class="star">★★★★</div>
-                        {% elif rating.score == 5 %}
-                            <div class="star">★★★★★</div>
-                        {% endif %}
-                    {% endif %}
-                {% endfor %} -->
-                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
-                <!-- give option to remove from playlist-->
-                <form action="/user-profile/delete-from/{{ playlist.playlist_id }}" method="POST" class="deleting">
-                    <input type="radio" name="media_id" value="{{ media.media_id }}" id="delete-from-playlist" checked>
-                    <label for="delete-from-playlist">
-                        <button type="submit" class="deleting-from-playlist-btn" value="{{ media.media_id }}">Remove from playlist</button>
-                    </label>
-                </form>
+                <div class="col" id="{{ playlist.playlist_id }}_media_div_{{ media.media_id }}">
+                    <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+                    <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                    <!-- give option to remove from playlist-->
+                    <!-- <form action="/user-profile/delete-from/{{ playlist.playlist_id }}" method="POST" class="deleting">
+                        <input type="radio" name="media_id" value="{{ media.media_id }}" id="delete-from-playlist" checked>
+                        <label for="delete-from-playlist"> -->
+                    <!-- <button type="button" class="deleting-from-playlist-btn" value="{{ media.media_id }}">Remove from playlist</button> -->
+                        <!-- </label>
+                    </form> -->
                 </div>
             {% endfor %}
             </div>

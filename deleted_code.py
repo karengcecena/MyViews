@@ -376,7 +376,6 @@
 
 
 ##############################################################################################
-# I am here
 
 # @app.route("/movie/<TMDB_id>/sort-folder", methods=["POST"])
 # def add_movie_to_folder(TMDB_id):
@@ -607,3 +606,71 @@
         # the three lines above let the users be displayed under the search feature, before I decided to take that out
 
         # return render_template("/search_friends.html", user=user, all_users_not_user=all_users_not_user)
+
+
+
+##############################################################################################
+# Code Removed when AJAX was implemented: 
+
+
+# @app.route("/media-info/<media_type>/delete-rating", methods=["POST"])
+# def deletes_rating_for_user_media_page(media_type):
+#     """Deletes a rating for user on the media page"""
+#     rating_id = request.form.get("rating_id")
+#     user_username = session["username"]
+#     user = crud.get_user_by_username(user_username)
+
+#     if rating_id:
+#         rating = crud.get_rating_by_id(rating_id, user)
+#         media = crud.get_media_by_rating(rating)
+#         db.session.delete(rating)
+#         db.session.commit()
+#         flash(f"The rating has successfully been deleted")
+
+#     return redirect(f"/media-info/{media_type}/{media.TMDB_id}")
+
+
+# @app.route("/delete-playlist", methods=["POST"])
+# def deletes_playlist_for_user():
+#     """Deletes a playlist for user"""
+#     playlist_id = request.form.get("playlist_id")
+#     user_username = session["username"]
+#     user = crud.get_user_by_username(user_username)
+
+#     if playlist_id:
+#         playlist = crud.get_playlist_by_id(playlist_id, user)
+#         db.session.delete(playlist)
+#         db.session.commit()
+#         flash(f"The playlist '{playlist.name}' has successfully been deleted")
+
+#     return redirect("/user-profile")
+
+# @app.route("/user-profile/delete-from-to-be-watched-list", methods=['POST'])
+# def remove_media_from_tobe_watchedlist():
+#     """Allows user to remove media from their to be watched list"""
+#     user_username = session["username"]
+#     user = crud.get_user_by_username(user_username)
+#     media_id = request.form.get("media_id")
+
+#     if media_id:
+#         media = crud.get_tobewatchlist_media_by_id(media_id, user)
+#         db.session.delete(media)
+#         db.session.commit()
+#         flash(f"Removed from to be watched list")
+
+#     return redirect("/user-profile")
+
+# @app.route("/user-profile/delete-from-watched-list", methods=['POST'])
+# def remove_media_from_watchedlist():
+#     """Allows user to remove media from their watched list"""
+#     user_username = session["username"]
+#     user = crud.get_user_by_username(user_username)
+#     media_id = request.form.get("media_id")
+
+#     if media_id:
+#         media = crud.get_watchlist_media_by_id(media_id, user)
+#         db.session.delete(media)
+#         db.session.commit()
+#         flash(f"Removed from watched list")
+
+#     return redirect("/user-profile")

@@ -105,37 +105,10 @@ for (const deleteBtn of deleteRatingBtns) {
   })
 }
 
-// deleting from a playlist
-
-// const deleteFromPlaylistBtns = document.querySelectorAll(".deleting-from-playlist-btn")
-
-// for (const deleteBtn of deleteFromPlaylistBtns) {
-
-//   deleteBtn.addEventListener("click", evt => {
-//     const formInputs  = {
-//           mediaID: deleteBtn.value
-//           // playlistID: document.querySelector("#playlist__div_{{ playlist.playlist_id }}")
-//           };
-
-//     fetch(`/user-profile/delete-from/${playlist.playlist_id}.json`, {
-//               method: 'POST',
-//               body: JSON.stringify(formInputs),
-//               headers: {
-//                 'Content-Type': 'application/json',
-//               },
-//           })
-
-//     .then((response) => response.json())
-//     .then((responseJson) => {
-//       document.querySelector(`#playlist_media_div_${deleteBtn.value}`).remove();
-//       });
-//   })
-// }
 
 
 
 
-// before steve showed me the other stuff
 
 // document.querySelector("#create_playlist_form").addEventListener("submit", evt => {
 //     evt.preventDefault();
