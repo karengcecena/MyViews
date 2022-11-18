@@ -14,7 +14,6 @@
     <nav>
         <ul>
             <li class="medialogo">MyViews</li>
-            <!-- <li><a href="/">Home</a></li> -->
             <li><a href="/media-search-results-react">Search</a></li>
             <li><a class="active" href="/user-profile">Profile</a></li>
             <li><a href="/search-friends">Friends</a></li>
@@ -35,14 +34,11 @@
         <!-- chart.js stuff for genres-->
             <div id="chart-wrapper">
                 <canvas id="genre-chart"></canvas>
-                <!-- <canvas id="watch-history-chart"></canvas> -->
             </div>
         </div>
 
         <div class="col">
             <!-- chart.js stuff for watch history-->
-            <!-- <label for = "watch-history-chart">
-                Your Label<br /> -->
                 <div id="chart-wrapper">
                     <canvas id="watch-history-chart"></canvas>
                 </div>
@@ -58,8 +54,6 @@
                 </p>
             </form>
 
-            <!-- <a href="/search" >Search for media</a>  -->
-
             <p>Or view your lists below:</p>
         </div>
     </div>
@@ -73,6 +67,7 @@
                 <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
                 
                 {% for rating in media.ratings %}
+                    <div id="rating_div_{{ rating.rating_id }}">
                     {% if rating.user_id == user.user_id %}
                         {% if rating.score == 1 %}
                             <div class="star">★</div>
@@ -85,12 +80,11 @@
                         {% elif rating.score == 5 %}
                             <div class="star">★★★★★</div>
                         {% endif %}
+                    
                     <!-- give option to delete rating -->
-                    <form action="/user-profile/delete-rating" method="POST" class="deleting">
-                            <input type="radio" name="rating_id" value="{{ rating.rating_id }}" id="deletingrating" checked>
-                            <label for="deletingrating"><button type="submit">Delete Rating</button></label>
-                    </form>
+                        <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button>
                     {% endif %}
+                    </div>
                 {% endfor %}
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                 <!-- give option to remove from watched list-->
@@ -125,7 +119,7 @@
             {% for media in playlist.medias %}
                 <div class="col" id="playlist_media_div_{{ media.media_id }}">
                 <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
-                {% for rating in media.ratings %}
+                <!-- {% for rating in media.ratings %}
                     {% if rating.user_id == user.user_id %}
                         {% if rating.score == 1 %}
                             <div class="star">★</div>
@@ -139,7 +133,7 @@
                             <div class="star">★★★★★</div>
                         {% endif %}
                     {% endif %}
-                {% endfor %}
+                {% endfor %} -->
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                 <!-- give option to remove from playlist-->
                 <form action="/user-profile/delete-from/{{ playlist.playlist_id }}" method="POST" class="deleting">

@@ -258,21 +258,38 @@ def deletes_rating_for_user():
 
     return redirect("/user-profile")
 
-@app.route("/media-info/<media_type>/delete-rating", methods=["POST"])
-def deletes_rating_for_user_media_page(media_type):
+# @app.route("/media-info/<media_type>/delete-rating", methods=["POST"])
+# def deletes_rating_for_user_media_page(media_type):
+#     """Deletes a rating for user on the media page"""
+#     rating_id = request.form.get("rating_id")
+#     user_username = session["username"]
+#     user = crud.get_user_by_username(user_username)
+
+#     if rating_id:
+#         rating = crud.get_rating_by_id(rating_id, user)
+#         media = crud.get_media_by_rating(rating)
+#         db.session.delete(rating)
+#         db.session.commit()
+#         flash(f"The rating has successfully been deleted")
+
+#     return redirect(f"/media-info/{media_type}/{media.TMDB_id}")
+
+@app.route("/media-info/delete-rating.json", methods=["POST"])
+def deletes_rating_for_user_media_page():
     """Deletes a rating for user on the media page"""
-    rating_id = request.form.get("rating_id")
+    rating_id = request.json.get("ratingID")
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
 
     if rating_id:
         rating = crud.get_rating_by_id(rating_id, user)
-        media = crud.get_media_by_rating(rating)
+        # media = crud.get_media_by_rating(rating)
         db.session.delete(rating)
         db.session.commit()
-        flash(f"The rating has successfully been deleted")
+        # flash(f"The rating has successfully been deleted")
 
-    return redirect(f"/media-info/{media_type}/{media.TMDB_id}")
+    return jsonify({"success": "The rating has successfully been deleted"})
+    # return redirect(f"/media-info/{media_type}/{media.TMDB_id}")
 
 
 @app.route("/friend-search-results", methods=["POST"])
