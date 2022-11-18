@@ -125,13 +125,6 @@
                 <div class="col" id="{{ playlist.playlist_id }}_media_div_{{ media.media_id }}">
                     <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
                     <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
-                    <!-- give option to remove from playlist-->
-                    <!-- <form action="/user-profile/delete-from/{{ playlist.playlist_id }}" method="POST" class="deleting">
-                        <input type="radio" name="media_id" value="{{ media.media_id }}" id="delete-from-playlist" checked>
-                        <label for="delete-from-playlist"> -->
-                    <!-- <button type="button" class="deleting-from-playlist-btn" value="{{ media.media_id }}">Remove from playlist</button> -->
-                        <!-- </label>
-                    </form> -->
                 </div>
             {% endfor %}
             </div>

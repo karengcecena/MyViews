@@ -674,3 +674,20 @@
 #         flash(f"Removed from watched list")
 
 #     return redirect("/user-profile")
+
+
+# @app.route("/user-profile/delete-from/<playlist_id>", methods=['POST'])
+# def remove_media_from_playlist(playlist_id):
+#     """Allows user to remove media from their playlist"""
+#     user_username = session["username"]
+#     user = crud.get_user_by_username(user_username)
+#     playlist = crud.get_playlist_by_id(playlist_id, user)
+#     media_id = request.form.get("media_id")
+    
+#     if media_id:
+#         media = crud.get_media_by_id(media_id)
+#         media.playlists.remove(playlist)
+#         db.session.commit()
+#         flash(f"Removed from playlist")
+
+#     return redirect("/user-profile")

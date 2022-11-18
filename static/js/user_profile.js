@@ -90,7 +90,7 @@ for (const deleteBtn of deleteRatingBtns) {
           ratingID: deleteBtn.value
           };
 
-    fetch("/media-info/delete-rating.json", {
+    fetch("/delete-rating.json", {
               method: 'POST',
               body: JSON.stringify(formInputs),
               headers: {
@@ -104,11 +104,6 @@ for (const deleteBtn of deleteRatingBtns) {
       });
   })
 }
-
-
-
-
-
 
 // document.querySelector("#create_playlist_form").addEventListener("submit", evt => {
 //     evt.preventDefault();

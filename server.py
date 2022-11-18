@@ -80,18 +80,6 @@ def homepage():
 
     return render_template("homepage.html")
 
-@app.route("/search-friends")
-def display_search():
-    """Displays search bar to search for friends"""
-
-    if "username" in session: 
-        return render_template("/search_friends.html")
-
-    else:
-        flash("Sorry, please log in:")
-        return redirect("/")
-
-
 @app.route("/register-user", methods=["POST"])
 def register_user():
     """Gets info input in create user page and registers user"""
@@ -170,94 +158,16 @@ def display_user_profile():
         flash("Sorry, please log in:")
         return redirect("/")
 
-@app.route("/create-playlist", methods=["POST"])
-def creates_playlist_for_user():
-    """Adds a playlist for user to store movies in"""
-    playlist_name = request.form.get("playlist_name")
-    user_username = session["username"]
+@app.route("/search-friends")
+def display_search():
+    """Displays search bar to search for friends"""
 
-    user = crud.get_user_by_username(user_username)
+    if "username" in session: 
+        return render_template("/search_friends.html")
 
-    if playlist_name: 
-        playlist = crud.create_playlist(playlist_name, user)
-        db.session.add(playlist)
-        db.session.commit()
-        flash(f"The playlist '{playlist_name}' has successfully been created")
-
-    return redirect("/user-profile")
-
-
-
-####################################################
-
-# @app.route("/create-playlist.json", methods=["POST"])
-# def creates_playlist_for_user():
-#     """Adds a playlist for user to store movies in WITH JSON"""
-#     playlist_name = request.json.get("playlistName")
-#     print(playlist_name)
-#     user_username = session["username"]
-
-#     user = crud.get_user_by_username(user_username)
-
-#     if playlist_name: 
-#         playlist = crud.create_playlist(playlist_name, user)
-#         db.session.add(playlist)
-#         db.session.commit()
-#         # flash(f"The playlist '{playlist_name}' has successfully been created")
-
-#     # return redirect("/user-profile")
-#     return jsonify({"success": f"The playlist '{playlist_name}' has successfully been created"})
-
-####################################################
-
-@app.route("/delete-playlist.json", methods=["POST"])
-def deletes_playlist_for_user():
-    """Deletes a playlist for user"""
-    playlist_id = request.json.get("playlistID")
-    user_username = session["username"]
-    user = crud.get_user_by_username(user_username)
-
-    if playlist_id:
-        playlist = crud.get_playlist_by_id(playlist_id, user)
-        db.session.delete(playlist)
-        db.session.commit()
-        # flash(f"The playlist '{playlist.name}' has successfully been deleted")
-
-    # return redirect("/user-profile")
-    return jsonify({"success": f"The playlist has successfully been deleted"})
-
-@app.route("/user-profile/delete-rating", methods=["POST"])
-def deletes_rating_for_user():
-    """Deletes a rating for user on the user's profile"""
-    rating_id = request.form.get("rating_id")
-    user_username = session["username"]
-    user = crud.get_user_by_username(user_username)
-
-    if rating_id:
-        rating = crud.get_rating_by_id(rating_id, user)
-        db.session.delete(rating)
-        db.session.commit()
-        flash(f"The rating has successfully been deleted")
-
-    return redirect("/user-profile")
-
-@app.route("/media-info/delete-rating.json", methods=["POST"])
-def deletes_rating_for_user_media_page():
-    """Deletes a rating for user on the media page"""
-    rating_id = request.json.get("ratingID")
-    user_username = session["username"]
-    user = crud.get_user_by_username(user_username)
-
-    if rating_id:
-        rating = crud.get_rating_by_id(rating_id, user)
-        # media = crud.get_media_by_rating(rating)
-        db.session.delete(rating)
-        db.session.commit()
-        # flash(f"The rating has successfully been deleted")
-
-    return jsonify({"success": "The rating has successfully been deleted"})
-    # return redirect(f"/media-info/{media_type}/{media.TMDB_id}")
-
+    else:
+        flash("Sorry, please log in:")
+        return redirect("/")
 
 @app.route("/friend-search-results", methods=["POST"])
 def show_friend_search_results():
@@ -425,7 +335,6 @@ def add_media_to_playlist(media_type, TMDB_id):
         return redirect (f"/media-info/{media_type}/{TMDB_id}")
     else:
         flash("Please log in")
-
 
 @app.route("/media-info/<media_type>/<TMDB_id>/rating", methods=["POST"])
 def rate_media(media_type, TMDB_id):
@@ -701,80 +610,6 @@ def get_users_watch_history():
 
     return jsonify({"moviedata": movie_history, "showdata": show_history})
 
-@app.route("/user-profile/delete-from-watched-list.json", methods=['POST'])
-def remove_media_from_watchedlist():
-    """Allows user to remove media from their watched list"""
-    user_username = session["username"]
-    user = crud.get_user_by_username(user_username)
-    media_id = request.json.get("mediaID")
-
-    if media_id:
-        media = crud.get_watchlist_media_by_id(media_id, user)
-        db.session.delete(media)
-        db.session.commit()
-        # flash(f"Removed from watched list")
-
-    return jsonify({"success": "Removed from watched list"})
-
-@app.route("/user-profile/delete-from-to-be-watched-list.json", methods=['POST'])
-def remove_media_from_tobe_watchedlist():
-    """Allows user to remove media from their to be watched list"""
-    user_username = session["username"]
-    user = crud.get_user_by_username(user_username)
-    media_id = request.json.get("mediaID")
-
-    if media_id:
-        media = crud.get_tobewatchlist_media_by_id(media_id, user)
-        db.session.delete(media)
-        db.session.commit()
-        # flash(f"Removed from to be watched list")
-
-    return jsonify({"success": "Removed from to be watched list"})
-
-################### NEED TO WORK ON THESE GUYS BELOW ###########################
-# @app.route("/user-profile/delete-from/<playlist_id>", methods=['POST'])
-# def remove_media_from_playlist(playlist_id):
-#     """Allows user to remove media from their playlist"""
-#     user_username = session["username"]
-#     user = crud.get_user_by_username(user_username)
-#     playlist = crud.get_playlist_by_id(playlist_id, user)
-#     media_id = request.form.get("media_id")
-    
-#     if media_id:
-#         media = crud.get_media_by_id(media_id)
-#         media.playlists.remove(playlist)
-#         db.session.commit()
-#         flash(f"Removed from playlist")
-
-#     return redirect("/user-profile")
-
-@app.route("/user-profile/edit-playlist/<playlist_id>", methods=['POST'])
-def edit_playlist(playlist_id):
-
-    user_username = session["username"]
-    user = crud.get_user_by_username(user_username)
-    playlist = crud.get_playlist_by_id(playlist_id, user)
-    
-    return render_template("/individual_playlist.html", playlist=playlist)
-
-@app.route("/user-profile/delete-from-playlist.json", methods=['POST'])
-def remove_media_from_playlist():
-    """Allows user to remove media from their playlist"""
-    user_username = session["username"]
-    user = crud.get_user_by_username(user_username)
-    
-    playlist_id = request.json.get("playlistID")
-    playlist = crud.get_playlist_by_id(playlist_id, user)
-    
-    media_id = request.json.get("mediaID")
-    
-    if media_id:
-        media = crud.get_media_by_id(media_id)
-        media.playlists.remove(playlist)
-        db.session.commit()
-
-    return jsonify({"success": "Removed from to be watched list"})
-
 @app.route("/recommended")
 def display_recommended_media():
 
@@ -837,6 +672,148 @@ def display_recommended_media():
     else:
         flash("Sorry, please log in.")
         return redirect("/")
+
+
+@app.route("/create-playlist", methods=["POST"])
+def creates_playlist_for_user():
+    """Adds a playlist for user to store movies in"""
+    playlist_name = request.form.get("playlist_name")
+    user_username = session["username"]
+
+    user = crud.get_user_by_username(user_username)
+
+    if playlist_name: 
+        playlist = crud.create_playlist(playlist_name, user)
+        db.session.add(playlist)
+        db.session.commit()
+        flash(f"The playlist '{playlist_name}' has successfully been created")
+
+    return redirect("/user-profile")
+
+####################################################
+
+# @app.route("/create-playlist.json", methods=["POST"])
+# def creates_playlist_for_user():
+#     """Adds a playlist for user to store movies in WITH JSON"""
+#     playlist_name = request.json.get("playlistName")
+#     print(playlist_name)
+#     user_username = session["username"]
+
+#     user = crud.get_user_by_username(user_username)
+
+#     if playlist_name: 
+#         playlist = crud.create_playlist(playlist_name, user)
+#         db.session.add(playlist)
+#         db.session.commit()
+#         # flash(f"The playlist '{playlist_name}' has successfully been created")
+
+#     # return redirect("/user-profile")
+#     return jsonify({"success": f"The playlist '{playlist_name}' has successfully been created"})
+
+####################################################
+
+#### ALL THE DELETING STUFF #####
+
+@app.route("/delete-playlist.json", methods=["POST"])
+def deletes_playlist_for_user():
+    """Deletes a playlist for user"""
+    playlist_id = request.json.get("playlistID")
+    user_username = session["username"]
+    user = crud.get_user_by_username(user_username)
+
+    if playlist_id:
+        playlist = crud.get_playlist_by_id(playlist_id, user)
+        db.session.delete(playlist)
+        db.session.commit()
+
+    return jsonify({"success": f"The playlist has successfully been deleted"})
+
+@app.route("/user-profile/delete-rating", methods=["POST"])
+def deletes_rating_for_user():
+    """Deletes a rating for user on the user's profile"""
+    rating_id = request.form.get("rating_id")
+    user_username = session["username"]
+    user = crud.get_user_by_username(user_username)
+
+    if rating_id:
+        rating = crud.get_rating_by_id(rating_id, user)
+        db.session.delete(rating)
+        db.session.commit()
+        flash(f"The rating has successfully been deleted")
+
+    return redirect("/user-profile")
+
+### right here!!!! 
+@app.route("/delete-rating.json", methods=["POST"])
+def deletes_rating_for_user_media_page():
+    """Deletes a rating for user"""
+    rating_id = request.json.get("ratingID")
+    user_username = session["username"]
+    user = crud.get_user_by_username(user_username)
+
+    if rating_id:
+        rating = crud.get_rating_by_id(rating_id, user)
+        db.session.delete(rating)
+        db.session.commit()
+
+    return jsonify({"success": "The rating has successfully been deleted"})
+
+@app.route("/user-profile/delete-from-watched-list.json", methods=['POST'])
+def remove_media_from_watchedlist():
+    """Allows user to remove media from their watched list"""
+    user_username = session["username"]
+    user = crud.get_user_by_username(user_username)
+    media_id = request.json.get("mediaID")
+
+    if media_id:
+        media = crud.get_watchlist_media_by_id(media_id, user)
+        db.session.delete(media)
+        db.session.commit()
+        # flash(f"Removed from watched list")
+
+    return jsonify({"success": "Removed from watched list"})
+
+@app.route("/user-profile/delete-from-to-be-watched-list.json", methods=['POST'])
+def remove_media_from_tobe_watchedlist():
+    """Allows user to remove media from their to be watched list"""
+    user_username = session["username"]
+    user = crud.get_user_by_username(user_username)
+    media_id = request.json.get("mediaID")
+
+    if media_id:
+        media = crud.get_tobewatchlist_media_by_id(media_id, user)
+        db.session.delete(media)
+        db.session.commit()
+        # flash(f"Removed from to be watched list")
+
+    return jsonify({"success": "Removed from to be watched list"})
+
+@app.route("/user-profile/edit-playlist/<playlist_id>", methods=['POST'])
+def edit_playlist(playlist_id):
+
+    user_username = session["username"]
+    user = crud.get_user_by_username(user_username)
+    playlist = crud.get_playlist_by_id(playlist_id, user)
+    
+    return render_template("/individual_playlist.html", playlist=playlist)
+
+@app.route("/user-profile/delete-from-playlist.json", methods=['POST'])
+def remove_media_from_playlist():
+    """Allows user to remove media from their playlist"""
+    user_username = session["username"]
+    user = crud.get_user_by_username(user_username)
+    
+    playlist_id = request.json.get("playlistID")
+    playlist = crud.get_playlist_by_id(playlist_id, user)
+    
+    media_id = request.json.get("mediaID")
+    
+    if media_id:
+        media = crud.get_media_by_id(media_id)
+        media.playlists.remove(playlist)
+        db.session.commit()
+
+    return jsonify({"success": "Removed from to be watched list"})
 
 if __name__ == "__main__":
     connect_to_db(app)  
