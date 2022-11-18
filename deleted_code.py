@@ -691,3 +691,18 @@
 #         flash(f"Removed from playlist")
 
 #     return redirect("/user-profile")
+
+# @app.route("/user-profile/delete-rating", methods=["POST"])
+# def deletes_rating_for_user():
+#     """Deletes a rating for user on the user's profile"""
+#     rating_id = request.form.get("rating_id")
+#     user_username = session["username"]
+#     user = crud.get_user_by_username(user_username)
+
+#     if rating_id:
+#         rating = crud.get_rating_by_id(rating_id, user)
+#         db.session.delete(rating)
+#         db.session.commit()
+#         flash(f"The rating has successfully been deleted")
+
+#     return redirect("/user-profile")
