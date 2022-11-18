@@ -51,10 +51,10 @@
 
     <div class="row">
         <div class="col">
-            <form action="/create-playlist" method="POST">
+            <form action="/create-playlist" method="POST" id="create_playlist_form">
                 <p>
-                  Want to create your own folder? Type in the name: <input type="text" name="playlist_name" required="required">
-                  <button type="submit">Create Playlist</button>
+                  Want to create your own playlist? Type in the name: <input type="text" name="playlist_name" id="playlist_name_field" required="required">
+                  <button type="submit" id="playlistadd">Create Playlist</button>
                 </p>
             </form>
 
@@ -68,10 +68,8 @@
     <div>
         <div class="row">
         <h2>Watched List:</h2>
-        <!-- <ul> -->
         {% for media in user.watched_list %}
-            <!-- <li> -->
-                <div class="col">
+                <div class="col" id="watch_list_div_{{ media.media_id }}">
                 <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
                 
                 {% for rating in media.ratings %}
@@ -96,49 +94,36 @@
                 {% endfor %}
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                 <!-- give option to remove from watched list-->
-                <form action="/user-profile/delete-from-watched-list" method="POST" class="deleting">
-                    <input type="radio" name="media_id" value="{{ media.media_id }}" id="delete-from-watched-list" checked>
-                    <label for="delete-from-watched-list"><button type="submit">Remove from list</button></label>
-                </form>
+                <button type="button" class="deleting-from-watched-btn" value="{{ media.media_id }}">Remove from list</button>
                 </div>
-            <!-- </li> -->
         {% endfor %}
         </div>
-        <!-- </ul> -->
     </div>
 
     <div>
         <div class="row">
         <h2>To Be Watched List:</h2>
-        <!-- <ul> -->
         {% for media in user.to_be_watched_list %}
-            <!-- <li> -->
-                <div class="col">
-                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
-                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
-                <!-- give option to from to be watched list-->
-                <form action="/user-profile/delete-from-to-be-watched-list" method="POST" class="deleting">
-                    <input type="radio" name="media_id" value="{{ media.media_id }}" id="delete-from-to-be-watched-list" checked>
-                    <label for="delete-from-to-be-watched-list"><button type="submit">Remove from list</button></label>
-                </form>
+                <div class="col" id="to_be_watch_list_div_{{ media.media_id }}">
+                    <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+                    <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                    <!-- give option to from to be to be watched list-->
+                    <button type="button" class="deleting-from-to-be-watched-btn" value="{{ media.media_id }}">Remove from list</button>
                 </div>
-            <!-- </li> -->
         {% endfor %}
          </div>
-        <!-- </ul> -->
     </div>
 
     <div>
-        <div class="row">
         {% for playlist in user.playlists %}
+        <div class="row" id="playlist_div_{{ playlist.playlist_id }}">
             <h2>{{ playlist.name }}:</h2>
             <!-- gives option to delete playlist -->
-            <form action="/delete-playlist" method="POST" class="deleting">
-                    <input type="radio" name="playlist_id" value="{{ playlist.playlist_id }}" id="deletingplaylist" checked>
-                    <label for="deletingplaylist"><button type="submit">Delete Playlist</button></label>
-            </form>
+            <button type="button" class="deleting-playlist-btn" value="{{ playlist.playlist_id }}">Delete Playlist</button>
+
+            <div class="row">
             {% for media in playlist.medias %}
-                <div class="col">
+                <div class="col" id="playlist_media_div_{{ media.media_id }}">
                 <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
                 {% for rating in media.ratings %}
                     {% if rating.user_id == user.user_id %}
@@ -159,12 +144,15 @@
                 <!-- give option to remove from playlist-->
                 <form action="/user-profile/delete-from/{{ playlist.playlist_id }}" method="POST" class="deleting">
                     <input type="radio" name="media_id" value="{{ media.media_id }}" id="delete-from-playlist" checked>
-                    <label for="delete-from-playlist"><button type="submit">Remove from playlist</button></label>
+                    <label for="delete-from-playlist">
+                        <button type="submit" class="deleting-from-playlist-btn" value="{{ media.media_id }}">Remove from playlist</button>
+                    </label>
                 </form>
                 </div>
             {% endfor %}
+            </div>
+        </div>
         {% endfor %}
-         </div>
     </div>
 
     <!-- display users friends watchlist and link to their profile:  -->
@@ -204,5 +192,6 @@
 {% endblock %}
 
 {% block js %}
+  <script src="/static/js/user_profile.js"></script>   
   <script src="/static/js/visuals.js"></script>
 {% endblock %}
