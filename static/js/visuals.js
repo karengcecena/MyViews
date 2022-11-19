@@ -70,10 +70,6 @@ fetch('/user-profile/genres.json')
 
 });
 
-
-
-// ################## CODE BELOW I AM UNSURE OF ###########################################################################
-
 // for watch history
 
 fetch('/user-profile/watch_history.json')
@@ -105,7 +101,6 @@ fetch('/user-profile/watch_history.json')
     new Chart(document.querySelector('#watch-history-chart'), {
       type: 'line',
       data: {
-        // labels: moviexvalues,
         datasets: [{
           label: "Movies",
           data: movievalues,

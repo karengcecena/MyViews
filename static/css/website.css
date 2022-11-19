@@ -114,13 +114,6 @@ nav>ul>li a:hover:not(.active) {
     /* visibility: hidden; */
 }
 
-/* delete playlist buttons */
-    /* takes input bubble away */
-/* .deleting-playlist> input[type=radio]{
-    display:none;
-} */
-/* delete rating buttons */
-    /* takes input bubble away */
 .deleting> input[type=radio]{
     display:none;
 }

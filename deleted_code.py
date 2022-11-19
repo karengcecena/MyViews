@@ -1,3 +1,5 @@
+""" All my Code before I started condensing routes for efficiency and adding AJAX buttons"""
+
 # Before Create User Pop-Up
 # @app.route("/create-user")
 # def display_create_user():
@@ -706,3 +708,25 @@
 #         flash(f"The rating has successfully been deleted")
 
 #     return redirect("/user-profile")
+
+####################################################
+
+# @app.route("/create-playlist.json", methods=["POST"])
+# def creates_playlist_for_user():
+#     """Adds a playlist for user to store movies in WITH JSON"""
+#     playlist_name = request.json.get("playlistName")
+#     print(playlist_name)
+#     user_username = session["username"]
+
+#     user = crud.get_user_by_username(user_username)
+
+#     if playlist_name: 
+#         playlist = crud.create_playlist(playlist_name, user)
+#         db.session.add(playlist)
+#         db.session.commit()
+#         # flash(f"The playlist '{playlist_name}' has successfully been created")
+
+#     # return redirect("/user-profile")
+#     return jsonify({"success": f"The playlist '{playlist_name}' has successfully been created"})
+
+####################################################

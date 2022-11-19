@@ -1,6 +1,6 @@
 'use-strict';
 
-// deleting a rating 
+// deleting a rating from media information
 const deleteRatingBtns = document.querySelectorAll(".deleting-rating-btn")
 
 for (const deleteBtn of deleteRatingBtns) {

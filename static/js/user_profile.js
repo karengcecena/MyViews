@@ -1,6 +1,6 @@
 'use-strict';
 
-// deleting from watched list
+// deleting from watched list on user profile
 const deleteFromWatchedBtns = document.querySelectorAll(".deleting-from-watched-btn")
 
 for (const deleteBtn of deleteFromWatchedBtns) {
@@ -9,7 +9,6 @@ for (const deleteBtn of deleteFromWatchedBtns) {
     console.log(deleteBtn.value)
     const formInputs  = {
           mediaID: deleteBtn.value
-            // mediaID : document.querySelector('#delete-from-watched-list').value,
           };
 
     fetch("/user-profile/delete-from-watched-list.json", {
@@ -27,7 +26,7 @@ for (const deleteBtn of deleteFromWatchedBtns) {
   })
 }
 
-// deleting from to be watched list
+// deleting from to be watched list on user profile
 const deleteFromToBeWatchedBtns = document.querySelectorAll(".deleting-from-to-be-watched-btn")
 
 for (const deleteBtn of deleteFromToBeWatchedBtns) {
@@ -52,9 +51,7 @@ for (const deleteBtn of deleteFromToBeWatchedBtns) {
   })
 }
 
-
-
-// deleting a playlist 
+// deleting a playlist on user profile
 const deletePlaylistBtns = document.querySelectorAll(".deleting-playlist-btn")
 
 for (const deleteBtn of deletePlaylistBtns) {
@@ -79,8 +76,7 @@ for (const deleteBtn of deletePlaylistBtns) {
   })
 }
 
-
-// deleting a rating 
+// deleting a rating on user profile
 const deleteRatingBtns = document.querySelectorAll(".deleting-rating-btn")
 
 for (const deleteBtn of deleteRatingBtns) {
@@ -104,41 +100,3 @@ for (const deleteBtn of deleteRatingBtns) {
       });
   })
 }
-
-// document.querySelector("#create_playlist_form").addEventListener("submit", evt => {
-//     evt.preventDefault();
-
-//     const formInputs  = {
-//       playlistName : document.querySelector('#playlist_name_field').value,
-//     };
-  
-//     console.log(playlist_name)
-
-//     fetch("/create-playlist.json", {
-//         method: 'POST',
-//         body: JSON.stringify(formInputs),
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//     })
-//         // .then((response) => response.json())
-//         // .then((responseJson) => {
-//         //     alert(responseJson.success);
-//         // });
-// })
-
-// const addplaylistbtn = document.querySelector("#playlistadd").addEventListener("submit", evt => {
-//   evt.preventDefault();
-
-//   const playlist_name = document.querySelector('#playlist_name_field').value;
-
-//     console.log(playlist_name)
-
-//     fetch("/create-playlist.json", {
-//         method: 'POST',
-//         body: JSON.stringify(playlist_name),
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//     })
-// })
