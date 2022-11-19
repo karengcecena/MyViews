@@ -186,16 +186,17 @@ def show_friend_search_results():
         flash(f"Sorry, no user exists with the username '{search_text}'.")
         return redirect("/search-friends")
 
-@app.route("/friend/<user2_user_id>/follow-status", methods=["POST"])
-def follow_or_unfollow_friends(user2_user_id):
+@app.route("/friend/follow-status.js", methods=["POST"])
+def follow_or_unfollow_friends():
     """Allows user to unfollow or follow a friend"""
 
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
 
+    user2_user_id = request.json.get("user2ID")
     user2 = crud.get_user_by_id(user2_user_id)
 
-    action = request.form.get("following")
+    action = (request.json.get("action")).lower()
 
     if action == "follow": 
         user.following.append(user2)
@@ -205,7 +206,7 @@ def follow_or_unfollow_friends(user2_user_id):
         user.following.remove(user2)
         db.session.commit()
 
-    return render_template("/search_friend_result.html", user2=user2, user=user, user2_user_id= user2.user_id)
+    return jsonify({"success": "user followed/unfollowed"})
 
 
 @app.route('/display-friend/<friend_username>')

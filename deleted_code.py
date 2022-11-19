@@ -730,3 +730,26 @@
 #     return jsonify({"success": f"The playlist '{playlist_name}' has successfully been created"})
 
 ####################################################
+
+# before following AJAX calls
+
+# @app.route("/friend/<user2_user_id>/follow-status", methods=["POST"])
+# def follow_or_unfollow_friends(user2_user_id):
+#     """Allows user to unfollow or follow a friend"""
+
+#     user_username = session["username"]
+#     user = crud.get_user_by_username(user_username)
+
+#     user2 = crud.get_user_by_id(user2_user_id)
+
+#     action = request.form.get("following")
+
+#     if action == "follow": 
+#         user.following.append(user2)
+#         db.session.commit()
+
+#     elif action == "unfollow": 
+#         user.following.remove(user2)
+#         db.session.commit()
+
+#     return render_template("/search_friend_result.html", user2=user2, user=user, user2_user_id= user2.user_id)
