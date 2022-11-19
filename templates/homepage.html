@@ -8,7 +8,6 @@
     <nav>
       <ul>
           <li class="medialogo">MyViews</li>
-          <!-- <li><a class="active" href="/">Home</a></li> -->
           <li><a href="/media-search-results-react">Search</a></li>
           <li><a href="/user-profile">Profile</a></li>
           <li><a href="/search-friends">Friends</a></li>
@@ -22,9 +21,6 @@
       <h1 >Login</h1>
 
       <form action="/login" method="POST">
-          <!-- <p>
-            Email <input type="text" name="email">
-          </p> -->
 
           <p>
             Username <input type="text" name="username">
@@ -40,10 +36,6 @@
           </p>
       </form>
 
-        <!-- <p>
-          <a href="/github">Log in with Github</a>
-        </p> -->
-
         <!-- GitHub button from https://testdriven.io/blog/flask-social-auth/#oauth -->
         <!-- GitHub button starts here -->
         <a href="{{url_for('login')}}"  class="btn btn-secondary">
@@ -51,11 +43,6 @@
           <span>Login with GitHub</span>
         </a>
         <!-- GitHub button ends here -->
-
-        <p>
-          <!-- <a href="/google">Log in with Google</a> -->
-        </p>
-
 
       <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
       <!-- Button trigger modal -->

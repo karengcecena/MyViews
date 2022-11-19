@@ -7,7 +7,6 @@
     <nav>
     <ul>
         <li class="medialogo">MyViews</li>
-        <!-- <li><a href="/">Home</a></li> -->
         <li><a href="/media-search-results-react">Search</a></li>
         <li><a href="/user-profile">Profile</a></li>
         <li><a class="active" href="/search-friends">Friends</a></li>
@@ -18,7 +17,7 @@
 
 
     <h1> {{ user2.username }} </h1>
-
+    
     <form action="/friend/{{ user2_user_id }}/follow-status" method="POST" class="following-status">
 
         <!-- if user is following friend, give user option to unfollow -->
