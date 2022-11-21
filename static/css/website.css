@@ -107,16 +107,17 @@ nav>ul>li a:hover:not(.active) {
     background-color: #04AA6D;
 }
 
-/* follow buttons */
-    /* takes input bubble away */
-.following-status > input[type=radio]{
-    display:none;
-    /* visibility: hidden; */
-}
-
 .deleting> input[type=radio]{
     display:none;
 }
+
+
+/* don't need these?? */
+/* follow buttons */
+    /* takes input bubble away */
+/* .following-status > input[type=radio]{
+    display:none;
+} */
 
 
 /* still figuring this out for webpage layout */

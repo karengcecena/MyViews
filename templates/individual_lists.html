@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %} Editing Playlist Info {% endblock %}
+
+{% block body %} 
+
+<nav>
+    <ul>
+        <li class="medialogo">MyViews</li>
+        <li><a href="/media-search-results-react">Search</a></li>
+        <li><a href="/user-profile">Profile</a></li>
+        <li><a href="/search-friends">Friends</a></li>
+        <li><a href="/recommended">Your Recommended</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+</nav>
+
+{% if lst %}
+   
+<h2>Editing your "{{ name }}":</h2>
+
+    {% if type == "watched" %}
+
+        <div class="row">
+        {% for media in lst %}
+            <div class="col" id="watch_list_div_{{ media.media_id }}">
+                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                
+                <!-- give option to remove from watched list-->
+                <button type="button" class="deleting-from-watched-btn" value="{{ media.media_id }}">Remove from list</button>
+                <br>
+            </div>
+
+        {% endfor %}
+        </div>
+
+    {% elif type == "tobewatched" %}
+
+        <div class="row">
+            {% for media in lst %}
+                <div class="col" id="to_be_watch_list_div_{{ media.media_id }}">
+                    <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+                    <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                    
+                    <!-- give option to from to be to be watched list-->
+                    <button type="button" class="deleting-from-to-be-watched-btn" value="{{ media.media_id }}">Remove from list</button>
+                    <br>
+                </div>
+
+            {% endfor %}
+        </div>
+
+    {% endif %}
+
+
+{% else %}
+
+<h2>Editing your "{{ name }}":</h2>
+
+    It seems your list is empty. Try searching for new media to add to your list.  
+
+{% endif %}
+
+
+{% endblock %}
+
+{% block js %}
+    <script src="/static/js/individual_lists.js"></script>
+{% endblock %}
