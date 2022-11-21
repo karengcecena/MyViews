@@ -22,16 +22,16 @@
         </ul>
     </nav>
 
-    <div class="row">
-        <div class="col">
+    <div class="row title text-center">
+        <!-- <div class="col"> -->
             <h1>{{ user.username }}'s profile</h1>
-        </div>
+        <!-- </div> -->
     </div>
 
-    <div class="row">
+    <div class="row graphs">
 
         <div class="col">
-        <!-- chart.js stuff for genres-->
+            <!-- chart.js stuff for genres-->
             <div id="chart-wrapper">
                 <canvas id="genre-chart"></canvas>
             </div>
@@ -39,94 +39,94 @@
 
         <div class="col">
             <!-- chart.js stuff for watch history-->
-                <div id="chart-wrapper">
-                    <canvas id="watch-history-chart"></canvas>
-                </div>
+            <div id="chart-wrapper">
+                <canvas id="watch-history-chart"></canvas>
+            </div>
         </div>
+
     </div>
 
-    <div class="row">
+    <div class="row add_playlist">
         <div class="col">
             <form action="/create-playlist" method="POST" id="create_playlist_form">
                 <p>
-                  Want to create your own playlist? Type in the name: <input type="text" name="playlist_name" id="playlist_name_field" required="required">
-                  <button type="submit" id="playlistadd">Create Playlist</button>
+                  Create your own playlist <input type="text" name="playlist_name" id="playlist_name_field" required="required">
+                  <button type="submit" id="playlistadd">Add Playlist</button>
                 </p>
             </form>
 
-            <p>Or view your lists below:</p>
+            <!-- <p>Or view your lists below:</p> -->
         </div>
     </div>
         
 
-    <div>
-        <div class="row">
-        <!-- <h2>Watched List:</h2> -->
+
+    <div class="row watched">
+
+        <div class="row title">
+            <a href= "/user-profile/edit-list/watched" >Watched List:</a>
+        </div>
 
 
-        <a href= "/user-profile/edit-list/watched" >Watched List:</a>
-
-
-
-        {% for media in user.watched_list %}
-                <div class="col" id="watch_list_div_{{ media.media_id }}">
-                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
-                
-                {% for rating in media.ratings %}
-                    <div id="rating_div_{{ rating.rating_id }}">
-                    {% if rating.user_id == user.user_id %}
-                        {% if rating.score == 1 %}
-                            <div class="star">★</div>
-                        {% elif rating.score == 2 %}
-                            <div class="star">★★</div>
-                        {% elif rating.score == 3 %}
-                            <div class="star">★★★</div>
-                        {% elif rating.score == 4 %}
-                            <div class="star">★★★★</div>
-                        {% elif rating.score == 5 %}
-                            <div class="star">★★★★★</div>
-                        {% endif %}
-                    
-                    <!-- give option to delete rating -->
-                        <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button>
-                    {% endif %}
+        <div class="scrollmenu">
+            {% for media in user.watched_list %}
+                    <div class="col media_card" id="watch_list_div_{{ media.media_id }}">
+                        <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+ 
+                        {% for rating in media.ratings %}
+                            <div id="rating_div_{{ rating.rating_id }}">
+                            {% if rating.user_id == user.user_id %}
+                                {% if rating.score == 1 %}
+                                    <div class="star">★</div>
+                                {% elif rating.score == 2 %}
+                                    <div class="star">★★</div>
+                                {% elif rating.score == 3 %}
+                                    <div class="star">★★★</div>
+                                {% elif rating.score == 4 %}
+                                    <div class="star">★★★★</div>
+                                {% elif rating.score == 5 %}
+                                    <div class="star">★★★★★</div>
+                                {% endif %}
+                            
+                            <!-- give option to delete rating -->
+                                <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button>
+                            {% endif %}
+                            </div>
+                        {% endfor %}
+                        <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                        <!-- give option to remove from watched list-->
+                        <!-- <button type="button" class="deleting-from-watched-btn" value="{{ media.media_id }}">Remove from list</button> -->
                     </div>
-                {% endfor %}
-                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
-                <!-- give option to remove from watched list-->
-                <!-- <button type="button" class="deleting-from-watched-btn" value="{{ media.media_id }}">Remove from list</button> -->
-                </div>
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
 
-    <div>
-        <div class="row">
-        <!-- <h2>To Be Watched List:</h2> -->
+    <div class="row to_be_watched">
 
 
+        <div class="row title">
+            <a href= "/user-profile/edit-list/tobewatched" >To Be Watched List: </a>
+        </div>
 
-        <a href= "/user-profile/edit-list/tobewatched" >To Be Watched List: </a>
-
-
-
-        {% for media in user.to_be_watched_list %}
-                <div class="col" id="to_be_watch_list_div_{{ media.media_id }}">
-                    <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
-                    <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
-                    <!-- give option to from to be to be watched list-->
-                    <!-- <button type="button" class="deleting-from-to-be-watched-btn" value="{{ media.media_id }}">Remove from list</button> -->
-                </div>
-        {% endfor %}
+        <div class="scrollmenu">
+            {% for media in user.to_be_watched_list %}
+                    <div class="col media_card" id="to_be_watch_list_div_{{ media.media_id }}">
+                        <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+                        <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                        <!-- give option to from to be to be watched list-->
+                        <!-- <button type="button" class="deleting-from-to-be-watched-btn" value="{{ media.media_id }}">Remove from list</button> -->
+                    </div>
+            {% endfor %}
          </div>
     </div>
 
-    <div>
+    <div class="row playlists">
         {% for playlist in user.playlists %}
-        <div class="row" id="playlist_div_{{ playlist.playlist_id }}">
+        <div class="row title" id="playlist_div_{{ playlist.playlist_id }}">
+            <a href="/user-profile/edit-playlist/{{ playlist.playlist_id }}">{{ playlist.name }}</a>
+
             <!-- <h2>{{ playlist.name }}:</h2> -->
-            <!-- link instead of button to edit playlist page:  -->
-                <a href="/user-profile/edit-playlist/{{ playlist.playlist_id }}">{{ playlist.name }}</a>
+            <!-- link instead of button to edit playlist page:  --> 
             <!-- gives option to delete playlist -->
             <!-- <button type="button" class="deleting-playlist-btn" value="{{ playlist.playlist_id }}">Delete Playlist</button> -->
             <!-- give option to edit playlist -->
@@ -134,52 +134,59 @@
             <!-- <form action="/user-profile/edit-playlist/{{ playlist.playlist_id }}" method="POST">
                 <button type="submit">Edit this playlist</button>
             </form>  -->
+        </div>
             
 
-            <div class="row">
+        <div class="scrollmenu">
             {% for media in playlist.medias %}
-                <div class="col" id="{{ playlist.playlist_id }}_media_div_{{ media.media_id }}">
+                <div class="col media_card" id="{{ playlist.playlist_id }}_media_div_{{ media.media_id }}">
                     <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
                     <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                 </div>
             {% endfor %}
-            </div>
         </div>
         {% endfor %}
     </div>
 
     <!-- display users friends watchlist and link to their profile:  -->
-    <div>
-        <h2>Your Friends: </h2>
-    </div>
+    <div class="row friends_display">
+        <div class="row title">
+            <h2>Your Friends: </h2>
+        </div>
+  
 
-    <div>
-        <div class="row">
-        {% for friend in user.following %}
-            <h2><a href="/display-friend/{{ friend.username }}">{{ friend.username }}'s Watched List:</a></h2>
+        <div class="row friends"> 
+            <div class="row friend">    
+            {% for friend in user.following %}
+                <h2><a href="/display-friend/{{ friend.username }}">{{ friend.username }}'s Watched List:</a></h2>
+            </div>
+
+            <div class="scrollmenu">
             {% for media in friend.watched_list %}
-                <div class="col">
-                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
-                {% for rating in media.ratings %}
-                    {% if rating.user_id == friend.user_id %}
-                        {% if rating.score == 1 %}
-                            <div class="star">★</div>
-                        {% elif rating.score == 2 %}
-                            <div class="star">★★</div>
-                        {% elif rating.score == 3 %}
-                            <div class="star">★★★</div>
-                        {% elif rating.score == 4 %}
-                            <div class="star">★★★★</div>
-                        {% elif rating.score == 5 %}
-                            <div class="star">★★★★★</div>
+                <div class="col media_card">
+                    <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+                    {% for rating in media.ratings %}
+                        {% if rating.user_id == friend.user_id %}
+                            {% if rating.score == 1 %}
+                                <div class="star">★</div>
+                            {% elif rating.score == 2 %}
+                                <div class="star">★★</div>
+                            {% elif rating.score == 3 %}
+                                <div class="star">★★★</div>
+                            {% elif rating.score == 4 %}
+                                <div class="star">★★★★</div>
+                            {% elif rating.score == 5 %}
+                                <div class="star">★★★★★</div>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
-                {% endfor %}
-                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                    {% endfor %}
+                    <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                 </div>
             {% endfor %}
-        {% endfor %}
-         </div>
+            </div>
+
+            {% endfor %}
+        </div>
     </div>
       
 {% endblock %}

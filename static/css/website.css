@@ -111,15 +111,6 @@ nav>ul>li a:hover:not(.active) {
     display:none;
 }
 
-
-/* don't need these?? */
-/* follow buttons */
-    /* takes input bubble away */
-/* .following-status > input[type=radio]{
-    display:none;
-} */
-
-
 /* still figuring this out for webpage layout */
 .parent {
     min-height: 100vh;
@@ -136,6 +127,7 @@ nav>ul>li a:hover:not(.active) {
     size: 50%;
 }
 
+/* scroll code adapted from https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp */
 .scrollmenu {
     /* background-color: #333; */
     overflow: auto;
@@ -154,29 +146,9 @@ nav>ul>li a:hover:not(.active) {
     background-color: rgb(203, 203, 203); 
 }
 
-/* .col {
-    position: absolute;
-    overflow-y: scroll;
+/* don't need these?? */
+/* follow buttons */
+    /* takes input bubble away */
+/* .following-status > input[type=radio]{
+    display:none;
 } */
-
- /* display: block;
-    /* justify-content: center; */
-    /* align-items: center; */
-    /* height: 50px;  */
-    /* border: 3px solid green; */
-    /* text-align: center;
-    top: 50%;
-    left: 50%; */ 
-    /* width: 500px;
-    height: 250px;
-    margin: auto; 
-    padding: 150px 0; */
-    /* margin-left: auto;
-    margin-right: auto;
-    margin-top: 50%; 
-    margin-bottom: 50%; */
-    /* margin: 25%; */
-    /* outline: solid 1px black; */
-    /* display: flex; */
-    /* justify-content: center;
-    align-items: center; */ 
