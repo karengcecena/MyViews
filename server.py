@@ -693,19 +693,19 @@ def creates_playlist_for_user():
 
 #### ALL THE DELETING STUFF #####
 
-@app.route("/delete-playlist.json", methods=["POST"])
-def deletes_playlist_for_user():
-    """Deletes a playlist for user"""
-    playlist_id = request.json.get("playlistID")
-    user_username = session["username"]
-    user = crud.get_user_by_username(user_username)
+# @app.route("/delete-playlist.json", methods=["POST"])
+# def deletes_playlist_for_user():
+#     """Deletes a playlist for user"""
+#     playlist_id = request.json.get("playlistID")
+#     user_username = session["username"]
+#     user = crud.get_user_by_username(user_username)
 
-    if playlist_id:
-        playlist = crud.get_playlist_by_id(playlist_id, user)
-        db.session.delete(playlist)
-        db.session.commit()
+#     if playlist_id:
+#         playlist = crud.get_playlist_by_id(playlist_id, user)
+#         db.session.delete(playlist)
+#         db.session.commit()
 
-    return jsonify({"success": f"The playlist has successfully been deleted"})
+#     return jsonify({"success": f"The playlist has successfully been deleted"})
 
 @app.route("/delete-rating.json", methods=["POST"])
 def deletes_rating_for_user_media_page():
@@ -777,6 +777,22 @@ def edit_list(lst):
     elif lst == "tobewatched":
         to_be_watched = user.to_be_watched_list
         return render_template("/individual_lists.html", lst=to_be_watched, name="To Be Watched List", type="tobewatched")
+    
+
+@app.route("/delete-playlist", methods=["POST"])
+def deletes_playlist():
+    """Deletes a playlist for user"""
+    playlist_id = request.form.get("playlist_id")
+    user_username = session["username"]
+    user = crud.get_user_by_username(user_username)
+
+    if playlist_id:
+        playlist = crud.get_playlist_by_id(playlist_id, user)
+        db.session.delete(playlist)
+        db.session.commit()
+        flash(f"The playlist '{playlist.name}' has successfully been deleted")
+
+    return redirect("/user-profile")
     
 ################################################################
 
