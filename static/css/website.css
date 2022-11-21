@@ -125,6 +125,12 @@ nav>ul>li a:hover:not(.active) {
     min-height: 100vh;
   }
 
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+    grid-gap: 20px;
+    align-items: center;
+}
 
  /* display: block;
     /* justify-content: center; */

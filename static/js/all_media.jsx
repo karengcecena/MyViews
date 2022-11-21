@@ -78,9 +78,9 @@ function SearchMedia(props) {
                   <li><a href="/logout">Logout</a></li>
                 </ul>
             </nav>
-            <div>
-              <h1> Search a movie or tv show by title below: </h1>
-              <label htmlFor="searchInput"></label>
+            <div class="text-center">
+              {/* <h1> Search by title: </h1> */}
+              <label htmlFor="searchInput"><h1> Search by title: </h1></label>
                   <input
                       name="search"
                       onChange={(event) => setSearch(event.target.value)}
