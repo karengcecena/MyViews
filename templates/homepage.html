@@ -16,25 +16,26 @@
         </ul>
     </nav>
 
-    <div class="center">
+    <div class="parent container d-flex justify-content-center align-items-center h-100" >
+      <div class="child">
 
-      <h1 >Login</h1>
+        <h1 >Login</h1>
 
-      <form action="/login" method="POST">
+        <form action="/login" method="POST">
 
-          <p>
-            Username <input type="text" name="username">
-          </p>
-      
-      
-          <p>
-            Password <input type="password" name="password">
-          </p>
-      
-          <p>
-            <button type="submit">Log In</button>
-          </p>
-      </form>
+            <p>
+              Username <input type="text" name="username">
+            </p>
+        
+        
+            <p>
+              Password <input type="password" name="password">
+            </p>
+        
+            <p>
+              <button type="submit">Log In</button>
+            </p>
+        </form>
 
         <!-- GitHub button from https://testdriven.io/blog/flask-social-auth/#oauth -->
         <!-- GitHub button starts here -->
@@ -44,55 +45,58 @@
         </a>
         <!-- GitHub button ends here -->
 
-      <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Create a User
-      </button>
+        <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Create a User
+        </button>
 
-      <!-- Modal -->
-      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">Create a User</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form action="/register-user" method="POST">
-                <p>
-                  Username <input type="text" name="username" required>
-                </p>
-        
-                <p>
-                  <!-- pattern from https://www.geeksforgeeks.org/html-dom-input-email-pattern-property/#:~:text=The%20Input%20Email%20pattern%20property%20in%20HTML%20DOM,user.%20It%20returns%20the%20Input%20Email%20pattern%20property. -->
-                  <!-- pattern broken down:  -->
-                  <!-- [a-z0-9._%+-]
-                    for the first part of the email, allows any character
-                  +@
-                    includes the @ and anything before that
-                  [a-z0-9.-]
-                    second part of the email, including specifics
-                  +\.
-                    for the "dot" part 
-                  [a-z]{2, 4}$"
-                    for the last part like com, edu, only want 3 letters -->
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Create a User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+                    <div class="modal-body">
+                      <form action="/register-user" method="POST">
+                        <p>
+                          Username <input type="text" name="username" required>
+                        </p>
+                
+                        <p>
+                          <!-- pattern from https://www.geeksforgeeks.org/html-dom-input-email-pattern-property/#:~:text=The%20Input%20Email%20pattern%20property%20in%20HTML%20DOM,user.%20It%20returns%20the%20Input%20Email%20pattern%20property. -->
+                          <!-- pattern broken down:  -->
+                          <!-- [a-z0-9._%+-]
+                            for the first part of the email, allows any character
+                          +@
+                            includes the @ and anything before that
+                          [a-z0-9.-]
+                            second part of the email, including specifics
+                          +\.
+                            for the "dot" part 
+                          [a-z]{2, 4}$"
+                            for the last part like com, edu, only want 3 letters -->
+                            
+                          Email <input type="text" name="email" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                        </p>
                     
-                  Email <input type="text" name="email" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
-                </p>
-            
-                <p>
-                  Password <input type="password" name="password" required>
-                </p>
-            </div>
-                  <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                    <button type="submit" class="btn btn-primary">Create User</button>
-                  </div>
-                </form>
+                        <p>
+                          Password <input type="password" name="password" required>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                      <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                      <button type="submit" class="btn btn-primary">Create User</button>
+                    </div>
+                      </form>
             </div>
           </div>
         </div>
+        <!-- end of modal -->
+
       </div>
+    </div>
 
 {% endblock %}

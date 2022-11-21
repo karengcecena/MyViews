@@ -121,8 +121,12 @@ nav>ul>li a:hover:not(.active) {
 
 
 /* still figuring this out for webpage layout */
-.center {
-    /* display: block;
+.parent {
+    min-height: 100vh;
+  }
+
+
+ /* display: block;
     /* justify-content: center; */
     /* align-items: center; */
     /* height: 50px;  */
@@ -143,4 +147,3 @@ nav>ul>li a:hover:not(.active) {
     /* display: flex; */
     /* justify-content: center;
     align-items: center; */ 
-  }
