@@ -671,7 +671,7 @@ def display_recommended_media():
         return render_template("/recommended.html", movie_results=movie_results, show_results=show_results, trending_movie_results=trending_movie_results,trending_show_results=trending_show_results)
 
     else:
-        flash("Sorry, please log in.")
+        flash("Sorry, please log in:")
         return redirect("/")
 
 
@@ -751,7 +751,8 @@ def remove_media_from_tobe_watchedlist():
 
     return jsonify({"success": "Removed from to be watched list"})
 
-@app.route("/user-profile/edit-playlist/<playlist_id>", methods=['POST'])
+# remove method to have it be a hyperlink methods=['POST']
+@app.route("/user-profile/edit-playlist/<playlist_id>")
 def edit_playlist(playlist_id):
 
     user_username = session["username"]
@@ -759,6 +760,25 @@ def edit_playlist(playlist_id):
     playlist = crud.get_playlist_by_id(playlist_id, user)
     
     return render_template("/individual_playlist.html", playlist=playlist)
+
+
+############ i am here ################################# 
+
+@app.route("/user-profile/edit-list/<lst>")
+def edit_list(lst):
+
+    user_username = session["username"]
+    user = crud.get_user_by_username(user_username)
+
+    if lst == "watched":
+        watched = user.watched_list
+        return render_template("/individual_lists.html", lst=watched, name="Watched List", type="watched")
+
+    elif lst == "tobewatched":
+        to_be_watched = user.to_be_watched_list
+        return render_template("/individual_lists.html", lst=to_be_watched, name="To Be Watched List", type="tobewatched")
+    
+################################################################
 
 @app.route("/user-profile/delete-from-playlist.json", methods=['POST'])
 def remove_media_from_playlist():

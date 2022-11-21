@@ -61,7 +61,13 @@
 
     <div>
         <div class="row">
-        <h2>Watched List:</h2>
+        <!-- <h2>Watched List:</h2> -->
+
+
+        <a href= "/user-profile/edit-list/watched" >Watched List:</a>
+
+
+
         {% for media in user.watched_list %}
                 <div class="col" id="watch_list_div_{{ media.media_id }}">
                 <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
@@ -88,7 +94,7 @@
                 {% endfor %}
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                 <!-- give option to remove from watched list-->
-                <button type="button" class="deleting-from-watched-btn" value="{{ media.media_id }}">Remove from list</button>
+                <!-- <button type="button" class="deleting-from-watched-btn" value="{{ media.media_id }}">Remove from list</button> -->
                 </div>
         {% endfor %}
         </div>
@@ -96,13 +102,20 @@
 
     <div>
         <div class="row">
-        <h2>To Be Watched List:</h2>
+        <!-- <h2>To Be Watched List:</h2> -->
+
+
+
+        <a href= "/user-profile/edit-list/tobewatched" >To Be Watched List: </a>
+
+
+
         {% for media in user.to_be_watched_list %}
                 <div class="col" id="to_be_watch_list_div_{{ media.media_id }}">
                     <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
                     <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                     <!-- give option to from to be to be watched list-->
-                    <button type="button" class="deleting-from-to-be-watched-btn" value="{{ media.media_id }}">Remove from list</button>
+                    <!-- <button type="button" class="deleting-from-to-be-watched-btn" value="{{ media.media_id }}">Remove from list</button> -->
                 </div>
         {% endfor %}
          </div>
@@ -111,13 +124,16 @@
     <div>
         {% for playlist in user.playlists %}
         <div class="row" id="playlist_div_{{ playlist.playlist_id }}">
-            <h2>{{ playlist.name }}:</h2>
+            <!-- <h2>{{ playlist.name }}:</h2> -->
+            <!-- link instead of button to edit playlist page:  -->
+                <a href="/user-profile/edit-playlist/{{ playlist.playlist_id }}">{{ playlist.name }}</a>
             <!-- gives option to delete playlist -->
             <button type="button" class="deleting-playlist-btn" value="{{ playlist.playlist_id }}">Delete Playlist</button>
             <!-- give option to edit playlist -->
-            <form action="/user-profile/edit-playlist/{{ playlist.playlist_id }}" method="POST">
+                <!-- remember to add method to route line 755 -->
+            <!-- <form action="/user-profile/edit-playlist/{{ playlist.playlist_id }}" method="POST">
                 <button type="submit">Edit this playlist</button>
-            </form> 
+            </form>  -->
             
 
             <div class="row">
@@ -134,13 +150,13 @@
 
     <!-- display users friends watchlist and link to their profile:  -->
     <div>
-        <h2>Friend's Watched Lists: </h2>
+        <h2>Your Friends: </h2>
     </div>
 
     <div>
         <div class="row">
         {% for friend in user.following %}
-            <h2><a href="/display-friend/{{ friend.username }}">{{ friend.username }}:</a></h2>
+            <h2><a href="/display-friend/{{ friend.username }}">{{ friend.username }}'s Watched List:</a></h2>
             {% for media in friend.watched_list %}
                 <div class="col">
                 <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>

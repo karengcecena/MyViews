@@ -1,56 +1,5 @@
 'use-strict';
 
-// deleting from watched list on user profile
-const deleteFromWatchedBtns = document.querySelectorAll(".deleting-from-watched-btn")
-
-for (const deleteBtn of deleteFromWatchedBtns) {
-
-  deleteBtn.addEventListener("click", evt => {
-    console.log(deleteBtn.value)
-    const formInputs  = {
-          mediaID: deleteBtn.value
-          };
-
-    fetch("/user-profile/delete-from-watched-list.json", {
-              method: 'POST',
-              body: JSON.stringify(formInputs),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-          })
-
-    .then((response) => response.json())
-    .then((responseJson) => {
-      document.querySelector(`#watch_list_div_${deleteBtn.value}`).remove();
-      });
-  })
-}
-
-// deleting from to be watched list on user profile
-const deleteFromToBeWatchedBtns = document.querySelectorAll(".deleting-from-to-be-watched-btn")
-
-for (const deleteBtn of deleteFromToBeWatchedBtns) {
-
-  deleteBtn.addEventListener("click", evt => {
-    const formInputs  = {
-          mediaID: deleteBtn.value
-          };
-
-    fetch("/user-profile/delete-from-to-be-watched-list.json", {
-              method: 'POST',
-              body: JSON.stringify(formInputs),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-          })
-
-    .then((response) => response.json())
-    .then((responseJson) => {
-      document.querySelector(`#to_be_watch_list_div_${deleteBtn.value}`).remove();
-      });
-  })
-}
-
 // deleting a playlist on user profile
 const deletePlaylistBtns = document.querySelectorAll(".deleting-playlist-btn")
 
