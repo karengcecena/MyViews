@@ -127,7 +127,7 @@ nav>ul>li a:hover:not(.active) {
 
 .grid {
     display: grid;
-    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr;
     grid-gap: 20px;
     align-items: center;
 }
@@ -135,6 +135,29 @@ nav>ul>li a:hover:not(.active) {
 #media_info_img {
     size: 50%;
 }
+
+.scrollmenu {
+    /* background-color: #333; */
+    overflow: auto;
+    white-space: nowrap;
+  }
+  
+.scrollmenu > .col {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+}
+
+.scrollmenu > .col:hover {
+    background-color: rgb(203, 203, 203); 
+}
+
+/* .col {
+    position: absolute;
+    overflow-y: scroll;
+} */
 
  /* display: block;
     /* justify-content: center; */
