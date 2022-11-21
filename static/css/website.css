@@ -132,6 +132,10 @@ nav>ul>li a:hover:not(.active) {
     align-items: center;
 }
 
+#media_info_img {
+    size: 50%;
+}
+
  /* display: block;
     /* justify-content: center; */
     /* align-items: center; */

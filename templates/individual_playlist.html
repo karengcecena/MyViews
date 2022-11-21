@@ -48,9 +48,9 @@
 
 <input type="hidden" id="playlist_id" value="{{ playlist.playlist_id }}">
 
-<div class="row">
+<div class="grid">
 {% for media in playlist.medias %}
-    <div class="col" id="playlist_media_div_{{ media.media_id }}">
+    <div id="playlist_media_div_{{ media.media_id }}">
         <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
         <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
         

@@ -15,6 +15,7 @@
     </nav>
 
 
+    <div class="media_title row text-center">
     {% if (media_type == "movie") %}
 
         <h1>{{data["original_title"]}}</h1>
@@ -24,153 +25,170 @@
 
     {% endif %}
 
+    </div>
+
+    <div class="overview row text-center">
         <p>{{data["overview"]}}</p>
+
+    </div>
 
         {% if user %}
 
-            <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
-            
-            <!-- Rating modal -->
+        <div class="row"> 
 
-            <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">
-                Rate
-            </button>
+            <!-- <div class="column-6"> -->
 
-            <!-- Modal -->
-            <div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Add a Rating</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="/media-info/{{ media_type }}/{{ TMDB_id }}/rating" method="POST">
+                <img id="media_info_img" src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
 
-                            <!-- star ratings updated:  -->
-                            <div class="rating">
-                        
-                            <!-- score= 0 -->
-                            <input type="radio" name="score" value=5 id="5">
-                            <label for="5">☆</label>
+            <!-- </div> -->
+        </div>
             
-                            <!-- score= 1 -->
-                            <input type="radio" name="score" value=4 id="4">
-                            <label for="4">☆</label>
-            
-                            <!-- score= 2 -->
-                            <input type="radio" name="score" value=3 id="3">
-                            <label for="3">☆</label>
-            
-                            <!-- score= 3 -->
-                            <input type="radio" name="score" value=2 id="2">
-                            <label for="2">☆</label>
-            
-                            <!-- score= 4 -->
-                            <input type="radio" name="score" value=1 id="1">
-                            <label for="1">☆</label>
-                            
-                            Have you seen this? Rate it: 
-            
-                            </div>
-                        
-                            <!-- comment -->
-                            Any comments? 
-                            <input type="text" name="comment" id="rating">
-            
-                            <!-- time input to add to watch list -->
-                            <label for="watch_time">Enter when you watched it: </label>
-                            <input type="date" id="watch_time" name="watch_time">
-                            </label>    
-                    </div>
-                        <div class="modal-footer">
-                            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                            <button type="submit" class="btn btn-primary">Add Review</button>
+        <div class="row"> 
+            <!-- <div class="column-6"> -->
+                <!-- Rating modal -->
+
+                <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">
+                    Rate
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Add a Rating</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        </form>
-                    </div>
-                </div>
-                </div>
+                        <div class="modal-body">
+                            <form action="/media-info/{{ media_type }}/{{ TMDB_id }}/rating" method="POST">
 
-            
-            <!-- Watched vs To Be Watched Modal-->
-
-            <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal2">
-                Add to List
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="modal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Add this to your list</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="/{{ media_type }}/{{ TMDB_id }}/sort-folder" method="POST">
-                            <!-- time input to of adding to list-->
-                            <input type="date" id="watch_time" name="watch_time">
-                            <label for="watch_time"></label>
+                                <!-- star ratings updated:  -->
+                                <div class="rating">
                             
-                            <!-- Watched List-->
-                            <input type="radio" name="list" value="watched" id="watched">
-                            <label for="watched"> Watched List </label>
-            
-                            <!-- To Be Watched List-->
-                            <input type="radio" name="list" value="to_be_watched" id="tobeewatched">
-                            <label for="tobeewatched">To Be Watched List</label>
-            
-                    </div>
-                        <div class="modal-footer">
-                            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                            <button type="submit" class="btn btn-primary">Add to List</button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-                </div>
-        
-            <!-- Playlist Modal -->
-            <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal3">
-                Add to Custom Playlist
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="modal3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Add this to your playlist</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="/{{ media_type }}/{{ TMDB_id }}/add-to-playlist" method="POST">
-
-                            <label for="playlists">Select Playlist:</label>
-                            <select name="playlist" id="playlists" required="required">
-                                
-                                {% for playlist in user.playlists %}
-                                    <option value="{{ playlist.playlist_id }}">{{ playlist.name }}</option>
-                                {% endfor %}
+                                <!-- score= 0 -->
+                                <input type="radio" name="score" value=5 id="5">
+                                <label for="5">☆</label>
                 
-                            </select>
-                    </div>
-                        <div class="modal-footer">
-                            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                            <button type="submit" class="btn btn-primary">Add to Playlist</button>
+                                <!-- score= 1 -->
+                                <input type="radio" name="score" value=4 id="4">
+                                <label for="4">☆</label>
+                
+                                <!-- score= 2 -->
+                                <input type="radio" name="score" value=3 id="3">
+                                <label for="3">☆</label>
+                
+                                <!-- score= 3 -->
+                                <input type="radio" name="score" value=2 id="2">
+                                <label for="2">☆</label>
+                
+                                <!-- score= 4 -->
+                                <input type="radio" name="score" value=1 id="1">
+                                <label for="1">☆</label>
+                                
+                                Have you seen this? Rate it: 
+                
+                                </div>
+                            
+                                <!-- comment -->
+                                Any comments? 
+                                <input type="text" name="comment" id="rating">
+                
+                                <!-- time input to add to watch list -->
+                                <label for="watch_time">Enter when you watched it: </label>
+                                <input type="date" id="watch_time" name="watch_time">
+                                </label>    
                         </div>
-                        </form>
+                            <div class="modal-footer">
+                                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                                <button type="submit" class="btn btn-primary">Add Review</button>
+                            </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                </div>
+                    </div>
+
+                
+                <!-- Watched vs To Be Watched Modal-->
+
+                <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal2">
+                    Add to List
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Add this to your list</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/{{ media_type }}/{{ TMDB_id }}/sort-folder" method="POST">
+                                <!-- time input to of adding to list-->
+                                <input type="date" id="watch_time" name="watch_time">
+                                <label for="watch_time"></label>
+                                
+                                <!-- Watched List-->
+                                <input type="radio" name="list" value="watched" id="watched">
+                                <label for="watched"> Watched List </label>
+                
+                                <!-- To Be Watched List-->
+                                <input type="radio" name="list" value="to_be_watched" id="tobeewatched">
+                                <label for="tobeewatched">To Be Watched List</label>
+                
+                        </div>
+                            <div class="modal-footer">
+                                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                                <button type="submit" class="btn btn-primary">Add to List</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+            
+                <!-- Playlist Modal -->
+                <!-- Code adapted from https://getbootstrap.com/docs/5.0/components/modal/ -->
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal3">
+                    Add to Custom Playlist
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Add this to your playlist</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/{{ media_type }}/{{ TMDB_id }}/add-to-playlist" method="POST">
+
+                                <label for="playlists">Select Playlist:</label>
+                                <select name="playlist" id="playlists" required="required">
+                                    
+                                    {% for playlist in user.playlists %}
+                                        <option value="{{ playlist.playlist_id }}">{{ playlist.name }}</option>
+                                    {% endfor %}
+                    
+                                </select>
+                        </div>
+                            <div class="modal-footer">
+                                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                                <button type="submit" class="btn btn-primary">Add to Playlist</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+            <!-- </div> -->
+
+        </div>
 
         <!-- display ratings for FRIENDS ONLY:  -->
         
@@ -232,7 +250,11 @@
         
         
         {% else %}
-            <img src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
+            <div class="row"> 
+
+                <img id="media_info_img" src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
+
+            </div>
 
         {% endif %}
 

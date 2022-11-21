@@ -21,9 +21,9 @@
 
     {% if type == "watched" %}
 
-        <div class="row">
+        <div class="grid">
         {% for media in lst %}
-            <div class="col" id="watch_list_div_{{ media.media_id }}">
+            <div id="watch_list_div_{{ media.media_id }}">
                 <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                 
@@ -37,9 +37,9 @@
 
     {% elif type == "tobewatched" %}
 
-        <div class="row">
+        <div class="grid">
             {% for media in lst %}
-                <div class="col" id="to_be_watch_list_div_{{ media.media_id }}">
+                <div id="to_be_watch_list_div_{{ media.media_id }}">
                     <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
                     <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                     
