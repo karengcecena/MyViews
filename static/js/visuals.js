@@ -59,10 +59,19 @@ fetch('/user-profile/genres.json')
       plugins: {
         legend: {
           position: 'top',
+          labels: {
+            color: 'white',
+            font: {family: 'Lucida Console', size: 15 }
+          }
         },
         title: {
           display: true,
-          text: 'Your Movie Watched List Genres:'
+          text: 'Your Movie Watched List Genres:',
+          color: 'white',
+          font: {
+            family: 'Lucida Console', 
+            size: 20 
+          }
         }
       }
     },
@@ -105,17 +114,17 @@ fetch('/user-profile/watch_history.json')
           label: "Movies",
           data: movievalues,
           fill: false,
-          borderColor: 'rgb(0, 100, 0)',
+          borderColor: 'rgb(190, 20, 20)',
           tension: 0.1
         },
         {
             label: "TV Shows",
             data: showvalues,
             fill: false,
-            borderColor: 'rgb(75, 192, 192)',
+            borderColor: 'rgb(75, 192, 75)',
             tension: 0.1
           },
-      ],
+        ],
       },
 
       options: {
@@ -124,8 +133,14 @@ fetch('/user-profile/watch_history.json')
             ticks: {
               min:0,
               beginAtZero: true,
-              stepSize: 1
-            }
+              stepSize: 1,
+              color: 'white',
+            },
+            grid: {
+              color: 'white',
+              borderColor: 'white',
+              tickColor: 'white'
+            },
           },
           x: {
             type: 'time',
@@ -133,15 +148,29 @@ fetch('/user-profile/watch_history.json')
               tooltipFormat: 'LLLL dd', // Luxon format string
               unit: 'day',
             },
+            grid: {
+              color: 'white',
+              borderColor: 'white',
+              tickColor: 'white',
+            },
+            ticks: {
+              color: 'white',
+            },
           },
         },
         plugins: {
           legend: {
             position: 'top',
+            labels: {
+              color: 'white',
+              font: {family: 'Lucida Console', size: 15 }
+            }
           },
           title: {
             display: true,
-            text: 'Your Watched List History:'
+            text: 'Your Watched List History:',
+            color: 'white',
+            font: {family: 'Lucida Console', size: 20 }
           }
         }
       }
