@@ -18,6 +18,8 @@
 
 <div class="container">
 
+    <br><br><br><br>
+
     <div class="row rec movie_recs">
         <div class="row title">
             <h1>Movie Recommendations:</h1>
@@ -28,7 +30,7 @@
             {{ movie_results }}
             {% for movie in movie_results %}
             <div class="col media_card">
-                <a class= "media_title" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br>
+                <a class= "media_title text-wrap" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br>
                 <img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}">
                 <br>
             </div>
@@ -51,7 +53,7 @@
         {% if show_results %}
             {% for show in show_results %}
             <div class="col media_card">
-                <a class= "media_title" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a><br>
+                <a class="media_title text-wrap" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a><br>
                 <img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}">
                 <br>
             </div>
@@ -73,7 +75,7 @@
         <div class="scrollmenu">
             {% for movie in trending_movie_results %}
             <div class="col media_card">
-                <a class= "media_title" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br>
+                <a class= "media_title text-wrap" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br>
                 <img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}">
                 <br>
             </div>
@@ -92,7 +94,7 @@
         <div class="scrollmenu">
             {% for show in trending_show_results %}
             <div class="col media_card">
-                <a class= "media_title" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a><br>
+                <a class= "media_title text-wrap" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a><br>
                 <img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}">
                 <br>
             </div>
