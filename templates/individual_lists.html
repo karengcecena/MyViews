@@ -15,16 +15,18 @@
       </ul>
 </nav>
 
+<div class="row title text-center">
+    <h2>Edit your "{{ name }}":</h2>
+</div>
+
 {% if lst %}
-   
-<h2>Editing your "{{ name }}":</h2>
 
     {% if type == "watched" %}
 
         <div class="grid">
         {% for media in lst %}
-            <div id="watch_list_div_{{ media.media_id }}">
-                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+            <div class="media_card text-center" id="watch_list_div_{{ media.media_id }}">
+                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
 
                 {% for rating in media.ratings %}
                 <div id="rating_div_{{ rating.rating_id }}">
@@ -61,8 +63,8 @@
 
         <div class="grid">
             {% for media in lst %}
-                <div id="to_be_watch_list_div_{{ media.media_id }}">
-                    <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+                <div class="media_card text-center" id="to_be_watch_list_div_{{ media.media_id }}">
+                    <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
 
                     {% for rating in media.ratings %}
                     <div id="rating_div_{{ rating.rating_id }}">
@@ -100,9 +102,10 @@
 
 {% else %}
 
-<h2>Editing your "{{ name }}":</h2>
 
-    It seems your list is empty. Try searching for new media to add to your list.  
+    <div class="row text-center">
+        <p>It seems your list is empty. Try <a href="/media-search-results-react">searching</a> for new media to add to your list.</p>
+    </div>
 
 {% endif %}
 
