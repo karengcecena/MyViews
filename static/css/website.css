@@ -4,14 +4,24 @@
     width: 100%;
 } */
 
-#genre-chart {
-    width: 20%;
+#chart-wrapper-genre{
+    /* width: 50%; */
     /* position: relative; */
+    justify-content: flex-end;
+    text-align: right;
+    size: 50%;
+    width: 50%;
+
 }
 
-#watch-history-chart {
-    width: 50%;
+.graph {
+    justify-content: center;
+}
+
+#chart-wrapper-watched {
     /* position: relative; */
+    size: 50%;
+    /* width: 75%; */
 }
 
 img {
