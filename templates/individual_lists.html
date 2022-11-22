@@ -25,6 +25,28 @@
         {% for media in lst %}
             <div id="watch_list_div_{{ media.media_id }}">
                 <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+
+                {% for rating in media.ratings %}
+                <div id="rating_div_{{ rating.rating_id }}">
+                    {% if rating.user_id == user.user_id %}
+                        {% if rating.score == 1 %}
+                            <div class="star">★</div>
+                        {% elif rating.score == 2 %}
+                            <div class="star">★★</div>
+                        {% elif rating.score == 3 %}
+                            <div class="star">★★★</div>
+                        {% elif rating.score == 4 %}
+                            <div class="star">★★★★</div>
+                        {% elif rating.score == 5 %}
+                            <div class="star">★★★★★</div>
+                        {% endif %}
+                    
+                    <!-- give option to delete rating -->
+                        <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
                 <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                 
                 <!-- give option to remove from watched list-->
@@ -41,6 +63,28 @@
             {% for media in lst %}
                 <div id="to_be_watch_list_div_{{ media.media_id }}">
                     <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+
+                    {% for rating in media.ratings %}
+                    <div id="rating_div_{{ rating.rating_id }}">
+                        {% if rating.user_id == user.user_id %}
+                            {% if rating.score == 1 %}
+                                <div class="star">★</div>
+                            {% elif rating.score == 2 %}
+                                <div class="star">★★</div>
+                            {% elif rating.score == 3 %}
+                                <div class="star">★★★</div>
+                            {% elif rating.score == 4 %}
+                                <div class="star">★★★★</div>
+                            {% elif rating.score == 5 %}
+                                <div class="star">★★★★★</div>
+                            {% endif %}
+                        
+                        <!-- give option to delete rating -->
+                            <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    
                     <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                     
                     <!-- give option to from to be to be watched list-->

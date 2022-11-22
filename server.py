@@ -759,7 +759,7 @@ def edit_playlist(playlist_id):
     user = crud.get_user_by_username(user_username)
     playlist = crud.get_playlist_by_id(playlist_id, user)
     
-    return render_template("/individual_playlist.html", playlist=playlist)
+    return render_template("/individual_playlist.html", playlist=playlist, user=user)
 
 
 ############ i am here ################################# 
@@ -772,11 +772,11 @@ def edit_list(lst):
 
     if lst == "watched":
         watched = user.watched_list
-        return render_template("/individual_lists.html", lst=watched, name="Watched List", type="watched")
+        return render_template("/individual_lists.html", lst=watched, name="Watched List", type="watched", user=user)
 
     elif lst == "tobewatched":
         to_be_watched = user.to_be_watched_list
-        return render_template("/individual_lists.html", lst=to_be_watched, name="To Be Watched List", type="tobewatched")
+        return render_template("/individual_lists.html", lst=to_be_watched, name="To Be Watched List", type="tobewatched", user=user)
     
 
 @app.route("/delete-playlist", methods=["POST"])
