@@ -693,20 +693,6 @@ def creates_playlist_for_user():
 
 #### ALL THE DELETING STUFF #####
 
-# @app.route("/delete-playlist.json", methods=["POST"])
-# def deletes_playlist_for_user():
-#     """Deletes a playlist for user"""
-#     playlist_id = request.json.get("playlistID")
-#     user_username = session["username"]
-#     user = crud.get_user_by_username(user_username)
-
-#     if playlist_id:
-#         playlist = crud.get_playlist_by_id(playlist_id, user)
-#         db.session.delete(playlist)
-#         db.session.commit()
-
-#     return jsonify({"success": f"The playlist has successfully been deleted"})
-
 @app.route("/delete-rating.json", methods=["POST"])
 def deletes_rating_for_user_media_page():
     """Deletes a rating for user"""
@@ -751,7 +737,6 @@ def remove_media_from_tobe_watchedlist():
 
     return jsonify({"success": "Removed from to be watched list"})
 
-# remove method to have it be a hyperlink methods=['POST']
 @app.route("/user-profile/edit-playlist/<playlist_id>")
 def edit_playlist(playlist_id):
 
@@ -760,9 +745,6 @@ def edit_playlist(playlist_id):
     playlist = crud.get_playlist_by_id(playlist_id, user)
     
     return render_template("/individual_playlist.html", playlist=playlist, user=user)
-
-
-############ i am here ################################# 
 
 @app.route("/user-profile/edit-list/<lst>")
 def edit_list(lst):
@@ -778,7 +760,6 @@ def edit_list(lst):
         to_be_watched = user.to_be_watched_list
         return render_template("/individual_lists.html", lst=to_be_watched, name="To Be Watched List", type="tobewatched", user=user)
     
-
 @app.route("/delete-playlist", methods=["POST"])
 def deletes_playlist():
     """Deletes a playlist for user"""
@@ -793,8 +774,6 @@ def deletes_playlist():
         flash(f"The playlist '{playlist.name}' has successfully been deleted")
 
     return redirect("/user-profile")
-    
-################################################################
 
 @app.route("/user-profile/delete-from-playlist.json", methods=['POST'])
 def remove_media_from_playlist():

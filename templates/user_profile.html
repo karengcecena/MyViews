@@ -88,15 +88,11 @@
                                     <div class="star">★★★★★</div>
                                 {% endif %}
                             
-                            <!-- give option to delete rating -->
-                                <!-- <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button> -->
                             {% endif %}
                             </div>
                         {% endfor %}
 
                         <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
-                        <!-- give option to remove from watched list-->
-                        <!-- <button type="button" class="deleting-from-watched-btn" value="{{ media.media_id }}">Remove from list</button> -->
                     </div>
             {% endfor %}
         </div>
@@ -128,16 +124,12 @@
                                 {% elif rating.score == 5 %}
                                     <div class="star">★★★★★</div>
                                 {% endif %}
-                            
-                            <!-- give option to delete rating -->
-                                <!-- <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button> -->
                             {% endif %}
                             </div>
                         {% endfor %}
 
                         <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
-                        <!-- give option to from to be to be watched list-->
-                        <!-- <button type="button" class="deleting-from-to-be-watched-btn" value="{{ media.media_id }}">Remove from list</button> -->
+                        
                     </div>
             {% endfor %}
          </div>
@@ -147,16 +139,6 @@
         {% for playlist in user.playlists %}
         <div class="row title" id="playlist_div_{{ playlist.playlist_id }}">
             <a href="/user-profile/edit-playlist/{{ playlist.playlist_id }}">{{ playlist.name }}</a>
-
-            <!-- <h2>{{ playlist.name }}:</h2> -->
-            <!-- link instead of button to edit playlist page:  --> 
-            <!-- gives option to delete playlist -->
-            <!-- <button type="button" class="deleting-playlist-btn" value="{{ playlist.playlist_id }}">Delete Playlist</button> -->
-            <!-- give option to edit playlist -->
-                <!-- remember to add method to route line 755 -->
-            <!-- <form action="/user-profile/edit-playlist/{{ playlist.playlist_id }}" method="POST">
-                <button type="submit">Edit this playlist</button>
-            </form>  -->
         </div>
             
 
@@ -179,9 +161,6 @@
                                 {% elif rating.score == 5 %}
                                     <div class="star">★★★★★</div>
                                 {% endif %}
-                            
-                            <!-- give option to delete rating -->
-                                <!-- <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button> -->
                             {% endif %}
                             </div>
                     {% endfor %}

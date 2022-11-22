@@ -753,3 +753,18 @@
 #         db.session.commit()
 
 #     return render_template("/search_friend_result.html", user2=user2, user=user, user2_user_id= user2.user_id)
+
+
+# @app.route("/delete-playlist.json", methods=["POST"])
+# def deletes_playlist_for_user():
+#     """Deletes a playlist for user"""
+#     playlist_id = request.json.get("playlistID")
+#     user_username = session["username"]
+#     user = crud.get_user_by_username(user_username)
+
+#     if playlist_id:
+#         playlist = crud.get_playlist_by_id(playlist_id, user)
+#         db.session.delete(playlist)
+#         db.session.commit()
+
+#     return jsonify({"success": f"The playlist has successfully been deleted"})
