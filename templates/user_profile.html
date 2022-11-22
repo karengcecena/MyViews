@@ -23,9 +23,7 @@
     </nav>
 
     <div class="row title text-center">
-        <!-- <div class="col"> -->
             <h1>{{ user.username }}'s profile</h1>
-        <!-- </div> -->
     </div>
 
     <div class="row graphs">
@@ -64,14 +62,14 @@
     <div class="row watched">
 
         <div class="row title">
-            <a href= "/user-profile/edit-list/watched" >Watched List:</a>
+            <a href= "/user-profile/edit-list/watched" ><h2>Watched List:</h2></a>
         </div>
 
 
         <div class="scrollmenu">
             {% for media in user.watched_list %}
                     <div class="col media_card" id="watch_list_div_{{ media.media_id }}">
-                        <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+                        <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
  
                         {% for rating in media.ratings %}
                             <div id="rating_div_{{ rating.rating_id }}">
@@ -102,13 +100,13 @@
 
 
         <div class="row title">
-            <a href= "/user-profile/edit-list/tobewatched" >To Be Watched List: </a>
+            <a href= "/user-profile/edit-list/tobewatched"><h2>To Be Watched List:</h2></a>
         </div>
 
         <div class="scrollmenu">
             {% for media in user.to_be_watched_list %}
                     <div class="col media_card" id="to_be_watch_list_div_{{ media.media_id }}">
-                        <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+                        <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
 
                         {% for rating in media.ratings %}
                             <div id="rating_div_{{ rating.rating_id }}">
@@ -138,14 +136,14 @@
     <div class="row playlists">
         {% for playlist in user.playlists %}
         <div class="row title" id="playlist_div_{{ playlist.playlist_id }}">
-            <a href="/user-profile/edit-playlist/{{ playlist.playlist_id }}">{{ playlist.name }}</a>
+            <a href="/user-profile/edit-playlist/{{ playlist.playlist_id }}"><h2>{{ playlist.name }}:</h2></a>
         </div>
             
 
         <div class="scrollmenu">
             {% for media in playlist.medias %}
                 <div class="col media_card" id="{{ playlist.playlist_id }}_media_div_{{ media.media_id }}">
-                    <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+                    <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}">{{ media.title }}</a><br>
 
                     {% for rating in media.ratings %}
                             <div id="rating_div_{{ rating.rating_id }}">
@@ -182,13 +180,13 @@
         <div class="row friends"> 
             <div class="row friend">    
             {% for friend in user.following %}
-                <h2><a href="/display-friend/{{ friend.username }}">{{ friend.username }}'s Watched List:</a></h2>
+                <a href="/display-friend/{{ friend.username }}"><h2>{{ friend.username }}'s Watched List:</h2></a>
             </div>
 
             <div class="scrollmenu">
             {% for media in friend.watched_list %}
                 <div class="col media_card">
-                    <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a>
+                    <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
                     {% for rating in media.ratings %}
                         {% if rating.user_id == friend.user_id %}
                             {% if rating.score == 1 %}
