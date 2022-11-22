@@ -3,18 +3,22 @@
 
 {% block body %} 
 
-    <nav>
-        <ul>
-            <li class="medialogo">MyViews</li>
-            <li><a href="/media-search-results-react">Search</a></li>
-            <li><a href="/user-profile">Profile</a></li>
-            <li><a href="/search-friends">Friends</a></li>
-            <li><a class="active" href="/recommended">Your Recommended</a></li>
-            <li><a href="/logout">Logout</a></li>
-        </ul>
-    </nav>
+<nav>
+    <ul>
+        <li class="medialogo">MyViews</li>
+        <li><a href="/media-search-results-react">Search</a></li>
+        <li><a href="/user-profile">Profile</a></li>
+        <li><a href="/search-friends">Friends</a></li>
+        <li><a class="active" href="/recommended">Your Recommended</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</nav>
 
-    <div class="row movie_recs">
+<br>
+
+<div class="container">
+
+    <div class="row rec movie_recs">
         <div class="row title">
             <h1>Movie Recommendations:</h1>
         </div>
@@ -36,8 +40,9 @@
         </div>
     </div>
 
+    <br><br>
 
-    <div class="row show_recs">
+    <div class="row rec show_recs">
         <div class="row title"></div>
             <h1>Show Recommendations:</h1>
         </div>
@@ -58,7 +63,9 @@
         </div>
     </div>
 
-    <div class="row movie_trends">
+    <br><br>
+
+    <div class="row rec movie_trends">
         <div class="row title">
             <h1>Movies Trending Today:</h1>
         </div>
@@ -74,7 +81,9 @@
         </div>
     </div>
 
-    <div class="row show_trends">
+    <br><br>
+
+    <div class="row rec show_trends">
 
         <div class="row title">
             <h1>Shows Trending Today:</h1>
@@ -91,4 +100,5 @@
         </div>
     </div>
 
+</div>
 {% endblock %}

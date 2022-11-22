@@ -22,6 +22,10 @@
         </ul>
     </nav>
 
+<div class="container">
+
+    <br>
+
     <div class="row title text-center">
             <h1>{{ user.username }}'s profile</h1>
     </div>
@@ -44,8 +48,10 @@
 
     </div>
 
+    <br><br>
+
     <div class="row add_playlist">
-        <div class="col">
+        <div class="col text-center">
             <form action="/create-playlist" method="POST" id="create_playlist_form">
                 <p>
                   Create your own playlist <input type="text" name="playlist_name" id="playlist_name_field" required="required">
@@ -57,7 +63,7 @@
         </div>
     </div>
         
-
+    <br>
 
     <div class="row watched">
 
@@ -96,6 +102,10 @@
         </div>
     </div>
 
+
+    <br><br>
+
+
     <div class="row to_be_watched">
 
 
@@ -133,6 +143,10 @@
          </div>
     </div>
 
+
+    <br><br>
+
+
     <div class="row playlists">
         {% for playlist in user.playlists %}
         <div class="row title" id="playlist_div_{{ playlist.playlist_id }}">
@@ -166,15 +180,21 @@
                     <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                 </div>
             {% endfor %}
+            <br><br>
         </div>
         {% endfor %}
     </div>
+
+
+
 
     <!-- display users friends watchlist and link to their profile:  -->
     <div class="row friends_display">
         <div class="row title">
             <h2>Your Friends: </h2>
         </div>
+
+        <br>
   
         <div class="row friends"> 
             <div class="row friend">    
@@ -204,11 +224,14 @@
                     <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
                 </div>
             {% endfor %}
+            <br><br>
             </div>
 
             {% endfor %}
         </div>
     </div>
+
+</div>
       
 {% endblock %}
 

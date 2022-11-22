@@ -1,7 +1,7 @@
 // creates a media card for each media
 function MediaCard(props) {
     return (
-      <div className="mediaCard text-center">
+      <div className="media_card text-center">
         <a className="media_title" href={`/media-info/${props.mediaType}/${props.TMDB_id}`}>{props.title}</a>
         <br></br>
         <img src={`https://image.tmdb.org/t/p/original${props.posterPath}`} alt="" />
@@ -78,37 +78,41 @@ function SearchMedia(props) {
                   <li><a href="/logout">Logout</a></li>
                 </ul>
             </nav>
-            <div class="text-center">
-              {/* <h1> Search by title: </h1> */}
-              <label htmlFor="searchInput"><h1> Search by title: </h1></label>
-                  <input
-                      name="search"
-                      onChange={(event) => setSearch(event.target.value)}
-                      id="searchInput"
-                  ></input>
-              <label htmlFor="movieInput">
-                  <input
-                    type="radio"
-                    value="movie"
-                    name="mediaTypeToSearch"
-                    onChange={(event) => setMediaTypeToSearch(event.target.value)}
-                    id="movieInput"
-                  /> movie 
-                </label>
-                <label htmlFor="showInput">
-                  <input
-                    type="radio"
-                    value="tv"
-                    name="mediaTypeToSearch"
-                    onChange={(event) => setMediaTypeToSearch(event.target.value)}
-                    id="showInput"
-                    /> tv show 
-                </label>
-                <button onClick={searchMediaInfo}>
-                    Search
-                </button>
+            <div class="container search_page">
+              <br></br>
+              <div class="search_bar text-center">
+                {/* <h1> Search by title: </h1> */}
+                <label htmlFor="searchInput"><h1> Search by title: </h1></label>
+                    <input
+                        name="search"
+                        onChange={(event) => setSearch(event.target.value)}
+                        id="searchInput"
+                    ></input>
+                <label htmlFor="movieInput">
+                    <input
+                      type="radio"
+                      value="movie"
+                      name="mediaTypeToSearch"
+                      onChange={(event) => setMediaTypeToSearch(event.target.value)}
+                      id="movieInput"
+                    /> movie 
+                  </label>
+                  <label htmlFor="showInput">
+                    <input
+                      type="radio"
+                      value="tv"
+                      name="mediaTypeToSearch"
+                      onChange={(event) => setMediaTypeToSearch(event.target.value)}
+                      id="showInput"
+                      /> tv show 
+                  </label>
+                  <button onClick={searchMediaInfo}>
+                      Search
+                  </button>
+              </div>
+              <br></br>
+              <div className="grid">{mediaCardsList}</div>
             </div>
-            <div className="grid">{mediaCardsList}</div>
         </React.Fragment>
     );
     };

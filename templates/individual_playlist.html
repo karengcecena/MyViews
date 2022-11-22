@@ -15,87 +15,90 @@
       </ul>
 </nav>
    
-<div class="row title text-center">
-    <h2>Edit your playlist "{{ playlist.name }}":</h2>
-</div>
+<div class="container">
 
-<div class="modalbtn text-center">
+    <div class="row title text-center">
+        <h2>Edit your playlist "{{ playlist.name }}":</h2>
+    </div>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal5">
-        Delete Playlist
-    </button>
+    <div class="modalbtn text-center">
 
-    <!-- Modal -->
-    <div class="modal fade" id="modal5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Are you sure you want to delete playlist?</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="/delete-playlist" method="POST" class="deleting">
-                    <input type="radio" name="playlist_id" value="{{ playlist.playlist_id }}" id="deletingplaylist" checked>
-                    <label for="deletingplaylist"><button type="submit" id="deletingplaylist">Yes, Delete Playlist</button></label>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal5">
+            Delete Playlist
+        </button>
 
-            </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, Close</button>
-                    <!-- <button type="submit" class="btn btn-primary">Yes, Delete Playlist</button> -->
+        <!-- Modal -->
+        <div class="modal fade" id="modal5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Are you sure you want to delete playlist?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                </form>
+                <div class="modal-body">
+                    <form action="/delete-playlist" method="POST" class="deleting">
+                        <input type="radio" name="playlist_id" value="{{ playlist.playlist_id }}" id="deletingplaylist" checked>
+                        <label for="deletingplaylist"><button type="submit" id="deletingplaylist">Yes, Delete Playlist</button></label>
+
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, Close</button>
+                        <!-- <button type="submit" class="btn btn-primary">Yes, Delete Playlist</button> -->
+                    </div>
+                    </form>
+                </div>
             </div>
-        </div>
-        </div>
+            </div>
 
-    <input type="hidden" id="playlist_id" value="{{ playlist.playlist_id }}">
-</div>
+        <input type="hidden" id="playlist_id" value="{{ playlist.playlist_id }}">
+    </div>
 
-{% if playlist.medias %}
+    {% if playlist.medias %}
 
-    <div class="grid">
-    {% for media in playlist.medias %}
-        <div class="media_card text-center" id="playlist_media_div_{{ media.media_id }}">
-            <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
+        <div class="grid">
+        {% for media in playlist.medias %}
+            <div class="media_card text-center" id="playlist_media_div_{{ media.media_id }}">
+                <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
 
-            {% for rating in media.ratings %}
-            <div id="rating_div_{{ rating.rating_id }}">
-                {% if rating.user_id == user.user_id %}
-                    {% if rating.score == 1 %}
-                        <div class="star">★</div>
-                    {% elif rating.score == 2 %}
-                        <div class="star">★★</div>
-                    {% elif rating.score == 3 %}
-                        <div class="star">★★★</div>
-                    {% elif rating.score == 4 %}
-                        <div class="star">★★★★</div>
-                    {% elif rating.score == 5 %}
-                        <div class="star">★★★★★</div>
+                {% for rating in media.ratings %}
+                <div id="rating_div_{{ rating.rating_id }}">
+                    {% if rating.user_id == user.user_id %}
+                        {% if rating.score == 1 %}
+                            <div class="star">★</div>
+                        {% elif rating.score == 2 %}
+                            <div class="star">★★</div>
+                        {% elif rating.score == 3 %}
+                            <div class="star">★★★</div>
+                        {% elif rating.score == 4 %}
+                            <div class="star">★★★★</div>
+                        {% elif rating.score == 5 %}
+                            <div class="star">★★★★★</div>
+                        {% endif %}
+                    
+                    <!-- give option to delete rating -->
+                        <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button>
                     {% endif %}
-                
-                <!-- give option to delete rating -->
-                    <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button>
-                {% endif %}
-            </div>
-            {% endfor %}
+                </div>
+                {% endfor %}
 
-            <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
-            
-            <!-- give option to remove from playlist-->
-            <button type="button" class="deleting-from-playlist-btn" value="{{ media.media_id }}">Remove from playlist</button>
-            <br>
+                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                
+                <!-- give option to remove from playlist-->
+                <button type="button" class="deleting-from-playlist-btn" value="{{ media.media_id }}">Remove from playlist</button>
+                <br>
+            </div>
+
+        {% endfor %}
         </div>
 
-    {% endfor %}
-    </div>
+    {% else %}
+        <div class="row text-center">
+            <p>It seems your playlist is empty. Try <a href="/media-search-results-react">searching</a> for new media to add to your playlist.</p>
+        </div>
+    {% endif %}
 
-{% else %}
-    <div class="row text-center">
-        <p>It seems your playlist is empty. Try <a href="/media-search-results-react">searching</a> for new media to add to your playlist.</p>
-    </div>
-{% endif %}
-
+</div>
 {% endblock %}
 
 {% block js %}
