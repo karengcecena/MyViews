@@ -24,7 +24,7 @@
             {{ movie_results }}
             {% for movie in movie_results %}
             <div class="col media_card">
-                <a href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br>
+                <a class= "media_title" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br>
                 <img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}">
                 <br>
             </div>
@@ -46,7 +46,7 @@
         {% if show_results %}
             {% for show in show_results %}
             <div class="col media_card">
-                <a href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a><br>
+                <a class= "media_title" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a><br>
                 <img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}">
                 <br>
             </div>
@@ -66,7 +66,7 @@
         <div class="scrollmenu">
             {% for movie in trending_movie_results %}
             <div class="col media_card">
-                <a href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br>
+                <a class= "media_title" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br>
                 <img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}">
                 <br>
             </div>
@@ -83,7 +83,7 @@
         <div class="scrollmenu">
             {% for show in trending_show_results %}
             <div class="col media_card">
-                <a href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a><br>
+                <a class= "media_title" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a><br>
                 <img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}">
                 <br>
             </div>

@@ -26,7 +26,7 @@
         <div class="grid">
         {% for media in lst %}
             <div class="media_card text-center" id="watch_list_div_{{ media.media_id }}">
-                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
+                <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
 
                 {% for rating in media.ratings %}
                 <div id="rating_div_{{ rating.rating_id }}">
@@ -64,7 +64,7 @@
         <div class="grid">
             {% for media in lst %}
                 <div class="media_card text-center" id="to_be_watch_list_div_{{ media.media_id }}">
-                    <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
+                    <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
 
                     {% for rating in media.ratings %}
                     <div id="rating_div_{{ rating.rating_id }}">

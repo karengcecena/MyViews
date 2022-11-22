@@ -43,7 +43,7 @@
         <div class="scrollmenu">
         {% for media in user2.watched_list %}
             <div class="col media_card">
-                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
+                <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
                 {% for rating in media.ratings %}
                     {% if rating.user_id == user2.user_id %}
                         {% if rating.score == 1 %}
@@ -71,7 +71,7 @@
         <div class="scrollmenu">
         {% for media in user2.to_be_watched_list %}
             <div class="col media_card">
-                <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
+                <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
                 {% for rating in media.ratings %}
                     {% if rating.user_id == user2.user_id %}
                         {% if rating.score == 1 %}
@@ -101,7 +101,7 @@
                 <div class="scrollmenu">
                 {% for media in playlist.medias %}
                     <div class="col media_card">
-                        <a href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
+                        <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
                         {% for rating in media.ratings %}
                             {% if rating.user_id == user2.user_id %}
                                 {% if rating.score == 1 %}

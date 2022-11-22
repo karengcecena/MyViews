@@ -2,7 +2,7 @@
 function MediaCard(props) {
     return (
       <div className="mediaCard text-center">
-        <a href={`/media-info/${props.mediaType}/${props.TMDB_id}`}>{props.title}</a>
+        <a className="media_title" href={`/media-info/${props.mediaType}/${props.TMDB_id}`}>{props.title}</a>
         <br></br>
         <img src={`https://image.tmdb.org/t/p/original${props.posterPath}`} alt="" />
       </div>
