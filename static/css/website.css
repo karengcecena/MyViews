@@ -88,6 +88,7 @@ nav>ul>li a:hover:not(.active) {
     color: white;
 }
 
+
 .active {
     background-color: #94545c56;
     color: white;
@@ -115,7 +116,7 @@ nav>ul>li a:hover:not(.active) {
 
 /* scroll code adapted from https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp */
 .scrollmenu {
-    /* background-color: #333; */
+    background-color: rgb(118, 118, 118);
     overflow: auto;
     white-space: nowrap;
   }
@@ -133,7 +134,9 @@ nav>ul>li a:hover:not(.active) {
 }
 
 body {
-    background-color: #8b8787;
+    background:url(/static/img/media_project_bg_1.jpeg) no-repeat center center fixed;
+    /* background-color: #8b8787; */
+    /* background-image: ; */
     color: white ;
     /* font: times-new-roman; */
     font-family: "Lucida Console", "Courier New", monospace;
@@ -147,6 +150,29 @@ body {
 .media_title {
     color: white ;
 }
+
+#genre-chart {
+    background-color: rgb(205, 203, 203);
+}
+
+#watch-history-chart {
+    background-color: rgb(205, 203, 203);
+}
+
+button {
+    background-color: rgb(205, 203, 203);
+    border-radius: 5px;
+}
+
+.child {
+    background-color: rgb(118, 118, 118, .8);
+    border-radius: 5px;
+}
+
+
+/* .row {
+    background-color: rgb(128, 128, 128);
+} */
 
 /* don't need these?? */
 /* follow buttons */
