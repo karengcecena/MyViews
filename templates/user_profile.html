@@ -78,8 +78,8 @@
             <br>
             {% for media in user.watched_list %}
                     <div class="col media_card text-center" id="watch_list_div_{{ media.media_id }}">
-                        <div class="row-3 media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
-                        <div class="row-3 media_rating">
+                        <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
+                        <div class="media_rating">
                         {% for rating in media.ratings %}
                             <div id="rating_div_{{ rating.rating_id }}">
                             {% if rating.user_id == user.user_id %}
@@ -94,13 +94,20 @@
                                 {% elif rating.score == 5 %}
                                     <div class="star">★★★★★</div>
                                 {% endif %}
-                            
+
+                            {% else %}
+                                <div class="blank-star">★★★★★</div>
                             {% endif %}
+
                             </div>
                         {% endfor %}
+
+                        {% if not media.ratings %}
+                            <div class="blank-star">★★★★★</div>
+                        {% endif %}
                         </div>
 
-                        <div class="row-6 media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}"></div>
+                        <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}"></div>
                     </div>
             {% endfor %}
         </div>
@@ -121,8 +128,8 @@
             <br>
             {% for media in user.to_be_watched_list %}
                     <div class="col media_card text-center" id="to_be_watch_list_div_{{ media.media_id }}">
-                        <a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
-
+                        <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
+                        <div class="media_rating">
                         {% for rating in media.ratings %}
                             <div id="rating_div_{{ rating.rating_id }}">
                             {% if rating.user_id == user.user_id %}
@@ -137,11 +144,20 @@
                                 {% elif rating.score == 5 %}
                                     <div class="star">★★★★★</div>
                                 {% endif %}
+
+                            {% else %}
+                                <div class="blank-star">★★★★★</div>
+
                             {% endif %}
                             </div>
                         {% endfor %}
 
-                        <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                        {% if not media.ratings %}
+                            <div class="blank-star">★★★★★</div>
+                        {% endif %}
+                        </div>
+
+                        <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}"></div>
                         
                     </div>
             {% endfor %}
@@ -163,8 +179,9 @@
             <br>
             {% for media in playlist.medias %}
                 <div class="col media_card text-center" id="{{ playlist.playlist_id }}_media_div_{{ media.media_id }}">
-                    <a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}">{{ media.title }}</a><br>
+                     <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}">{{ media.title }}</a><br></div>
 
+                    <div class="media_rating">
                     {% for rating in media.ratings %}
                             <div id="rating_div_{{ rating.rating_id }}">
                             {% if rating.user_id == user.user_id %}
@@ -179,11 +196,19 @@
                                 {% elif rating.score == 5 %}
                                     <div class="star">★★★★★</div>
                                 {% endif %}
+
+                            {% else %}
+                                <div class="blank-star">★★★★★</div>
                             {% endif %}
                             </div>
                     {% endfor %}
 
-                    <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                    {% if not media.ratings %}
+                            <div class="blank-star">★★★★★</div>
+                    {% endif %}
+                    </div>
+
+                    <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}"></div>
                 </div>
             {% endfor %}
             <br><br>
@@ -210,7 +235,8 @@
                 <br>
             {% for media in friend.watched_list %}
                 <div class="col media_card text-center">
-                    <a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
+                    <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
+                    <div class="media_rating">
                     {% for rating in media.ratings %}
                         {% if rating.user_id == friend.user_id %}
                             {% if rating.score == 1 %}
@@ -224,9 +250,19 @@
                             {% elif rating.score == 5 %}
                                 <div class="star">★★★★★</div>
                             {% endif %}
+
+                        {% else %}
+                            <div class="blank-star">★★★★★</div>
+
                         {% endif %}
                     {% endfor %}
-                    <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+
+                    {% if not media.ratings %}
+                            <div class="blank-star">★★★★★</div>
+                    {% endif %}
+                    </div>
+
+                     <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}"></div>
                 </div>
             {% endfor %}
             <br><br>

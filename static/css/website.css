@@ -54,6 +54,11 @@ opacity: 0.4;
     color: #FFD700;
 }
 
+.blank-star {
+    /* color: rgba(51, 51, 51, 0.95); */
+    opacity: 0;
+}
+
 /* navbar styling adapted from: https://www.w3schools.com/Css/css_navbar_horizontal.asp */
 
 nav>ul {
@@ -88,10 +93,10 @@ nav>ul>li a {
     text-decoration: none;
 }
 
-/* nav>ul>li a:hover:not(.active) {
+nav>ul>li a:hover:not(.active) {
     background-color: #111;
     color: rgb(146, 108, 108);
-} */
+}
 
 nav>ul>li a:hover(.active) {
     background-color: #111;
@@ -145,39 +150,75 @@ nav>ul>li a:hover(.active) {
     /* margin-bottom: 0; */
 }
 
+.media_card {
+    background-color: rgba(51, 51, 51, 0.95);
+    /* background-color: rgb(118, 118, 118, .5); */
+    border-radius: 5px;
+    width: 191px;
+    height: 300px;
+    display: inline-block;
+
+}
+
+
+
+
+/* div assignments */
+.media_title {
+    color: white ;
+    /* maxlength: 2; */
+    /* height:30px; */
+    /* line-height:15px; */
+    /* overflow:hidden; */
+    /* text-overflow: ellipsis; */
+    /* max-height: 20%; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 16px;    
+    max-height: 32px;     
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+
+/* .media_rating {
+    max-height: 20%;
+} */
+
+.media_poster_path > img {
+  height: 187.5px;
+  width: 125px;
+}
+
 body {
     /* background-color: #000000; */
     background:url(/static/img/media_project_bg_1.jpeg) no-repeat center center fixed;
     background-size: cover;
     color: white ;
     font-family: "Lucida Console", "Courier New", monospace;
+    /* font: "Neue Helvetica Light"; */
 
 }
 
-/* .container {
-    background-color: rgb(34, 33, 33, 0.8);
-} */
+.modal-content {
+    background-color: rgb(51, 51, 51, 0.95);
+}
 
 .list_title {
     color: white ;
 }
 
+.graphs {
+    background-color: rgb(51, 51, 51, 0.95);
+}
 
-/* div assignments */
-.media_title {
+
+
+/* 
+.btn-close {
     color: white ;
-    /* max-height: 20%; */
-}
-
-
-/* .media_rating {
-    max-height: 20%;
-}
-
-.media_poster_path {
-    max-height: 60%;
 } */
-
 
 /* #genre-chart {
     background-color: rgb(51, 51, 51, 0.95);
@@ -188,9 +229,6 @@ body {
     background-color: rgb(51, 51, 51, 0.95);
 } */
 
-.graphs {
-    background-color: rgb(51, 51, 51, 0.95);
-}
 
 .title {
     background-color: rgba(148, 84, 92, 0.5)
@@ -207,22 +245,6 @@ body {
     border-radius: 5px;
 }
 
-.media_card {
-    background-color: rgba(51, 51, 51, 0.95);
-    /* background-color: rgb(118, 118, 118, .5); */
-    border-radius: 5px;
-    width: 191px;
-    height: 300px;
-    display: inline-block;
-
-}
-
-/* .rating_div {
-    background-color: rgba(51, 51, 51, 0.95);
-    margin: 0 auto;
-    border-radius: 5px;
-} */
-
 .container-flex {
     background-color: rgb(51, 51, 51, .7);
     min-height: 100vh;
@@ -231,14 +253,10 @@ body {
 #media_info_img {
     width: 20%;
     height: 20%;
-    /* justify-content: center; */
     margin: 0 auto;
-
-    /* size: 50%; */
 }
 
 #modal_center{
-    /* margin: 0 auto; */
     text-align: center;
 }
 
@@ -264,3 +282,13 @@ button:hover{
     background-color: rgba(148, 84, 92) !important;
     border-color: rgba(148, 84, 92, 0.5);
 }
+
+.modal-body {
+    text-align: left;
+    display: block;
+}
+/* .rating_div {
+    background-color: rgba(51, 51, 51, 0.95);
+    margin: 0 auto;
+    border-radius: 5px;
+} */
