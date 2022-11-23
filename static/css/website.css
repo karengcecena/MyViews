@@ -56,7 +56,6 @@ opacity: 0.4;
 
 
 /* navbar styling adapted from: https://www.w3schools.com/Css/css_navbar_horizontal.asp */
-
 nav>ul {
     list-style-type: none;
     margin: 0;
@@ -109,7 +108,6 @@ nav>ul>li a:hover(.active) {
     display:none;
 }
 
-/* still figuring this out for webpage layout */
 .parent {
     min-height: 100vh;
   }
@@ -127,10 +125,8 @@ nav>ul>li a:hover(.active) {
 
 /* scroll code adapted from https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp */
 .scrollmenu {
-    /* background-color: rgb(118, 118, 118); */
     overflow: auto;
     white-space: nowrap;
-    /* display: flex; */
   }
   
 .scrollmenu > .col {
@@ -143,12 +139,10 @@ nav>ul>li a:hover(.active) {
 
 .scrollmenu > .col:hover {
     background-color: rgba(148, 84, 92, .3);
-    /* margin-bottom: 0; */
 }
 
 .media_card {
     background-color: rgba(51, 51, 51, 0.95);
-    /* background-color: rgb(118, 118, 118, .5); */
     border-radius: 5px;
     width: 191px;
     height: 300px;
@@ -158,7 +152,6 @@ nav>ul>li a:hover(.active) {
 
 .media_card_edit_lists {
     background-color: rgba(51, 51, 51, 0.95);
-    /* background-color: rgb(118, 118, 118, .5); */
     border-radius: 5px;
     width: 191px;
     height: 350px;
@@ -166,18 +159,8 @@ nav>ul>li a:hover(.active) {
 
 }
 
-
-
-
-/* div assignments */
 .media_title {
     color: white ;
-    /* maxlength: 2; */
-    /* height:30px; */
-    /* line-height:15px; */
-    /* overflow:hidden; */
-    /* text-overflow: ellipsis; */
-    /* max-height: 20%; */
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -198,7 +181,6 @@ nav>ul>li a:hover(.active) {
 }
 
 body {
-    /* background-color: #000000; */
     background:url(/static/img/media_project_bg_1.jpeg) no-repeat center center fixed;
     background-size: cover;
     color: white ;
@@ -218,13 +200,6 @@ body {
 .graphs {
     background-color: rgb(51, 51, 51, 0.95);
 }
-
-
-
-/* 
-.btn-close {
-    color: white ;
-} */
 
 /* #genre-chart {
     background-color: rgb(51, 51, 51, 0.95);
@@ -247,7 +222,6 @@ body {
 
 .child {
     background-color: rgb(118, 118, 118, .8);
-    /* background-color: rgba(124, 79, 84, 0.8); */
     border-radius: 5px;
 }
 
@@ -293,11 +267,6 @@ button:hover{
     text-align: left;
     display: block;
 }
-/* .rating_div {
-    background-color: rgba(51, 51, 51, 0.95);
-    margin: 0 auto;
-    border-radius: 5px;
-} */
 
 .blank-star {
     opacity: 0;
@@ -308,3 +277,14 @@ button:hover{
     width: 140.82px;
     opacity: 0;
 }
+
+/* .rating_div {
+    background-color: rgba(51, 51, 51, 0.95);
+    margin: 0 auto;
+    border-radius: 5px;
+} */
+
+/* 
+.btn-close {
+    color: white ;
+} */
