@@ -67,8 +67,8 @@
         <div class="grid">
         {% for media in playlist.medias %}
             <div class="media_card text-center" id="playlist_media_div_{{ media.media_id }}">
-                <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
-
+                <div class="media_title"><a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
+                <div class="media_rating">
                 {% for rating in media.ratings %}
                 <div id="rating_div_{{ rating.rating_id }}">
                     {% if rating.user_id == user.user_id %}
@@ -81,8 +81,11 @@
                         {% elif rating.score == 4 %}
                             <div class="star">★★★★</div>
                         {% elif rating.score == 5 %}
-                            <div class="star">★★★★★</div>
+                            <div class="star">★★★★★</div>      
                         {% endif %}
+
+                    {% else %}
+                        <div class="blank-star">★★★★★</div>
                     
                     <!-- give option to delete rating -->
                         <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button>
@@ -90,7 +93,12 @@
                 </div>
                 {% endfor %}
 
-                <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                {% if not media.ratings %}
+                    <div class="blank-star">★★★★★</div>
+                {% endif %}
+                </div>
+
+                <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}"></div>
                 
                 <!-- give option to remove from playlist-->
                 <button type="button" class="deleting-from-playlist-btn" value="{{ media.media_id }}">Remove from playlist</button>

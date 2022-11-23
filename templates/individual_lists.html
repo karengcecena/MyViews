@@ -33,9 +33,10 @@
 
             <div class="grid">
             {% for media in lst %}
-                <div class="media_card text-center" id="watch_list_div_{{ media.media_id }}">
-                    <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
+                <div class="media_card_edit_lists text-center" id="watch_list_div_{{ media.media_id }}"><br>
+                    <div class="media_title"><a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
 
+                    <div class="media_rating">
                     {% for rating in media.ratings %}
                     <div id="rating_div_{{ rating.rating_id }}">
                         {% if rating.user_id == user.user_id %}
@@ -53,11 +54,22 @@
                         
                         <!-- give option to delete rating -->
                             <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button>
+    
+                        {% else %}
+                            <div class="blank-star">★★★★★</div>
+                            <button type="button" class="filler-btn"></button>
+
                         {% endif %}
                     </div>
                     {% endfor %}
 
-                    <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                    {% if not media.ratings %}
+                            <div class="blank-star">★★★★★</div>
+                            <button type="button" class="filler-btn"></button>
+                    {% endif %}
+                    </div>
+
+                    <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}"></div>
                     
                     <!-- give option to remove from watched list-->
                     <button type="button" class="deleting-from-watched-btn" value="{{ media.media_id }}">Remove from list</button>
@@ -71,9 +83,9 @@
 
             <div class="grid">
                 {% for media in lst %}
-                    <div class="media_card text-center" id="to_be_watch_list_div_{{ media.media_id }}">
-                        <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
-
+                    <div class="media_card_edit_lists text-center" id="to_be_watch_list_div_{{ media.media_id }}"><br>
+                        <div class="media_title"><a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
+                        <div class="media_rating">
                         {% for rating in media.ratings %}
                         <div id="rating_div_{{ rating.rating_id }}">
                             {% if rating.user_id == user.user_id %}
@@ -91,11 +103,22 @@
                             
                             <!-- give option to delete rating -->
                                 <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button>
+                            
+                            {% else %}
+                                <div class="blank-star">★★★★★</div>
+                                <button type="button" class="filler-btn"></button>
+                            
                             {% endif %}
                         </div>
                         {% endfor %}
+
+                        {% if not media.ratings %}
+                            <div class="blank-star">★★★★★</div>
+                            <button type="button" class="filler-btn"></button>
+                        {% endif %}
+                        </div>
                         
-                        <img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}">
+                        <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}"></div>
                         
                         <!-- give option to from to be to be watched list-->
                         <button type="button" class="deleting-from-to-be-watched-btn" value="{{ media.media_id }}">Remove from list</button>

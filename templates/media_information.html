@@ -239,7 +239,7 @@
                 <div class="col">
                     {% for friend in user.following %}
                         {% if rating.user_id == friend.user_id %}
-                        <h2><a href="/display-friend/{{ rating.user.username }}">{{ rating.user.username }}:</a></h2>
+                        <h2><a class="list_title" href="/display-friend/{{ rating.user.username }}">{{ rating.user.username }}:</a></h2>
                             {% if rating.score == 1 %}
                                 <div class="star">★</div>
                             {% elif rating.score == 2 %}
