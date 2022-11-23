@@ -5,7 +5,7 @@
 
 <nav>
     <ul>
-        <li class="medialogo">MyViews</li>
+        <li><a href="/">MyViews</a></li>
         <li><a href="/media-search-results-react">Search</a></li>
         <li><a href="/user-profile">Profile</a></li>
         <li><a href="/search-friends">Friends</a></li>
@@ -21,7 +21,7 @@
 
     <br><br><br>
 
-    <div class="media_title row text-center">
+    <div class="title row text-center">
     {% if (media_type == "movie") %}
 
         <h1>{{data["original_title"]}}</h1>
@@ -48,8 +48,8 @@
 
             <!-- </div> -->
         </div>
-            
-        <div class="row"> 
+            <br>
+        <div id="modal_center"> 
             <!-- <div class="column-6"> -->
                 <!-- Rating modal -->
 
@@ -58,6 +58,8 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">
                     Rate
                 </button>
+
+        <!-- </div> -->
 
                 <!-- Modal -->
                 <div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -195,20 +197,23 @@
             <!-- </div> -->
 
         </div>
+        <br>
 
         <!-- display ratings for FRIENDS ONLY:  -->
         
         {% if all_ratings %} 
         <div>
             <div class="row">
-            <h1> Ratings: </h1>
+                <div class="title">
+                    <h1> Ratings: </h1>
+                </div>
     
             {% for rating in all_ratings %}
 
             <!-- for user to view own rating -->
-                    <div class="col" id="rating_div_{{ rating.rating_id}}">
+                    <div class="col rating_div" id="rating_div_{{ rating.rating_id}}">
                     {% if rating.user_id == user.user_id %}
-                        <h2><a href="/user-profile">{{ rating.user.username }}:</a></h2>
+                        <h2><a class="list_title" href="/user-profile">{{ rating.user.username }}:</a></h2>
                             {% if rating.score == 1 %}
                                 <div class="star">★</div>
                             {% elif rating.score == 2 %}
