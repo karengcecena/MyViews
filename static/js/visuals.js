@@ -114,7 +114,7 @@ fetch('/user-profile/watch_history.json')
           label: "Movies",
           data: movievalues,
           fill: false,
-          borderColor: 'rgb(190, 20, 20)',
+          borderColor: 'rgb(186, 85, 211)',
           tension: 0.1
         },
         {

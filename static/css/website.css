@@ -4,6 +4,10 @@ img {
     width: 125px;
 }
 
+a:hover {
+    color: rgb(168, 165, 165);
+}
+
 /* star code adapted from  https://www.foolishdeveloper.com/2022/01/5-star-rating-html-css.html*/
 
 /* makes stars fill in correct order and puts it on left side of page */
@@ -84,7 +88,12 @@ nav>ul>li a {
     text-decoration: none;
 }
 
-nav>ul>li a:hover:not(.active) {
+/* nav>ul>li a:hover:not(.active) {
+    background-color: #111;
+    color: rgb(146, 108, 108);
+} */
+
+nav>ul>li a:hover(.active) {
     background-color: #111;
     color: white;
 }
@@ -120,6 +129,7 @@ nav>ul>li a:hover:not(.active) {
     /* background-color: rgb(118, 118, 118); */
     overflow: auto;
     white-space: nowrap;
+    /* display: flex; */
   }
   
 .scrollmenu > .col {
@@ -131,7 +141,8 @@ nav>ul>li a:hover:not(.active) {
 }
 
 .scrollmenu > .col:hover {
-    background-color: rgb(203, 203, 203); 
+    background-color: rgba(148, 84, 92, .3);
+    /* margin-bottom: 0; */
 }
 
 body {
@@ -151,9 +162,22 @@ body {
     color: white ;
 }
 
+
+/* div assignments */
 .media_title {
     color: white ;
+    /* max-height: 20%; */
 }
+
+
+/* .media_rating {
+    max-height: 20%;
+}
+
+.media_poster_path {
+    max-height: 60%;
+} */
+
 
 /* #genre-chart {
     background-color: rgb(51, 51, 51, 0.95);
@@ -201,6 +225,7 @@ body {
 
 .container-flex {
     background-color: rgb(51, 51, 51, .7);
+    min-height: 100vh;
 }
 
 #media_info_img {

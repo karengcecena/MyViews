@@ -27,6 +27,8 @@
         <input type="hidden" id="user2_id" value="{{ user2.user_id }}">
     </div>
 
+    <br>
+
     <div class="followbtn text-center"> 
         {% if user2 in user.following %}
             
@@ -39,13 +41,17 @@
         {% endif %} 
     </div>
 
+    <br>
+
 
     <div class="row lists">
         <div class="row title">
             <h2>Watched List:</h2>
         </div>
 
+
         <div class="scrollmenu">
+            <br>
         {% for media in user2.watched_list %}
             <div class="col media_card">
                 <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
@@ -77,6 +83,7 @@
         </div>
 
         <div class="scrollmenu">
+            <br>
         {% for media in user2.to_be_watched_list %}
             <div class="col media_card">
                 <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>
@@ -110,6 +117,7 @@
                 </div>
 
                 <div class="scrollmenu">
+                    <br>
                 {% for media in playlist.medias %}
                     <div class="col media_card">
                         <a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br>

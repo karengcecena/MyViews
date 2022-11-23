@@ -27,7 +27,7 @@
         
         <div class="scrollmenu">
         {% if movie_results %}
-            {{ movie_results }}
+            <!-- {{ movie_results }} -->
             {% for movie in movie_results %}
             <div class="col media_card">
                 <a class= "media_title text-wrap" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br>
