@@ -26,19 +26,19 @@
         </div>
         
         <div class="scrollmenu">
-        {% if movie_results %}
-            <!-- {{ movie_results }} -->
-            {% for movie in movie_results %}
-            <div class="col media_card">
-                <a class= "media_title text-wrap" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br>
-                <img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}">
-                <br>
-            </div>
-            {% endfor %}
-        
-        {% else %}
-            <p>Sorry, there are no movies in your recommended at the moment. Try adding more to your watched list.</p>
-        {% endif %}
+            <br>
+            {% if movie_results %}
+                {% for movie in movie_results %}
+                <div class="col media_card">
+                    <div class="media_title"><a class= "media_title text-wrap" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br></div>
+                    <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}" alt=""></div>
+                    <br>
+                </div>
+                {% endfor %}
+            
+            {% else %}
+                <p>Sorry, there are no movies in your recommended at the moment. Try adding more to your watched list.</p>
+            {% endif %}
         </div>
     </div>
 
@@ -50,18 +50,19 @@
         </div>
 
         <div class="scrollmenu">
-        {% if show_results %}
-            {% for show in show_results %}
-            <div class="col media_card">
-                <a class="media_title text-wrap" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a><br>
-                <img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}">
-                <br>
-            </div>
-            {% endfor %}
-            
-        {% else%}
-            <p>Sorry, there are no shows in your recommended at the moment. Try adding more to your watched list.</p>
-        {% endif %}
+            <br>
+            {% if show_results %}
+                {% for show in show_results %}
+                <div class="col media_card">
+                    <div class="media_title"><a class="media_title text-wrap" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a><br></div>
+                    <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}" alt=""></div>
+                    <br>
+                </div>
+                {% endfor %}
+                
+            {% else%}
+                <p>Sorry, there are no shows in your recommended at the moment. Try adding more to your watched list.</p>
+            {% endif %}
         </div>
     </div>
 
@@ -73,10 +74,11 @@
         </div>
 
         <div class="scrollmenu">
+            <br>
             {% for movie in trending_movie_results %}
             <div class="col media_card">
-                <a class= "media_title text-wrap" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br>
-                <img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}">
+                <div class="media_title"><a class= "media_title text-wrap" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a><br></div>
+                <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}" alt=""></div>
                 <br>
             </div>
             {% endfor %}
@@ -92,10 +94,11 @@
         </div>
 
         <div class="scrollmenu">
+            <br>
             {% for show in trending_show_results %}
             <div class="col media_card">
-                <a class= "media_title text-wrap" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a><br>
-                <img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}">
+                <div class="media_title"><a class= "media_title text-wrap" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a><br></div>
+                <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}" alt=""></div>
                 <br>
             </div>
             {% endfor %}
