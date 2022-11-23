@@ -2,9 +2,10 @@
 function MediaCard(props) {
     return (
       <div className="media_card text-center">
-        <a className="media_title" href={`/media-info/${props.mediaType}/${props.TMDB_id}`}>{props.title}</a>
         <br></br>
-        <img src={`https://image.tmdb.org/t/p/original${props.posterPath}`} alt="" />
+        <div class="media_title"><a className="media_title" href={`/media-info/${props.mediaType}/${props.TMDB_id}`}>{props.title}</a></div>
+        <br></br>
+        <div class="media_poster_path"><img src={`https://image.tmdb.org/t/p/original${props.posterPath}`} alt="No Poster Path Available"/></div>
       </div>
     );
   }
