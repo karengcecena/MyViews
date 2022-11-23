@@ -78,40 +78,42 @@ function SearchMedia(props) {
                   <li><a href="/logout">Logout</a></li>
                 </ul>
             </nav>
-            <div class="container search_page">
-              <br></br><br></br><br></br><br></br>
-              <div class="search_bar text-center">
-                {/* <h1> Search by title: </h1> */}
-                <label htmlFor="searchInput"><h1> Search by title: </h1></label>
-                    <input
-                        name="search"
-                        onChange={(event) => setSearch(event.target.value)}
-                        id="searchInput"
-                    ></input>
-                <label htmlFor="movieInput">
-                    <input
-                      type="radio"
-                      value="movie"
-                      name="mediaTypeToSearch"
-                      onChange={(event) => setMediaTypeToSearch(event.target.value)}
-                      id="movieInput"
-                    /> movie 
-                  </label>
-                  <label htmlFor="showInput">
-                    <input
-                      type="radio"
-                      value="tv"
-                      name="mediaTypeToSearch"
-                      onChange={(event) => setMediaTypeToSearch(event.target.value)}
-                      id="showInput"
-                      /> tv show 
-                  </label>
-                  <button onClick={searchMediaInfo}>
-                      Search
-                  </button>
-              </div>
-              <br></br>
-              <div className="grid">{mediaCardsList}</div>
+            <div class="container-flex">
+              <div class="container search_page">
+                <br></br><br></br><br></br><br></br>
+                  <div class="search_bar text-center">
+                    {/* <h1> Search by title: </h1> */}
+                    <label htmlFor="searchInput"><h1> Search by title: </h1></label>
+                        <input
+                            name="search"
+                            onChange={(event) => setSearch(event.target.value)}
+                            id="searchInput"
+                        ></input>
+                    <label htmlFor="movieInput">
+                        <input
+                          type="radio"
+                          value="movie"
+                          name="mediaTypeToSearch"
+                          onChange={(event) => setMediaTypeToSearch(event.target.value)}
+                          id="movieInput"
+                        /> movie 
+                      </label>
+                      <label htmlFor="showInput">
+                        <input
+                          type="radio"
+                          value="tv"
+                          name="mediaTypeToSearch"
+                          onChange={(event) => setMediaTypeToSearch(event.target.value)}
+                          id="showInput"
+                          /> tv show 
+                      </label>
+                      <button onClick={searchMediaInfo}>
+                          Search
+                      </button>
+                  </div>
+                  <br></br>
+                  <div className="grid">{mediaCardsList}</div>
+                </div>
             </div>
         </React.Fragment>
     );
