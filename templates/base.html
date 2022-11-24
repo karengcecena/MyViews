@@ -34,11 +34,13 @@
 </head>
 <body>
 
-    <!-- {% for msg in get_flashed_messages() %}
+    {% for msg in get_flashed_messages() %}
+    <div> <br><br><br>
     <p class="flash-msg">
       {{ msg }}
     </p>
-    {% endfor %} -->
+    </div>
+    {% endfor %}
 
     {% block body %}{% endblock %}
     {% block js %}{% endblock %}

@@ -768,3 +768,61 @@
 #         db.session.commit()
 
 #     return jsonify({"success": f"The playlist has successfully been deleted"})
+
+#Trying to change the way scores work#########################################################################################################################################
+#     # check if a score was input:
+#     if score and comment:   
+#             # check if user has rated this media before:
+#             if crud.user_rated(media, user):
+#                 media_rating = crud.user_rated(media, user)
+#                 media_rating.score = score
+#                 media_rating.review_input = comment
+#                 db.session.commit()
+#                 # add time watched if exists: 
+#                 # if time_watched:
+#                 #     media.time_watched = time_watched
+#                 #     db.session.commit()
+#                 # flash(f"Your score has been updated to {score} and your comment was successfully added to {media.title}")
+#             else:
+#                 # media_rating = crud.user_rated(media, user)
+#                 media_rating = crud.add_rating_to_db(score, user.user_id, media.media_id, comment)
+#                 db.session.add(media_rating)
+#                 db.session.commit()
+#                 # add time watched if exists: 
+#                 # if time_watched:
+#                 #     media.time_watched = time_watched
+#                 #     db.session.commit()
+#                 flash(f"Your score has been updated to {score} for {media.title}")
+#     elif score:
+#         # add rating to media
+#         rating = crud.add_rating_to_db(score, user.user_id, media.media_id, comment)
+#         db.session.add(rating)
+#         db.session.commit()
+#         # add time watched if exists: 
+#         # if time_watched:
+#         #     media.time_watched = time_watched
+#         #     db.session.commit()
+#         flash(f"Your rating of {score} out of 5 and comment were successfully added for {media.title}")
+
+#         # add media to watched list: 
+#         if not crud.user_sorted_Watched(media, user):
+#             # add to watched list
+#             media_folder = crud.add_to_WatchedList(media, user)
+#             db.session.add(media_folder)
+#             db.session.commit()
+#             flash(f"{media.title} has been added to your watched list")
+
+#     elif comment:
+#         if crud.user_rated(media, user):
+#             media_rating = crud.user_rated(media, user)
+#             media_rating.review_input = comment
+#             db.session.commit()
+#         else:
+#             rating = crud.add_rating_to_db(score, user.user_id, media.media_id, comment)
+
+
+
+    # else: 
+    #     flash("Sorry, it seems no score was selected.")
+
+    ##########################################################################################################################################

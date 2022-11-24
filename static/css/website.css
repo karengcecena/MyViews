@@ -19,7 +19,11 @@ justify-content: flex-end;
 
 /* takes input bubble away */
 .rating > input{
-    display:none;
+    /* display:none; */
+    opacity: 0;
+    /* border: 0px; */
+    width: 0.5%;
+    /* height: 2em; */
 }
 
 /* makes stars yellow */
@@ -278,13 +282,12 @@ button:hover{
     opacity: 0;
 }
 
-/* .rating_div {
-    background-color: rgba(51, 51, 51, 0.95);
-    margin: 0 auto;
-    border-radius: 5px;
-} */
-
-/* 
-.btn-close {
+.review_input {
     color: white ;
-} */
+}
+
+.rating_div {
+    background-color: rgba(51, 51, 51, 0.9);
+    padding: 0;
+    margin: 0 auto;
+}

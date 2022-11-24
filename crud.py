@@ -41,10 +41,14 @@ def add_movie_to_db(movie_info):
     media_type = "movie"
     title = movie_info["original_title"]
     overview = movie_info["overview"]
-    release_date = movie_info["release_date"]
+    # added for dateTime errors for one's without release date 
+    if movie_info["release_date"]:
+        release_date = movie_info["release_date"]
+    else:
+        release_date = None
     poster_path = movie_info["poster_path"]
 
-    return Media(TMDB_id=TMDB_id, media_type=media_type, title=title, overview=overview, release_date=release_date, poster_path=poster_path )
+    return Media(TMDB_id=TMDB_id, media_type=media_type, title=title, overview=overview, release_date=release_date, poster_path=poster_path)
 
 def add_show_to_db(show_info):
     """Adds show to DB"""
@@ -53,9 +57,12 @@ def add_show_to_db(show_info):
     media_type = "tv"
     title = show_info["name"]
     overview = show_info["overview"]
-    release_date = show_info["first_air_date"]
+    # added for dateTime errors for one's without release date 
+    if show_info["first_air_date"]:
+        release_date = show_info["first_air_date"]
+    else:
+        release_date = None
     poster_path = show_info["poster_path"]
-
     return Media(TMDB_id=TMDB_id, media_type=media_type, title=title, overview=overview, release_date=release_date, poster_path=poster_path )
 
 
