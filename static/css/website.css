@@ -236,8 +236,14 @@ body {
 }
 
 #media_info_img {
-    width: 20%;
-    height: 20%;
+    width: 50%;
+    height: 50%;
+    margin: 0 auto;
+}
+
+#media_info_img_smaller{
+    width: 26%;
+    height: 26%;
     margin: 0 auto;
 }
 
@@ -291,4 +297,17 @@ button:hover{
     background-color: rgba(51, 51, 51, 0.9);
     padding: 0;
     margin: 0 auto;
+}
+
+.media_info_page {
+    min-height: 83vh;
+}
+
+.overview {
+    font-size: 25px;
+    margin: auto;
+}
+
+.media_img_and_modals{
+    margin: auto;
 }

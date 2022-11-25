@@ -33,20 +33,43 @@
 
     </div>
 
-    <div class="overview row text-center">
+    <div class="row media_info_page">
+
+    {% if data["overview"] %}
+    <div class="overview col text-center">
         <p>{{data["overview"]}}</p>
     </div>
 
+    {% else %}
+
+    <div class="overview text-center">
+        <p>{{data["overview"]}}</p>
+    </div>
+
+    {% endif %}
+
         {% if user %}
+
+        <div class="col media_img_and_modals">
 
         <div class="row"> 
 
             <!-- <div class="column-6"> -->
 
+                {% if data["overview"] %}
+
                 <img id="media_info_img" src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}" alt="No Poster Path Available">
+
+                {% else %}
+
+                <img id="media_info_img_smaller" src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}" alt="No Poster Path Available">
+
+                {% endif %}
 
             <!-- </div> -->
         </div>
+
+        
             <br>
         <div id="modal_center"> 
             <!-- <div class="column-6"> -->
@@ -196,10 +219,12 @@
                         </div>
                     </div>
                     </div>
-            <!-- </div> -->
+            </div>
 
         </div>
         <br>
+
+    </div>
 
         <!-- display ratings for FRIENDS ONLY:  -->
         
@@ -271,12 +296,20 @@
         
         
         {% else %}
+        <div class="col media_img">
+            <br>
             <div class="row"> 
 
-                <img id="media_info_img" src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}">
+                {% if data["overview"] %}
 
-            </div>
+                    <img id="media_info_img" src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}" alt="No Poster Path Available">
 
+                {% else %}
+
+                    <img id="media_info_img_smaller" src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}" alt="No Poster Path Available">
+
+                {% endif %}
+        </div>
         {% endif %}
 
 </div>
