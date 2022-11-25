@@ -35,19 +35,6 @@
 
     <div class="row media_info_page">
 
-    {% if data["overview"] %}
-    <div class="overview col text-center">
-        <p>{{data["overview"]}}</p>
-    </div>
-
-    {% else %}
-
-    <div class="overview text-center">
-        <p>{{data["overview"]}}</p>
-    </div>
-
-    {% endif %}
-
         {% if user %}
 
         <div class="col media_img_and_modals">
@@ -223,6 +210,19 @@
 
         </div>
         <br>
+        {% if data["overview"]%}
+        
+            <div class="overview col text-center">
+                <p>{{data["overview"]}}</p>
+            </div>
+
+        {% else %}
+
+            <div class="overview text-center">
+                <p>{{data["overview"]}}</p>
+            </div>
+
+        {% endif %}
 
     </div>
 
@@ -296,20 +296,30 @@
         
         
         {% else %}
-        <div class="col media_img">
-            <br>
-            <div class="row"> 
+        <!-- <div class="col media_img"> -->
+            <!-- <br> -->
 
                 {% if data["overview"] %}
+                    <div class="col media_img">
+                        <br>
+                        <div class="row">
+                            <img id="media_info_img" src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}" alt="No Poster Path Available">
+                        </div>
+                    </div>
 
-                    <img id="media_info_img" src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}" alt="No Poster Path Available">
-
+                    <div class="overview col text-center">
+                        <p>{{data["overview"]}}</p>
+                    </div>
+    
                 {% else %}
-
-                    <img id="media_info_img_smaller" src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}" alt="No Poster Path Available">
-
+                <div class="col media_img">
+                    <br>
+                    <div class="row">
+                        <img id="media_info_img_smaller" src="https://image.tmdb.org/t/p/original{{ data['poster_path'] }}" alt="No Poster Path Available">
+                    </div>
+                </div>
                 {% endif %}
-        </div>
+        <!-- </div> -->
         {% endif %}
 
 </div>
