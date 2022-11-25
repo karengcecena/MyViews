@@ -91,7 +91,8 @@ fetch('/user-profile/watch_history.json')
   
     for (const movie_value of responseJson.moviedata){
         movievalues.push({
-          x: movie_value["day"],
+          // x: movie_value["day"],
+          x: movie_value["month"],
           y: movie_value["number_of_movies"]
         })
        
@@ -99,7 +100,8 @@ fetch('/user-profile/watch_history.json')
 
     for (const show_value of responseJson.showdata){
       showvalues.push({
-        x: show_value["day"],
+        // x: show_value["day"],
+        x: show_value["month"],
         y: show_value["number_of_shows"]
       })
     };
@@ -108,31 +110,34 @@ fetch('/user-profile/watch_history.json')
     console.log(showvalues)
 
     new Chart(document.querySelector('#watch-history-chart'), {
-      type: 'line',
+      type: 'bar',
       data: {
         datasets: [{
           label: "Movies",
           data: movievalues,
           fill: false,
-          borderColor: 'rgb(186, 85, 211)',
-          tension: 0.1
+          backgroundColor: 'rgb(186, 85, 211)',
+          // borderColor: 'rgb(186, 85, 211)',
+          // tension: 0.1
         },
         {
             label: "TV Shows",
             data: showvalues,
             fill: false,
-            borderColor: 'rgb(75, 192, 75)',
-            tension: 0.1
+            backgroundColor: 'rgb(75, 192, 75)',
+            // borderColor: 'rgb(75, 192, 75)',
+            // tension: 0.1
           },
         ],
       },
 
       options: {
+        responsive: true,
         scales: {
           y: {
+            beginAtZero: true,
             ticks: {
               min:0,
-              beginAtZero: true,
               stepSize: 1,
               color: 'white',
             },

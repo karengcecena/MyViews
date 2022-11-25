@@ -591,11 +591,15 @@ def get_users_watch_history():
     movie_history = []
     show_history = []
 
-    for day, total in user_movie_watch_history.items():
-        movie_history.append({'day': day.isoformat(),'number_of_movies': total})
+    # for day, total in user_movie_watch_history.items():
+        # movie_history.append({'day': day.isoformat(),'number_of_movies': total})
+    for month, total in user_movie_watch_history.items():
+        movie_history.append({'month': month,'number_of_movies': total})
 
-    for day, total in user_show_watch_history.items():
-        show_history.append({'day': day.isoformat(),'number_of_shows': total})
+    # for day, total in user_show_watch_history.items():
+        # show_history.append({'day': day.isoformat(),'number_of_shows': total})
+    for month, total in user_show_watch_history.items():
+        show_history.append({'month': month,'number_of_shows': total})
 
     return jsonify({"moviedata": movie_history, "showdata": show_history})
 

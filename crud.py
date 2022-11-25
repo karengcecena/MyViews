@@ -162,7 +162,7 @@ def get_user_movie_watch_history(user):
     movie_watch_history = {}
 
     for movie in users_movies:
-        movie_watch_history[movie.time_watched] = movie_watch_history.get(movie.time_watched, 0) + 1
+        movie_watch_history[(movie.time_watched).strftime("%Y-%m")] = movie_watch_history.get((movie.time_watched).strftime("%Y-%m"), 0) + 1
 
     # code adapted from https://www.geeksforgeeks.org/python-sort-a-dictionary/
     sorted_movie_watch_history = {key: val for key, val in sorted(movie_watch_history.items(), key = lambda ele: ele[0])}
@@ -182,7 +182,7 @@ def get_user_show_watch_history(user):
     show_watch_history = {}
 
     for show in users_shows:
-        show_watch_history[show.time_watched] = show_watch_history.get(show.time_watched, 0) + 1
+        show_watch_history[(show.time_watched).strftime("%Y-%m")] = show_watch_history.get((show.time_watched).strftime("%Y-%m"), 0) + 1
 
     # code adapted from https://www.geeksforgeeks.org/python-sort-a-dictionary/
     sorted_show_watch_history = {key: val for key, val in sorted(show_watch_history.items(), key = lambda ele: ele[0])}
