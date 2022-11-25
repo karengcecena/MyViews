@@ -188,7 +188,8 @@ body {
     background:url(/static/img/media_project_bg_1.jpeg) no-repeat center center fixed;
     background-size: cover;
     color: white ;
-    font-family: "Lucida Console", "Courier New", monospace;
+    /* font-family: "Lucida Console", "Courier New", monospace; */
+    font-family: "Times New Roman", Times, serif;
     /* font: "Neue Helvetica Light"; */
 
 }

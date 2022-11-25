@@ -61,17 +61,14 @@ fetch('/user-profile/genres.json')
           position: 'top',
           labels: {
             color: 'white',
-            font: {family: 'Lucida Console', size: 15 }
+            font: {family: "Times", size: 15 }
           }
         },
         title: {
           display: true,
           text: 'Your Movie Watched List Genres:',
           color: 'white',
-          font: {
-            family: 'Lucida Console', 
-            size: 20 
-          }
+          font: {family: 'Times', size: 20 }
         }
       }
     },
@@ -168,14 +165,14 @@ fetch('/user-profile/watch_history.json')
             position: 'top',
             labels: {
               color: 'white',
-              font: {family: 'Lucida Console', size: 15 }
+              font: {family: 'Times', size: 15 }
             }
           },
           title: {
             display: true,
             text: 'Your Watched List History:',
             color: 'white',
-            font: {family: 'Lucida Console', size: 20 }
+            font: {family: 'Times', size: 20 }
           }
         }
       }
