@@ -81,10 +81,9 @@ function SearchMedia(props) {
             </nav>
             <div class="container-flex">
               <div class="container search_page">
-                <br></br><br></br><br></br><br></br>
+                <div class="row search_page_row">
                   <div class="search_bar text-center">
-                    {/* <h1> Search by title: </h1> */}
-                    <label htmlFor="searchInput"><h1> Search by title:</h1></label>
+                    <label htmlFor="searchInput"><h1 id="search_title"> Search by title:</h1></label>
                         <input
                             name="search"
                             onChange={(event) => setSearch(event.target.value)}
@@ -112,7 +111,7 @@ function SearchMedia(props) {
                           Search
                       </button>
                   </div>
-                  <br></br>
+                  </div>
                   <div className="grid">{mediaCardsList}</div>
                 </div>
             </div>

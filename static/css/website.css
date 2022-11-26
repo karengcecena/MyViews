@@ -10,6 +10,8 @@ a:hover {
 
 .child {
     padding: 1%;
+    background-color: rgb(118, 118, 118, .8);
+    border-radius: 5px;
 }
 
 .row {
@@ -163,6 +165,10 @@ nav>ul>li a:hover(.active) {
 
 }
 
+.media_card:hover {
+    background-color: rgba(148, 84, 92, .3);
+}
+
 .media_card_edit_lists {
     background-color: rgba(51, 51, 51, 0.95);
     border-radius: 5px;
@@ -188,6 +194,16 @@ nav>ul>li a:hover(.active) {
     padding-top: 5%;
 }
 
+#search_title {
+    font-size: 32px; 
+}
+
+.search_page_row {
+    /* position: absolute; */
+    margin: auto 0;
+    padding-top: 6%;
+    padding-bottom: 2%; 
+}
 
 /* .media_rating {
     max-height: 20%;
@@ -236,12 +252,6 @@ body {
 
 .friend {
     background-color: rgba(71, 50, 50, 0.9);
-}
-
-
-.child {
-    background-color: rgb(118, 118, 118, .8);
-    border-radius: 5px;
 }
 
 .container-flex {
@@ -338,4 +348,8 @@ button:hover{
 .media_rating_list {
     max-height: 57px;
     min-height: 57px;
+}
+
+.followbtn {
+    padding: 0.75%;
 }

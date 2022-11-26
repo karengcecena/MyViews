@@ -19,15 +19,12 @@
 
 <div class="container">
 
-    <br><br><br>
-
-    <div class="row title text-center"> 
+    <div class="row title profile_title text-center"> 
         <h1> {{ user2.username }} </h1>
 
         <input type="hidden" id="user2_id" value="{{ user2.user_id }}">
     </div>
 
-    <br>
 
     <div class="followbtn text-center"> 
         {% if user2 in user.following %}
@@ -41,7 +38,7 @@
         {% endif %} 
     </div>
 
-    <br>
+
 
 
     <div class="row lists">
@@ -51,10 +48,9 @@
 
 
         <div class="scrollmenu">
-            <br>
         {% for media in user2.watched_list %}
             <div class="col media_card">
-                <div class="media_title"><a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a></div><br>
+                <div class="media_title"><a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a></div>
                 <div class="media_rating">
                 {% for rating in media.ratings %}
                     {% if rating.user_id == user2.user_id %}
@@ -80,7 +76,6 @@
                 <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}" alt=""></div>
             </div>
         {% endfor %}
-        <br><br><br>
         </div>
 
    
@@ -90,10 +85,9 @@
         </div>
 
         <div class="scrollmenu">
-            <br>
         {% for media in user2.to_be_watched_list %}
             <div class="col media_card">
-                <div class="media_title"><a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a></div><br>
+                <div class="media_title"><a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a></div>
                 <div class="media_rating">
                 {% for rating in media.ratings %}
                     {% if rating.user_id == user2.user_id %}
@@ -117,10 +111,9 @@
                 <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}" alt=""></div>
             </div>
         {% endfor %}
-        <br><br><br>
+
          </div>
 
-        <!-- <br><br> -->
 
         <div class="row playlists">
             {% for playlist in user2.playlists %}
@@ -129,10 +122,9 @@
                 </div>
 
                 <div class="scrollmenu">
-                    <br>
                 {% for media in playlist.medias %}
                     <div class="col media_card">
-                        <div class="media_title"><a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a></div><br>
+                        <div class="media_title"><a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a></div>
                         <div class="media_rating">
                         {% for rating in media.ratings %}
                             {% if rating.user_id == user2.user_id %}
@@ -156,7 +148,6 @@
                         <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}" alt=""></div>
                     </div>
                 {% endfor %}
-                <br><br><br>
             {% endfor %}
          </div>
     </div>
