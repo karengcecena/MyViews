@@ -190,7 +190,11 @@ nav>ul>li a:hover(.active) {
     -webkit-box-orient: vertical;
 }
 
-.profile_title {
+/* .profile_title {
+    padding-top: 5%;
+} */
+
+.page_title {
     padding-top: 5%;
 }
 
