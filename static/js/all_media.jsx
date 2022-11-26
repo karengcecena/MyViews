@@ -84,7 +84,7 @@ function SearchMedia(props) {
                 <br></br><br></br><br></br><br></br>
                   <div class="search_bar text-center">
                     {/* <h1> Search by title: </h1> */}
-                    <label htmlFor="searchInput"><h1> Search by title: </h1></label>
+                    <label htmlFor="searchInput"><h1> Search by title:</h1></label>
                         <input
                             name="search"
                             onChange={(event) => setSearch(event.target.value)}

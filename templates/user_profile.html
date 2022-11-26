@@ -26,10 +26,8 @@
 
 <div class="container">
 
-    <br><br><br>
-
-    <div class="row title text-center">
-            <h1>{{ user.username }}'s profile</h1>
+    <div class="row title profile_title text-center">
+            <h1>{{ user.username }}</h1>
     </div>
 
     <div class="row graphs">
@@ -50,8 +48,6 @@
 
     </div>
 
-    <br><br>
-
     <div class="row add_playlist">
         <div class="col text-center">
             <form action="/create-playlist" method="POST" id="create_playlist_form">
@@ -64,8 +60,6 @@
             <!-- <p>Or view your lists below:</p> -->
         </div>
     </div>
-        
-    <br>
 
     <div class="row watched">
 
@@ -75,10 +69,9 @@
 
 
         <div class="scrollmenu">
-            <br>
             {% for media in user.watched_list %}
                     <div class="col media_card text-center" id="watch_list_div_{{ media.media_id }}">
-                        <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
+                        <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a></div>
                         <div class="media_rating">
                         {% for rating in media.ratings %}
                             <div class="row_media_rating" id="rating_div_{{ rating.rating_id }}">
@@ -107,10 +100,6 @@
         </div>
     </div>
 
-
-    <br><br>
-
-
     <div class="row to_be_watched">
 
 
@@ -119,10 +108,9 @@
         </div>
 
         <div class="scrollmenu">
-            <br>
             {% for media in user.to_be_watched_list %}
                     <div class="col media_card text-center" id="to_be_watch_list_div_{{ media.media_id }}">
-                        <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
+                        <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a></div>
                         <div class="media_rating">
                         {% for rating in media.ratings %}
                             <div id="rating_div_{{ rating.rating_id }}">
@@ -152,10 +140,6 @@
          </div>
     </div>
 
-
-    <br><br>
-
-
     <div class="row playlists">
         {% for playlist in user.playlists %}
         <div class="row title" id="playlist_div_{{ playlist.playlist_id }}">
@@ -164,10 +148,9 @@
             
 
         <div class="scrollmenu">
-            <br>
             {% for media in playlist.medias %}
                 <div class="col media_card text-center" id="{{ playlist.playlist_id }}_media_div_{{ media.media_id }}">
-                     <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}">{{ media.title }}</a><br></div>
+                     <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}">{{ media.title }}</a></div>
 
                     <div class="media_rating">
                     {% for rating in media.ratings %}
@@ -194,7 +177,6 @@
                     <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}" alt=""></div>
                 </div>
             {% endfor %}
-            <br><br>
         </div>
         {% endfor %}
     </div>
@@ -215,10 +197,9 @@
             <!-- </div> -->
 
             <div class="scrollmenu">
-                <br>
             {% for media in friend.watched_list %}
                 <div class="col media_card text-center">
-                    <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
+                    <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a></div>
                     <div class="media_rating">
                     {% for rating in media.ratings %}
                         {% if rating.user_id == friend.user_id %}
@@ -242,7 +223,6 @@
                      <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}" alt=""></div>
                 </div>
             {% endfor %}
-            <br><br>
             </div>
 
             {% endfor %}
