@@ -67,6 +67,7 @@
         <div class="grid">
         {% for media in playlist.medias %}
             <div class="media_card text-center" id="playlist_media_div_{{ media.media_id }}">
+                <br>
                 <div class="media_title"><a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
                 <div class="media_rating">
                 {% for rating in media.ratings %}
