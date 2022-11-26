@@ -27,7 +27,7 @@ flex-direction: row-reverse;
 justify-content: flex-end;
 }
 
-/* takes input bubble away */
+/* hides input bubble */
 .rating > input{
     /* display:none; */
     opacity: 0;
@@ -190,8 +190,8 @@ nav>ul>li a:hover(.active) {
     -webkit-box-orient: vertical;
 }
 
-/* .profile_title {
-    padding-top: 5%;
+/* .media_title_grid {
+    padding-top: 4%;
 } */
 
 .page_title {
@@ -203,15 +203,10 @@ nav>ul>li a:hover(.active) {
 }
 
 .search_page_row {
-    /* position: absolute; */
     margin: auto 0;
     padding-top: 6%;
     padding-bottom: 2%; 
 }
-
-/* .media_rating {
-    max-height: 20%;
-} */
 
 .media_poster_path > img {
   height: 187.5px;
@@ -224,7 +219,6 @@ body {
     color: white ;
     /* font-family: "Lucida Console", "Courier New", monospace; */
     font-family: "Times New Roman", Times, serif;
-    /* font: "Neue Helvetica Light"; */
 
 }
 
@@ -239,16 +233,6 @@ body {
 .graphs {
     background-color: rgb(51, 51, 51, 0.95);
 }
-
-/* #genre-chart {
-    background-color: rgb(51, 51, 51, 0.95);
-
-}
-
-#watch-history-chart {
-    background-color: rgb(51, 51, 51, 0.95);
-} */
-
 
 .title {
     background-color: rgba(148, 84, 92, 0.5)
@@ -290,7 +274,6 @@ body {
 }
 
 button {
-    /* background-color: rgb(205, 203, 203); */
     background-color: rgba(148, 84, 92, 0.5);
     border-radius: 5px;
     border-color: rgba(148, 84, 92, 0.5);
