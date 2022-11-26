@@ -19,22 +19,16 @@
 
 <div class="container">
 
-    <br><br><br>
-
-    <div class="row title text-center">
+    <div class="row title page_title text-center">
         <h2>Edit your playlist "{{ playlist.name }}":</h2>
     </div>
 
-    <div class="modalbtn text-center">
-
-        <br>
+    <div class="modalbtn delete_playlist_btn text-center">
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal5">
             Delete Playlist
         </button>
-
-        <br>
 
         <!-- Modal -->
         <div class="modal fade" id="modal5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -68,7 +62,7 @@
         {% for media in playlist.medias %}
             <div class="media_card text-center" id="playlist_media_div_{{ media.media_id }}">
                 <br>
-                <div class="media_title"><a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
+                <div class="media_title"><a class= "media_title" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a></div>
                 <div class="media_rating">
                 {% for rating in media.ratings %}
                 <div id="rating_div_{{ rating.rating_id }}">
@@ -96,7 +90,6 @@
                 
                 <!-- give option to remove from playlist-->
                 <button type="button" class="deleting-from-playlist-btn" value="{{ media.media_id }}">Remove from playlist</button>
-                <br>
             </div>
 
         {% endfor %}
