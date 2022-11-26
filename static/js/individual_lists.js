@@ -71,9 +71,9 @@ for (const deleteBtn of deleteRatingBtns) {
 
     .then((response) => response.json())
     .then((responseJson) => {
-      // document.querySelector(`#rating_div_${deleteBtn.value}`).remove();
-      document.querySelector('.deleting-rating-btn').classList.add("filler-btn");
-      document.querySelector('.star').classList.add("blank-star");
+      document.querySelector(`#rating_div_${deleteBtn.value}`).remove();
+      // document.querySelector('.deleting-rating-btn').classList.add("filler-btn");
+      // document.querySelector('.star').classList.add("blank-star");
       });
   })
 }

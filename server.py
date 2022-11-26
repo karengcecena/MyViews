@@ -101,7 +101,7 @@ def register_user():
         db.session.add(user)
         db.session.commit()
         session["username"] = username
-        flash ("Succesfully created user")
+        # flash ("Succesfully created user")
         return redirect("/user-profile")
 
     return redirect ("/")

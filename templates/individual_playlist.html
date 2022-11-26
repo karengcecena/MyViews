@@ -83,19 +83,12 @@
                         {% elif rating.score == 5 %}
                             <div class="star">★★★★★</div>      
                         {% endif %}
-
-                    {% else %}
-                        <div class="blank-star">★★★★★</div>
-                    
                     <!-- give option to delete rating -->
                         <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button>
                     {% endif %}
                 </div>
                 {% endfor %}
 
-                {% if not media.ratings %}
-                    <div class="blank-star">★★★★★</div>
-                {% endif %}
                 </div>
 
                 <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}"></div>

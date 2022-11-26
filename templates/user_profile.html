@@ -81,7 +81,7 @@
                         <div class="media_title"><a class= "media_title text-wrap" href="/media-info/{{ media.media_type }}/{{ media.TMDB_id }}" >{{ media.title }}</a><br></div>
                         <div class="media_rating">
                         {% for rating in media.ratings %}
-                            <div id="rating_div_{{ rating.rating_id }}">
+                            <div class="row_media_rating" id="rating_div_{{ rating.rating_id }}">
                             {% if rating.user_id == user.user_id %}
                                 {% if rating.score == 1 %}
                                     <div class="star">★</div>
@@ -95,16 +95,10 @@
                                     <div class="star">★★★★★</div>
                                 {% endif %}
 
-                            {% else %}
-                                <div class="blank-star">★★★★★</div>
                             {% endif %}
 
                             </div>
                         {% endfor %}
-
-                        {% if not media.ratings %}
-                            <div class="blank-star">★★★★★</div>
-                        {% endif %}
                         </div>
 
                         <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}" alt=""></div>
@@ -145,16 +139,10 @@
                                     <div class="star">★★★★★</div>
                                 {% endif %}
 
-                            {% else %}
-                                <div class="blank-star">★★★★★</div>
-
                             {% endif %}
                             </div>
                         {% endfor %}
 
-                        {% if not media.ratings %}
-                            <div class="blank-star">★★★★★</div>
-                        {% endif %}
                         </div>
 
                         <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}" alt=""></div>
@@ -197,15 +185,10 @@
                                     <div class="star">★★★★★</div>
                                 {% endif %}
 
-                            {% else %}
-                                <div class="blank-star">★★★★★</div>
                             {% endif %}
                             </div>
                     {% endfor %}
 
-                    {% if not media.ratings %}
-                            <div class="blank-star">★★★★★</div>
-                    {% endif %}
                     </div>
 
                     <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}" alt=""></div>
@@ -251,15 +234,9 @@
                                 <div class="star">★★★★★</div>
                             {% endif %}
 
-                        {% else %}
-                            <div class="blank-star">★★★★★</div>
-
                         {% endif %}
                     {% endfor %}
 
-                    {% if not media.ratings %}
-                            <div class="blank-star">★★★★★</div>
-                    {% endif %}
                     </div>
 
                      <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}" alt=""></div>

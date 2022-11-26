@@ -69,18 +69,12 @@
                         {% elif rating.score == 5 %}
                             <div class="star">★★★★★</div>
 
-                        {% else %}
-                            <div class="blank-star">★★★★★</div>
-
                         {% endif %}
 
                     {% endif %}
                     
                 {% endfor %}
 
-                {% if not media.ratings %}
-                    <div class="blank-star">★★★★★</div>
-                {% endif %}
                 </div>
 
                 <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}" alt=""></div>
@@ -114,16 +108,10 @@
                         {% elif rating.score == 5 %}
                             <div class="star">★★★★★</div>
 
-                        {% else %}
-                            <div class="blank-star">★★★★★</div>   
-
                         {% endif %}
                     {% endif %}
                 {% endfor %}
 
-                {% if not media.ratings %}
-                    <div class="blank-star">★★★★★</div>
-                {% endif %}
                 </div>
 
                 <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}" alt=""></div>
@@ -159,16 +147,10 @@
                                 {% elif rating.score == 5 %}
                                     <div class="star">★★★★★</div>
 
-                                {% else %}
-                                    <div class="blank-star">★★★★★</div>
-
                                 {% endif %}
                             {% endif %}
                         {% endfor %}
 
-                        {% if not media.ratings %}
-                            <div class="blank-star">★★★★★</div>
-                        {% endif %}
                         </div>
 
                         <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ media.poster_path }}" alt=""></div>
