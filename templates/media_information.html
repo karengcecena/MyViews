@@ -229,18 +229,16 @@
         <!-- display ratings for FRIENDS ONLY:  -->
         
         {% if all_ratings %} 
-        <div>
+        <!-- <div> -->
             <div class="row">
                 <div class="title">
                     <h1> Ratings: </h1>
                 </div>
     
-            {% for rating in all_ratings %}
-
-            <!-- for user to view own rating -->
-                    <div class="row rating_div" id="rating_div_{{ rating.rating_id}}">
-                    <div>
+                {% for rating in all_ratings %}
+                <!-- for user to view own rating -->       
                     {% if rating.user_id == user.user_id %}
+                    <div class="rating_div" id="rating_div_{{ rating.rating_id}}">   
                         <br>
                         <h2><a class="list_title" href="/user-profile">Your Rating:</a></h2>
                             {% if rating.score == 1 %}
@@ -260,44 +258,37 @@
                         <!-- give option to delete rating -->
                         <br> 
                             <button type="button" class="deleting-rating-btn" value="{{ rating.rating_id }}">Delete Rating</button>
-                        </div>
-                    {% endif %}
                     </div>
-
+                    {% endif %}
+                {% endfor %}
+                
             <!-- for user to view friend's rating -->
-                <div class="row">
                     {% for friend in user.following %}
-                    <br>
-                        {% if rating.user_id == friend.user_id %}
-                        <div class="row rating_div">
-                        <br><h2><a class="list_title" href="/display-friend/{{ rating.user.username }}">{{ rating.user.username }}:</a></h2>
-                            {% if rating.score == 1 %}
-                                <div class="star">★</div>
-                            {% elif rating.score == 2 %}
-                                <div class="star">★★</div>
-                            {% elif rating.score == 3 %}
-                                <div class="star">★★★</div>
-                            {% elif rating.score == 4 %}
-                                <div class="star">★★★★</div>
-                            {% elif rating.score == 5 %}
-                                <div class="star">★★★★★</div>
-                            {% endif %}
-                        <div class="review_input">{{ rating.review_input }}</div>
-                        {% endif %} 
-                        </div>
+                        {% for rating in all_ratings %}
+                            {% if rating.user_id == friend.user_id %}
+                            <div class="rating_div">
+                                <h2><a class="list_title" href="/display-friend/{{ rating.user.username }}">{{ rating.user.username }}:</a></h2>
+                                    {% if rating.score == 1 %}
+                                        <div class="star">★</div>
+                                    {% elif rating.score == 2 %}
+                                        <div class="star">★★</div>
+                                    {% elif rating.score == 3 %}
+                                        <div class="star">★★★</div>
+                                    {% elif rating.score == 4 %}
+                                        <div class="star">★★★★</div>
+                                    {% elif rating.score == 5 %}
+                                        <div class="star">★★★★★</div>
+                                    {% endif %}
+                                <div class="review_input">{{ rating.review_input }}</div>
+                            </div>
+                            {% endif %}            
+                        {% endfor %}
                     {% endfor %}
-                    <br>
-                </div>
-            {% endfor %}
             </div>
-        </div>
-        <br><br><br><br>
         {% endif %}
         
         
         {% else %}
-        <!-- <div class="col media_img"> -->
-            <!-- <br> -->
 
                 {% if data["overview"] %}
                     <div class="col media_img">
@@ -319,7 +310,6 @@
                     </div>
                 </div>
                 {% endif %}
-        <!-- </div> -->
         {% endif %}
 
 </div>
