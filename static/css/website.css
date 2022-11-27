@@ -344,3 +344,7 @@ button:hover{
 .delete_playlist_btn {
     padding: 0.75%;
 }
+
+#create_playlist_form {
+    padding-top: 2%;
+}
