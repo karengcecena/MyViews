@@ -9,14 +9,14 @@
         <li><a href="/media-search-results-react">Search</a></li>
         <li><a href="/user-profile">Profile</a></li>
         <li><a href="/search-friends">Friends</a></li>
-        <li><a class="active" href="/recommended">Your Recommended</a></li>
+        <li><a class="active" href="/recommended">Recommended</a></li>
         <li><a href="/logout">Logout</a></li>
     </ul>
 </nav>
 
 <div class="container-flex">
 <div class="container">
-
+    {% if user %}
     <div class="row rec movie_recs">
         <div class="row title page_title">
             <h1>Movie Recommendations:</h1>
@@ -57,11 +57,18 @@
         </div>
     </div>
 
+    {% endif %}
 
     <div class="row rec movie_trends">
-        <div class="row title">
-            <h1>Movies Trending Today:</h1>
-        </div>
+        {% if not user %}
+            <div class="row title page_title">
+                <h1>Movies Trending Today:</h1>
+            </div>
+        {% else %}
+            <div class="row title">
+                <h1>Movies Trending Today:</h1>
+            </div>
+        {% endif %}
 
         <div class="scrollmenu">
             {% for movie in trending_movie_results %}

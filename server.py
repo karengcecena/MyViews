@@ -660,11 +660,31 @@ def display_recommended_media():
         trending_show_data = trending_show_res.json()
         trending_show_results = trending_show_data["results"]
 
-        return render_template("/recommended.html", movie_results=movie_results, show_results=show_results, trending_movie_results=trending_movie_results,trending_show_results=trending_show_results)
+        return render_template("/recommended.html", user=user, movie_results=movie_results, show_results=show_results, trending_movie_results=trending_movie_results,trending_show_results=trending_show_results)
 
     else:
+        # get trending movies: 
+        url = f"https://api.themoviedb.org/3/trending/movie/day"
+
+        payload = {"api_key": API_KEY} 
+
+        trending_movie_res = requests.get(url, params=payload)
+        trending_movie_data = trending_movie_res.json()
+        trending_movie_results = trending_movie_data["results"]
+
+        # get trending shows: 
+        url = f"https://api.themoviedb.org/3/trending/tv/day"
+
+        payload = {"api_key": API_KEY} 
+
+        trending_show_res = requests.get(url, params=payload)
+        trending_show_data = trending_show_res.json()
+        trending_show_results = trending_show_data["results"]
+
+        return render_template("/recommended.html", user=None, movie_results=None, show_results=None, trending_movie_results=trending_movie_results,trending_show_results=trending_show_results)
         # flash("Sorry, please log in:")
-        return redirect("/")
+
+        # return redirect("/")
 
 
 @app.route("/create-playlist", methods=["POST"])
