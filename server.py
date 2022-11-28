@@ -123,7 +123,9 @@ def login_user():
         elif argon2.verify(password, user.password):
             session["username"] = user.username
             # flash("You have successfully logged in")
-            return redirect ("/user-profile")
+            # return redirect ("/user-profile")
+            return redirect ("/media-search-results-react")
+        
         else:
             flash("Your password was incorrect. Please try again.")
 

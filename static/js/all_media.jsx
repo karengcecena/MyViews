@@ -83,11 +83,12 @@ function SearchMedia(props) {
               <div class="container search_page">
                 <div class="row search_page_row">
                   <div class="search_bar text-center">
-                    <label htmlFor="searchInput"><h1 id="search_title"> Search by title:</h1></label>
+                    <label htmlFor="searchInput"><h1 id="search_title"></h1></label>
                         <input
                             name="search"
                             onChange={(event) => setSearch(event.target.value)}
                             id="searchInput"
+                            placeholder="Search for movies and tv shows by title:"
                         ></input>
                     <label htmlFor="movieInput">
                         <input
