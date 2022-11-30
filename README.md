@@ -15,7 +15,7 @@
 
 ## <a name="deployment"></a>Deployment
 
-Check out [Host Site](http://54.218.60.203/)
+Check out MyViews [Hosted Site](http://54.218.60.203/)
 
 Or check out [MyViews](https://youtu.be/uvLiHigX4Fg) on youtube for a tutorial of its features. 
 
