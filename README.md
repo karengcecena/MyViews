@@ -57,7 +57,8 @@ Install the dependencies:
 pip install -r requirements.txt
 ```
 
-Sign up to use the [TMDB API](https://developer.uber.com/docs/rides/getting-started), and the [GitHub OAuth](https://www.lyft.com/developers)
+Sign up to use the [TMDB API](https://developer.uber.com/docs/rides/getting-started), and the [GitHub OAuth](https://github.com/settings/applications/new). 
+For more information on OAuth Implementation, check out this [article](https://testdriven.io/blog/flask-social-auth/#oauth). 
 
 Save your API keys in a file called <kbd>secrets.sh</kbd> using this format:
 
