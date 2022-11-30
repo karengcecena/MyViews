@@ -6,7 +6,7 @@
 
 ## Features
 
-Check out [MyViews](https://youtu.be/uvLiHigX4Fg) on youtube for a tutorial of MyViews. 
+Check out [MyViews](https://youtu.be/uvLiHigX4Fg) on youtube for a tutorial of its features. 
 
 ## About the Developer
 
@@ -89,3 +89,9 @@ python server.py
 ```
 
 You can now navigate to 'localhost:5000/' to access MyViews.
+
+## Future Additions: 
+
+- Add books to media types
+- Add individual episodes to show watch history
+- Use OAuth and APIs to automatically add user watch history information
