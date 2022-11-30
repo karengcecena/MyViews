@@ -10,7 +10,7 @@ Check out [MyViews](https://youtu.be/uvLiHigX4Fg) on youtube for a tutorial of i
 
 ![alt text](https://github.com/karengcecena/project-movie-app/blob/main/static/img/login_screenshot.png "MyViews Login")
 
-A user can log in via creating an account or logging in with GitHub. Creating an account uses password hashing to maintain user security and regex to ensure email formatting. Logging in with GitHub uses GitHub OAuth 2.0 to improve security and facilitate user authentication. 
+A user can log in via creating an account or logging in with GitHub. Creating an account uses password hashing to maintain user security and RegEx to ensure email formatting. Logging in with GitHub uses GitHub OAuth 2.0 to improve security and facilitate user authentication. 
 
 
 ![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/img/user_profile_graphs_screenshot.png "MyViews Profile Page Graphs")
