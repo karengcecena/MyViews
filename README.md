@@ -8,6 +8,79 @@
 
 Check out [MyViews](https://youtu.be/uvLiHigX4Fg) on youtube for a tutorial of its features. 
 
+![alt text](https://github.com/karengcecena/project-movie-app/blob/main/static/img/ "MyViews Login")
+
+A user can log in via creating an account or logging in with GitHub. Creating an account uses password hashing to maintain user security and regex to ensure email formatting. Logging in with GitHub uses GitHub OAuth 2.0 to improve security and facilitate user authentication. 
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Profile Page Graphs")
+
+On a user’s profile, I implemented two graphs, a donut and bar graph, using ChartJS. The left one queries the database using SQLAlchemy to display the genre name and amount of times it appears in a user's watch history. The right one queries the database for watch history information in a users watch lists, and categorizes it by month. 
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Profile Create Playlists / Watched List & To Be Watch List")
+
+Users have two default playlists to which they can add media to.
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Profile Edit Watched List")
+
+Users can edit each individual list, as well as delete media ratings in their watched and to be watched list. Both of these features use AJAX which allows users to delete reviews/ media without reloading the entire page, increasing user experience
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Profile Playlists")
+
+Users can also create, edit, and delete custom made playlists. 
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Profile Friend Watched Lists")
+
+After adding a friend, the user can see that friends' watch lists on their profile as well as their ratings on other medias. 
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Friends Profile'")
+
+To add a new friend, a follow button was implemented under the friends username that also uses AJAX
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Search Page")
+
+The search feature uses the TMDB API to populate the page with either movies or tv shows results. For a greater learning experience, I re-implemented the search page using REACT. 
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Media Info")
+
+Media display poster path and overview, as well as the option to rate media or add them to their lists if they are logged in. 
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Add Rating")
+
+If a user is logged in, they can rate a movie and leave a comment, as well as input the day they watched it. The movie and rating are then added to the PostgreSQL database. This reduces the API calls for the users profile, increasing web app speed. 
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Displayed Ratings")
+
+Ratings are displayed underneath media so that users can see if their friends have rated them before. Ratings can also be seen on profiles. 
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Add to Lists")
+
+When a user rates a movie or tv show, it is automatically added to the user’s watch list. They can also add a movie or tv show to their watch list without rating it or add media they would like to watch in the future to their to be watched list or custom playlists.
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Add to Playlists")
+
+This is how users can add new media to their playlists. 
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Movie & Show Recommendations")
+
+For users that are logged in, their watch list media is queried using SQLAlchemy to retrieve that last movie and tv show they watched to give the user movie and tv show recommendations. 
+
+
+![alt text](https://github.com/karengcecena/project-movie-app/tree/main/static/ "MyViews Trending Movies & Shows")
+
+Both users and guests can see the current trending media 
+
 
 
 ## About the Developer
