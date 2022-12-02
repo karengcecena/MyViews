@@ -1,10 +1,10 @@
-# MyViews
+# 🎬 MyViews
 
-## Summary 
+## 📖 Summary 
 
 **MyViews** is a web app that allows users and guests to search for movies and tv shows. This app is for those who love organization and sharing their recommended media with friends. Users who log in can rate the media, categorize them into playlists, see their recommended and trending tv shows and movies, as well as add friends to see their profiles as well. The user profile also contains data visualization graphs, allowing users to be more mindful of the type and amount of media they are taking in. 
 
-## Contents
+## 📋 Content
 * [Deployment](#deployment)
 * [About the Developer](#aboutme)
 * [Tech Stack](#technologies)
@@ -13,19 +13,19 @@
 * [Features](#features)
 
 
-## <a name="deployment"></a>Deployment
+## 🌐 <a name="deployment"></a>Deployment
 
 Check out MyViews [Hosted Site](http://54.218.60.203/)
 
 Or check out [MyViews](https://youtu.be/uvLiHigX4Fg) on youtube for a tutorial of its features. 
 
 
-## <a name="aboutme"></a>About the Developer
+## 🪐 <a name="aboutme"></a>About the Developer
 
 MyViews was created by Karen G. Cecena. Learn more about the developer on [LinkedIn](https://www.linkedin.com/in/karengcecena).
 
 
-## <a name="technologies"></a>Technologies
+## 💻 <a name="technologies"></a>Technologies
 
 **Tech Stack:**
 
@@ -45,7 +45,7 @@ MyViews was created by Karen G. Cecena. Learn more about the developer on [Linke
 - TMDB API
 
 
-## <a name="installation"></a>Installation
+## ⚙️ <a name="installation"></a>Installation
 
 To run MyViews:
 
@@ -103,14 +103,14 @@ python server.py
 
 You can now navigate to 'localhost:5000/' to access MyViews.
 
-## <a name="futureadditions"></a>Future Additions 
+## ⌨️ <a name="futureadditions"></a>Future Additions 
 
 - Add books to media types
 - Add individual episodes to show watch history
 - Use OAuth and APIs to automatically add user watch history information
 
 
-## <a name="features"></a>Features
+## 🔍 <a name="features"></a>Features
 
 ![alt text](https://github.com/karengcecena/project-movie-app/blob/main/static/img/login_screenshot.png "MyViews Login")
 
