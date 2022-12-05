@@ -22,9 +22,9 @@ a:hover {
 
 /* makes stars fill in correct order and puts it on left side of page */
 .rating {
-display: flex;
-flex-direction: row-reverse;
-justify-content: flex-end;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
 }
 
 /* hides input bubble */
