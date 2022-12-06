@@ -24,20 +24,20 @@ class FlaskTestsLoggedOut(TestCase):
     def test_friends_search(self):
         """Tests guests cannot see friends search bar"""
         
-        result = self.client.get("/search-friends")
-        self.assertIn(b'redirected automatically to the target URL: <a href="/">/</a>', result.data)
+        result = self.client.get("/search-friends", follow_redirects=True)
+        self.assertIn(b'Login', result.data)
 
     def test_your_recommended(self):
-        """Tests guests cannot see recommended media page"""
+        """Tests guests can see recommended media page"""
         
-        result = self.client.get("/recommended")
-        self.assertIn(b'redirected automatically to the target URL: <a href="/">/</a>', result.data)
+        result = self.client.get("/recommended", follow_redirects=True)
+        self.assertIn(b'Recommended', result.data)
 
     def test_user_profile(self):
         """Test guests cannot see a profile page"""
         
-        result = self.client.get("/user-profile")
-        self.assertIn(b'redirected automatically to the target URL: <a href="/">/</a>', result.data)
+        result = self.client.get("/user-profile", follow_redirects=True)
+        self.assertIn(b'Login', result.data)
 
 class FlaskTestsLoggedIn(TestCase):
     """Flask tests with user logged in to session."""
@@ -104,7 +104,7 @@ class FlaskTestsDatabase(TestCase):
         result = self.client.post("/login",
                                   data={"username": "test1", "password": "test1"},
                                   follow_redirects=True)
-        self.assertIn(b"test1's profile", result.data)
+        self.assertIn(b'script src="/static/js/all_media.jsx', result.data)
 
 if __name__ == "__main__":
     import unittest
