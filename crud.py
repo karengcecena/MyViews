@@ -6,16 +6,12 @@ from model import db, User, Media, Rating, Playlist, PlaylistMedia, WatchedList,
 def create_user(username, email, password):
     """Creates a user"""
     
-    user = User(username=username, email=email, password=password)
-
-    return user
-
+    return User(username=username, email=email, password=password)
 
 def get_user_by_email(email):
     """Gets user by their email"""
 
     return User.query.filter(User.email == email).first()
-
 
 def get_user_by_username(username):
     """Gets user by their username"""
@@ -27,12 +23,10 @@ def get_user_by_id(user_id):
 
     return User.query.filter(User.user_id == user_id).first()
 
-
 def get_media_by_TMDB_id(TMDB_id, media_type):
     """Checks if media is in the db using TMDB_id and media_type"""
 
     return Media.query.filter(Media.TMDB_id == TMDB_id, Media.media_type == media_type).first()
-
 
 def add_movie_to_db(movie_info):
     """Adds movie to DB"""
@@ -65,7 +59,6 @@ def add_show_to_db(show_info):
     poster_path = show_info["poster_path"]
     return Media(TMDB_id=TMDB_id, media_type=media_type, title=title, overview=overview, release_date=release_date, poster_path=poster_path )
 
-
 def check_if_genre_in_db(genre):
     """Checks if the genre mentioned is in DB"""
 
@@ -81,10 +74,7 @@ def add_genre_to_db(genre):
 def add_rating_to_db(score, user_id, media_id, comment=None):
     """Adds the rating to the DB"""
 
-    rating = Rating(score=score, user_id=user_id, media_id=media_id, review_input=comment)
-
-    return rating
-
+    return Rating(score=score, user_id=user_id, media_id=media_id, review_input=comment)
 
 def user_rated(media, user):
     """Checks if user has rated this media previously"""
@@ -111,12 +101,10 @@ def user_sorted_Watched(media, user):
 
     return WatchedList.query.filter(WatchedList.media_id == media.media_id, WatchedList.user_id == user.user_id).first()
 
-
 def user_sorted_ToBeWatched(media, user):
     """Checks if user has sorted movie in folder previously"""
 
     return ToBeWatchedList.query.filter(ToBeWatchedList.media_id == media.media_id, ToBeWatchedList.user_id == user.user_id).first()
-
 
 def add_to_WatchedList(media, user):
     """Adds media to users watched list"""
@@ -168,7 +156,6 @@ def get_user_movie_watch_history(user):
     sorted_movie_watch_history = {key: val for key, val in sorted(movie_watch_history.items(), key = lambda ele: ele[0])}
 
     return sorted_movie_watch_history
-
 
 def get_user_show_watch_history(user):
     """Returns the show watch history data the user has saved in a dictionary"""

@@ -32,19 +32,13 @@
 
     <div class="row graphs">
 
-        <!-- <div class="col graph"> -->
-            <!-- chart.js stuff for genres-->
             <div class="col-4" id="chart-wrapper-genre">
                 <canvas id="genre-chart"></canvas>
             </div>
-        <!-- </div> -->
-
-        <!-- <div class="col-4 graph"> -->
-            <!-- chart.js stuff for watch history-->
+    
             <div class="col-8" id="chart-wrapper-watched">
                 <canvas id="watch-history-chart"></canvas>
             </div>
-        <!-- </div> -->
 
     </div>
 
@@ -57,7 +51,6 @@
                 </p>
             </form>
 
-            <!-- <p>Or view your lists below:</p> -->
         </div>
     </div>
 
@@ -185,16 +178,11 @@
 
 
     <!-- display users friends watchlist and link to their profile:  -->
-    <!-- <div class="row friends_display"> -->
         <div class="row">
             <h2 class="row title">Your Friends: </h2>
-        <!-- </div>
-  
-        <div class="row friends">  -->
-            <!-- <div class="row friend">     -->
+        
             {% for friend in user.following %}
                 <a class= "row friend list_title" href="/display-friend/{{ friend.username }}"><h2>{{ friend.username }}'s Watched List:</h2></a>
-            <!-- </div> -->
 
             <div class="scrollmenu">
             {% for media in friend.watched_list %}
@@ -227,7 +215,6 @@
 
             {% endfor %}
         </div>
-    <!-- </div> -->
 
 </div>
 
