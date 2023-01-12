@@ -785,7 +785,7 @@ def deletes_playlist():
 @app.route("/user-profile/delete-from-playlist.json", methods=['POST'])
 def remove_media_from_playlist():
     """Allows user to remove media from their playlist"""
-    
+
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
     
@@ -811,3 +811,4 @@ if __name__ == "__main__":
         db.create_all()
 
     app.run()
+    
