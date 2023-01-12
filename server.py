@@ -7,6 +7,7 @@ import crud
 import os
 import requests
 from jinja2 import StrictUndefined
+from datetime import date
 
 # import for hashing passwords
 from passlib.hash import argon2
@@ -17,8 +18,6 @@ from flask_login import current_user
 from flask_dance.consumer import oauth_authorized
 from flask_dance.consumer.storage.sqla import SQLAlchemyStorage
 from sqlalchemy.orm.exc import NoResultFound
-
-from datetime import date
 
 app = Flask(__name__)
 app.secret_key = "forsession"
@@ -49,24 +48,28 @@ def github_logged_in(blueprint, token):
         username = account_info["login"]
 
         query = User.query.filter_by(username=username)
+
         try:
             user = query.one()
+
         except NoResultFound:
             user = User(username=username)
             db.session.add(user)
             db.session.commit()
         
         session["username"] = username
+
         return redirect("/user-profile")
 
 @app.route("/github")
 def login():
     if not github.authorized:
         return redirect(url_for("github.login"))
+
     res = github.get("/user")
     username = res.json()["login"]
-
     session['username'] = username
+
     return redirect("/user-profile")
 
 ##################### End of GitHub OAuth Implementation ###########################################
@@ -101,7 +104,7 @@ def register_user():
         db.session.add(user)
         db.session.commit()
         session["username"] = username
-        # flash ("Succesfully created user")
+
         return redirect("/user-profile")
 
     return redirect ("/")
@@ -116,14 +119,14 @@ def login_user():
     user = crud.get_user_by_username(username)
 
     if user:
+
        # see if they are a github user
         if not user.password: 
             flash("Sorry, that password was incorrect. Try logging in with GitHub")
+
         # if not github user, verify hashed password input is equal to one in DB
         elif argon2.verify(password, user.password):
             session["username"] = user.username
-            # flash("You have successfully logged in")
-            # return redirect ("/user-profile")
             return redirect ("/media-search-results-react")
         
         else:
@@ -140,9 +143,8 @@ def logout_user():
     
     if "username" in session: 
         session.clear()
-        # flash("You've been logged out")
+ 
     else:
-        # flash("Sorry, please log in:")
         return redirect("/")
     
     return redirect("/")
@@ -154,10 +156,10 @@ def display_user_profile():
     if "username" in session: 
         user_username= session["username"]
         user = crud.get_user_by_username(user_username)
+
         return render_template("user_profile.html", user=user)
 
     else:
-        # flash("Sorry, please log in:")
         return redirect("/")
 
 @app.route("/search-friends")
@@ -168,7 +170,6 @@ def display_search():
         return render_template("/search_friends.html")
 
     else:
-        # flash("Sorry, please log in:")
         return redirect("/")
 
 @app.route("/friend-search-results", methods=["POST"])
@@ -220,7 +221,6 @@ def display_friend_by_username(friend_username):
 
     user2 = crud.get_user_by_username(friend_username)
 
-    # if user2: 
     return render_template("/search_friend_result.html", user2=user2, user=user, user2_user_id= user2.user_id)
 
 ################################################# REACT #################################################
@@ -279,6 +279,7 @@ def show_media(media_type, TMDB_id):
     # check if user is logged in in order to display playlists correctly 
     if "username" in session:
         user = crud.get_user_by_username(session["username"])
+
         return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user, media_type=media_type, all_ratings=all_ratings)
 
     else:
@@ -287,6 +288,7 @@ def show_media(media_type, TMDB_id):
 @app.route("/<media_type>/<TMDB_id>/add-to-playlist", methods=["POST"])
 def add_media_to_playlist(media_type, TMDB_id):
     """Adds media to selected playlist"""
+
     media = crud.get_media_by_TMDB_id(TMDB_id, media_type)
     playlist_id = request.form.get("playlist")
     user_username = session["username"]
@@ -294,6 +296,7 @@ def add_media_to_playlist(media_type, TMDB_id):
 
     # add media to database if not in there already
     if not media:
+
         #get media information
         url = f"https://api.themoviedb.org/3/{media_type}/{TMDB_id}"
         payload = {"api_key": API_KEY} 
@@ -315,13 +318,16 @@ def add_media_to_playlist(media_type, TMDB_id):
         # add genres to media that do not exist:
         if data["genres"]: 
             genres = data["genres"]
+
             for genre in genres:
+
                 # check if genre in genres:
                 if crud.check_if_genre_in_db(genre):
                     # if yes: 
                     genre = crud.check_if_genre_in_db(genre)
                     media.genres.append(genre)
                     db.session.commit()
+
                 else:
                     # if not, add to genre:
                     genre = crud.add_genre_to_db(genre)
@@ -334,10 +340,9 @@ def add_media_to_playlist(media_type, TMDB_id):
         playlist = crud.get_playlist_by_id(playlist_id, user)
         media.playlists.append(playlist)
         db.session.commit()
-        # flash(f"{media.title} successfully added to {playlist.name}")
+
         return redirect (f"/media-info/{media_type}/{TMDB_id}")
-    # else:
-    #     flash("Please log in")
+
 
 @app.route("/media-info/<media_type>/<TMDB_id>/rating", methods=["POST"])
 def rate_media(media_type, TMDB_id):
@@ -350,6 +355,7 @@ def rate_media(media_type, TMDB_id):
 
     # add media to database if not in there already
     if not media:
+
         #get movie information
         url = f"https://api.themoviedb.org/3/{media_type}/{TMDB_id}"
         payload = {"api_key": API_KEY} 
@@ -371,13 +377,16 @@ def rate_media(media_type, TMDB_id):
         # add genres to media that do not exist:
         if data["genres"]: 
             genres = data["genres"]
+
             for genre in genres:
+
                 # check if genre in genres:
                 if crud.check_if_genre_in_db(genre):
                     # if yes: 
                     genre = crud.check_if_genre_in_db(genre)
                     media.genres.append(genre)
                     db.session.commit()
+
                 else:
                     # if not, add to genre:
                     genre = crud.add_genre_to_db(genre)
@@ -388,6 +397,7 @@ def rate_media(media_type, TMDB_id):
     # add time watched 
     if time_watched:
         media.time_watched = time_watched
+
     else:
         # auto set time watched to day when added
         media.time_watched = date.today()
@@ -409,18 +419,17 @@ def rate_media(media_type, TMDB_id):
                 media_rating.score = score
                 media_rating.review_input = comment
                 db.session.commit()
-                # flash(f"Your score has been updated to {score} and your comment was successfully added to {media.title}")
+
             else:
                 media_rating = crud.user_rated(media, user)
                 media_rating.score = score
                 db.session.commit()
-                # flash(f"Your score has been updated to {score} for {media.title}")
+
         else:
             # add rating to media
             rating = crud.add_rating_to_db(score, user.user_id, media.media_id, comment)
             db.session.add(rating)
             db.session.commit()
-            # flash(f"Your rating of {score} out of 5 and comment were successfully added for {media.title}")
 
             if crud.user_sorted_ToBeWatched(media,user):
                 # delete from to_be_watched_list
@@ -434,7 +443,6 @@ def rate_media(media_type, TMDB_id):
                 media_folder = crud.add_to_WatchedList(media, user)
                 db.session.add(media_folder)
                 db.session.commit()
-                # flash(f"{media.title} has been added to your watched list")
 
     return redirect(f"/media-info/{media_type}/{TMDB_id}")
 
@@ -448,6 +456,7 @@ def add_media_to_folder(media_type, TMDB_id):
 
     # add media to database if not in there already
     if not media:
+
         #get mmdia information
         url = f"https://api.themoviedb.org/3/{media_type}/{TMDB_id}"
         payload = {"api_key": API_KEY} 
@@ -469,13 +478,16 @@ def add_media_to_folder(media_type, TMDB_id):
         # add genres to media that do not exist:
         if data["genres"]: 
             genres = data["genres"]
+
             for genre in genres:
+
                 # check if genre in genres:
                 if crud.check_if_genre_in_db(genre):
                     # if yes: 
                     genre = crud.check_if_genre_in_db(genre)
                     media.genres.append(genre)
                     db.session.commit()
+
                 else:
                     # if not, add to genre:
                     genre = crud.add_genre_to_db(genre)
@@ -486,6 +498,7 @@ def add_media_to_folder(media_type, TMDB_id):
     # add time watched 
     if time_watched:
         media.time_watched = time_watched
+
     else:
         # auto set time watched to day when added
         media.time_watched = date.today()
@@ -493,6 +506,7 @@ def add_media_to_folder(media_type, TMDB_id):
         
     # check if folder was selected:
     if folder:
+
         # check is user is logged in:
         if "username" in session:
             user_username = session["username"]
@@ -500,10 +514,6 @@ def add_media_to_folder(media_type, TMDB_id):
 
             # sort into folder depending on value:
             if folder == "watched":
-                
-                # check if user added to watched_list before:
-                # if crud.user_sorted_Watched(media, user):
-                #     flash(f"{media.title} is already in your Watched List")
 
                 # check if user added to to_be_watched_list before:
                 if crud.user_sorted_ToBeWatched(media, user):
@@ -516,24 +526,17 @@ def add_media_to_folder(media_type, TMDB_id):
                     media_folder = crud.add_to_WatchedList(media, user)
                     db.session.add(media_folder)
                     db.session.commit()
-                    # flash(f"{media.title} has been switched from your To Be Watched List to your Watched List")
 
                 else:
                     # add to watched list:
                     media_folder = crud.add_to_WatchedList(media, user)
                     db.session.add(media_folder)
                     db.session.commit()
-                    # flash(f"{media.title} has been added to your Watched List")
-
 
             elif folder == "to_be_watched":
-                # check if user added to to_be_watched_list before:
-                # if crud.user_sorted_ToBeWatched(media, user):
-                    # flash(f"{media.title} is already in your To Be Watched List")
 
-                # check if user added to to_be_watched_list before:
+                # check if user added to watched_list before:
                 if crud.user_sorted_Watched(media, user):
-                    # flash(f"{media.title} is already in your To Be Watched List")
                     # delete from to be watched_list
                     media_folder = crud.user_sorted_Watched(media, user)
                     db.session.delete(media_folder)
@@ -543,20 +546,12 @@ def add_media_to_folder(media_type, TMDB_id):
                     media_folder = crud.add_to_ToBeWatchedList(media, user)
                     db.session.add(media_folder)
                     db.session.commit()
-                    # flash(f"{media.title} has been switched from your Watched List to your To Be Watched List")
 
                 else:
                     # add to to_be_watched list:
                     media_folder = crud.add_to_ToBeWatchedList(media, user)
                     db.session.add(media_folder)
                     db.session.commit()
-                    # flash(f"{media.title} has been added to your Watched List")
-
-        # else:
-        #     flash("Sorry, only logged in users can add movies to folders")
-
-    # else:
-    #     flash("Sorry, it seems no folder was selected.")
 
     return redirect(f"/media-info/{media_type}/{TMDB_id}")
 
@@ -593,13 +588,9 @@ def get_users_watch_history():
     movie_history = []
     show_history = []
 
-    # for day, total in user_movie_watch_history.items():
-        # movie_history.append({'day': day.isoformat(),'number_of_movies': total})
     for month, total in user_movie_watch_history.items():
         movie_history.append({'month': month,'number_of_movies': total})
 
-    # for day, total in user_show_watch_history.items():
-        # show_history.append({'day': day.isoformat(),'number_of_shows': total})
     for month, total in user_show_watch_history.items():
         show_history.append({'month': month,'number_of_shows': total})
 
@@ -607,8 +598,10 @@ def get_users_watch_history():
 
 @app.route("/recommended")
 def display_recommended_media():
+    """Displays the media on the recommended page"""
 
     if "username" in session:
+
         # get user:
         user_username = session["username"]
         user = crud.get_user_by_username(user_username)
@@ -626,6 +619,7 @@ def display_recommended_media():
             movie_res = requests.get(url, params=payload)
             movie_data = movie_res.json()
             movie_results=movie_data["results"]
+
         else:
             movie_data = None
             movie_results = None
@@ -684,14 +678,11 @@ def display_recommended_media():
         trending_show_results = trending_show_data["results"]
 
         return render_template("/recommended.html", user=None, movie_results=None, show_results=None, trending_movie_results=trending_movie_results,trending_show_results=trending_show_results)
-        # flash("Sorry, please log in:")
-
-        # return redirect("/")
-
 
 @app.route("/create-playlist", methods=["POST"])
 def creates_playlist_for_user():
     """Adds a playlist for user to store movies in"""
+
     playlist_name = request.form.get("playlist_name")
     user_username = session["username"]
 
@@ -701,7 +692,6 @@ def creates_playlist_for_user():
         playlist = crud.create_playlist(playlist_name, user)
         db.session.add(playlist)
         db.session.commit()
-        # flash(f"The playlist '{playlist_name}' has successfully been created")
 
     return redirect("/user-profile")
 
@@ -710,6 +700,7 @@ def creates_playlist_for_user():
 @app.route("/delete-rating.json", methods=["POST"])
 def deletes_rating_for_user_media_page():
     """Deletes a rating for user"""
+
     rating_id = request.json.get("ratingID")
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
@@ -724,6 +715,7 @@ def deletes_rating_for_user_media_page():
 @app.route("/user-profile/delete-from-watched-list.json", methods=['POST'])
 def remove_media_from_watchedlist():
     """Allows user to remove media from their watched list"""
+
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
     media_id = request.json.get("mediaID")
@@ -732,13 +724,13 @@ def remove_media_from_watchedlist():
         media = crud.get_watchlist_media_by_id(media_id, user)
         db.session.delete(media)
         db.session.commit()
-        # flash(f"Removed from watched list")
 
     return jsonify({"success": "Removed from watched list"})
 
 @app.route("/user-profile/delete-from-to-be-watched-list.json", methods=['POST'])
 def remove_media_from_tobe_watchedlist():
     """Allows user to remove media from their to be watched list"""
+
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
     media_id = request.json.get("mediaID")
@@ -747,12 +739,12 @@ def remove_media_from_tobe_watchedlist():
         media = crud.get_tobewatchlist_media_by_id(media_id, user)
         db.session.delete(media)
         db.session.commit()
-        # flash(f"Removed from to be watched list")
 
     return jsonify({"success": "Removed from to be watched list"})
 
 @app.route("/user-profile/edit-playlist/<playlist_id>")
 def edit_playlist(playlist_id):
+    """Displays individual playlists in own page for editing purposes"""
 
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
@@ -762,6 +754,7 @@ def edit_playlist(playlist_id):
 
 @app.route("/user-profile/edit-list/<lst>")
 def edit_list(lst):
+    """Displays individual lists (watched or to be watched) for editing purposes"""
 
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
@@ -777,6 +770,7 @@ def edit_list(lst):
 @app.route("/delete-playlist", methods=["POST"])
 def deletes_playlist():
     """Deletes a playlist for user"""
+
     playlist_id = request.form.get("playlist_id")
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
@@ -785,13 +779,13 @@ def deletes_playlist():
         playlist = crud.get_playlist_by_id(playlist_id, user)
         db.session.delete(playlist)
         db.session.commit()
-        # flash(f"The playlist '{playlist.name}' has successfully been deleted")
 
     return redirect("/user-profile")
 
 @app.route("/user-profile/delete-from-playlist.json", methods=['POST'])
 def remove_media_from_playlist():
     """Allows user to remove media from their playlist"""
+    
     user_username = session["username"]
     user = crud.get_user_by_username(user_username)
     
@@ -816,5 +810,4 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
 
-    # app.run(host="0.0.0.0", debug=True)
     app.run()
