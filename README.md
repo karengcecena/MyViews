@@ -15,7 +15,7 @@
 
 ## 🌐 <a name="deployment"></a>Deployment
 
-Check out MyViews [Hosted Site](http://54.218.60.203/)
+Check out MyViews [Live Site](http://54.218.60.203/)
 
 Or check out [MyViews](https://youtu.be/uvLiHigX4Fg) on youtube for a tutorial of its features. 
 
@@ -31,7 +31,7 @@ MyViews was created by Karen G. Cecena. Learn more about the developer on [Linke
 
 - Python
 - HTML
-- Javascript
+- JavaScript
 - AJAX
 - JSON
 - CSS
