@@ -8,7 +8,7 @@ function MediaCard(props) {
     );
   }
 
-// creates the search feature so the user can search for a media
+// creates the search feature so the user can search for media
 function SearchMedia(props) {
     const [search, setSearch] = React.useState("");
     const [mediaType, setmediaType] = React.useState("");
