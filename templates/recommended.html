@@ -26,8 +26,8 @@
             {% if movie_results %}
                 {% for movie in movie_results %}
                 <div class="col media_card">
-                    <div class="media_title"><a class= "media_title text-wrap" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a></div>
-                    <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}" alt=""></div>
+                    <div class="media_title_search"><a class= "media_title text-wrap" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a></div>
+                    <div class="media_poster_path_search"><img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}" alt=""></div>
                 </div>
                 {% endfor %}
             
@@ -46,8 +46,8 @@
             {% if show_results %}
                 {% for show in show_results %}
                 <div class="col media_card">
-                    <div class="media_title"><a class="media_title text-wrap" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a></div>
-                    <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}" alt=""></div>
+                    <div class="media_title_search"><a class="media_title text-wrap" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a></div>
+                    <div class="media_poster_path_search"><img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}" alt=""></div>
                 </div>
                 {% endfor %}
                 
@@ -73,8 +73,8 @@
         <div class="scrollmenu">
             {% for movie in trending_movie_results %}
             <div class="col media_card">
-                <div class="media_title"><a class= "media_title text-wrap" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a></div>
-                <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}" alt=""></div>
+                <div class="media_title_search"><a class= "media_title text-wrap" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a></div>
+                <div class="media_poster_path_search"><img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}" alt=""></div>
             </div>
             {% endfor %}
         </div>
@@ -90,8 +90,8 @@
         <div class="scrollmenu">
             {% for show in trending_show_results %}
             <div class="col media_card">
-                <div class="media_title"><a class= "media_title text-wrap" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a></div>
-                <div class="media_poster_path"><img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}" alt=""></div>
+                <div class="media_title_search"><a class= "media_title text-wrap" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a></div>
+                <div class="media_poster_path_search"><img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}" alt=""></div>
             </div>
             {% endfor %}
         </div>
