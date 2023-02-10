@@ -208,6 +208,14 @@ nav>ul>li a:hover(.active) {
     padding-bottom: 2%; 
 }
 
+.media_title_search {
+    padding-top: 8%;
+}
+
+.media_poster_path_search {
+    padding-top: 8%;
+}
+
 .media_poster_path > img {
   height: 187.5px;
   width: 125px;

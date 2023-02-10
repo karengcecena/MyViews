@@ -1,11 +1,9 @@
 // creates a media card for each media
 function MediaCard(props) {
     return (
-      <div className="media_card text-center">
-        <br></br>
-        <div class="media_title"><a className="media_title" href={`/media-info/${props.mediaType}/${props.TMDB_id}`}>{props.title}</a></div>
-        <br></br>
-        <div class="media_poster_path"><img src={`https://image.tmdb.org/t/p/original${props.posterPath}`} alt="No Poster Path Available"/></div>
+      <div className="media_card text-center"> 
+        <div className="media_title_search"><a className="media_title" href={`/media-info/${props.mediaType}/${props.TMDB_id}`}>{props.title}</a></div>
+        <div className="media_poster_path_search"><img src={`https://image.tmdb.org/t/p/original${props.posterPath}`} alt="No Poster Path Available"/></div>
       </div>
     );
   }
@@ -18,8 +16,7 @@ function SearchMedia(props) {
     const [mediaTypeToSearch, setMediaTypeToSearch] = React.useState("");
     
     function searchMediaInfo() {
-      console.log(mediaTypeToSearch)
-      console.log(search)
+  
       if (mediaTypeToSearch != "" && search != ""){
 
         fetch("/media-search-results-react.json", {
@@ -72,17 +69,17 @@ function SearchMedia(props) {
             <nav>
               <ul>
                   <li><a href="/">MyViews</a></li>
-                  <li><a class="active" href="/media-search-results-react">Search</a></li>
+                  <li><a className="active" href="/media-search-results-react">Search</a></li>
                   <li><a href="/user-profile">Profile</a></li>
                   <li><a href="/search-friends">Friends</a></li>
                   <li><a href="/recommended">Recommended</a></li>
                   <li><a href="/logout">Logout</a></li>
                 </ul>
             </nav>
-            <div class="container-flex">
-              <div class="container search_page">
-                <div class="row search_page_row">
-                  <div class="search_bar text-center">
+            <div className="container-flex">
+              <div className="container search_page">
+                <div className="row search_page_row">
+                  <div className="search_bar text-center">
                     <label htmlFor="searchInput"><h1 id="search_title"></h1></label>
                         <input
                             name="search"
@@ -120,4 +117,4 @@ function SearchMedia(props) {
     );
     };
 
-ReactDOM.render(<SearchMedia/>, document.getElementById('container'));
+ReactDOM.render(<SearchMedia/>, document.getElementById('root'));
