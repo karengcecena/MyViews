@@ -16,6 +16,7 @@ a:hover {
 
 .row {
     padding: 0.25%;
+    margin-left: -5px;
 }
 
 /* star code adapted from  https://www.foolishdeveloper.com/2022/01/5-star-rating-html-css.html*/
@@ -366,9 +367,10 @@ button:hover{
 }
 
 @media screen and (max-width: 992px) {
-    /* .column {
-      flex: 50%;
-    } */
+    .container {
+        padding-top: 5%;
+        width: 100%;
+    }
   }
   
   @media screen and (max-width: 912px) {
@@ -403,12 +405,9 @@ button:hover{
     }
 
     .grid {
-        /* display: block; */
-        /* justify-items: center; */
         grid-template-columns: 6fr 6fr;
         grid-gap: 0.5px;
         margin-left: -8px;
-        /* padding-left: 0px; */
     }
 
     .row {
