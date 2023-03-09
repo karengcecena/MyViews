@@ -364,3 +364,55 @@ button:hover{
     border-radius: 5px;
     border-color: rgba(148, 84, 92);
 }
+
+@media screen and (max-width: 992px) {
+    /* .column {
+      flex: 50%;
+    } */
+  }
+  
+  @media screen and (max-width: 912px) {
+
+    .container {
+        padding-top: 5%;
+        width: 100%;
+    }
+
+    nav {
+        font-size: small;
+    }
+
+    .grid {
+        grid-template-columns: 4fr 4fr 4fr;
+    }
+
+  }
+
+  @media screen and (max-width: 414px) {
+    .container {
+        padding-top: 8%;
+        width: 100%;
+    }
+
+    nav {
+        font-size: xx-small;
+    }
+
+    nav>ul>li a {
+        padding: 10px 12px;
+    }
+
+    .grid {
+        /* display: block; */
+        /* justify-items: center; */
+        grid-template-columns: 6fr 6fr;
+        grid-gap: 0.5px;
+        margin-left: -8px;
+        /* padding-left: 0px; */
+    }
+
+    .row {
+        margin-left: -5px;
+    }
+
+  }
