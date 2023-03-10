@@ -366,14 +366,19 @@ button:hover{
     border-color: rgba(148, 84, 92);
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1377px) {
     .container {
         padding-top: 5%;
         width: 100%;
     }
+
+    .grid {
+        grid-template-columns: 3fr 3fr 3fr 3fr;
+    }
+
   }
-  
-  @media screen and (max-width: 912px) {
+
+  @media screen and (max-width: 992px) {
 
     .container {
         padding-top: 5%;
@@ -390,7 +395,7 @@ button:hover{
 
   }
 
-  @media screen and (max-width: 414px) {
+  @media screen and (max-width: 772px) {
     .container {
         padding-top: 8%;
         width: 100%;
@@ -408,10 +413,6 @@ button:hover{
         grid-template-columns: 6fr 6fr;
         grid-gap: 0.5px;
         margin-left: -8px;
-    }
-
-    .row {
-        margin-left: -5px;
     }
 
   }
