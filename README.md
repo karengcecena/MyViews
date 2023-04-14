@@ -15,7 +15,9 @@
 
 ## 🌐 <a name="deployment"></a>Deployment
 
-Check out MyViews [Live Site](http://54.218.60.203/)
+Deployed using AWS Lightsail.
+
+Check out MyViews' [Website](http://54.218.60.203/)
 
 Or check out [MyViews](https://youtu.be/uvLiHigX4Fg) on youtube for a tutorial of its features. 
 
