@@ -11,6 +11,7 @@
 * [Installation](#installation)
 * [Future Additions](#futureadditions)
 * [Features](#features)
+* [Database Model](#databasemodel)
 
 
 ## 🌐 <a name="deployment"></a>Deployment
@@ -186,3 +187,7 @@ For users that are logged in, their watch list media is queried using SQLAlchemy
 ![alt text](https://github.com/karengcecena/project-movie-app/blob/main/static/img/trending_media_screenshot.png "MyViews Trending Movies & Shows")
 
 Both users and guests can see the current trending media 
+
+## 🗂️ <a name="databasemodel"></a>Database Model
+
+![alt text](https://github.com/karengcecena/project-movie-app/blob/main/static/img/MyViewsDataModel.jpeg "MyViews Database Model")
