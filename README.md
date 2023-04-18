@@ -33,19 +33,17 @@ MyViews was created by Karen G. Cecena. Learn more about the developer on [Linke
 **Tech Stack:**
 
 - Python
-- HTML
-- JavaScript
-- AJAX
-- JSON
-- CSS
-- Bootstrap
 - Flask
-- Jinja
-- ReactJS
-- Chart.JS
 - PostgreSQL
-- GitHub OAuth
+- JavaScript ES6+ (AJAX, JSON)
+- React
+- HTML5
+- CSS3
+- Bootstrap
+- Jinja
 - TMDB API
+- Chart.js
+- GitHub OAuth
 
 
 ## 🗂️ <a name="databasemodel"></a>Database Model
