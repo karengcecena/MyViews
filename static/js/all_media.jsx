@@ -1,15 +1,15 @@
 // creates a media card for each media
 function MediaCard(props) {
-    return (
-      <div className="media_card text-center"> 
-        <div className="media_title_search"><a className="media_title" href={`/media-info/${props.mediaType}/${props.TMDB_id}`}>{props.title}</a></div>
-        <div className="media_poster_path_search"><img src={`https://image.tmdb.org/t/p/original${props.posterPath}`} alt="No Poster Path Available"/></div>
-      </div>
-    );
-  }
+  return (
+    <div className="media_card text-center"> 
+      <div className="media_title_search"><a className="media_title" href={`/media-info/${props.mediaType}/${props.TMDB_id}`}>{props.title}</a></div>
+      <div className="media_poster_path_search"><img src={`https://image.tmdb.org/t/p/original${props.posterPath}`} alt="No Poster Path Available"/></div>
+    </div>
+  );
+}
 
 // creates the search feature so the user can search for media
-function SearchMedia(props) {
+function SearchMedia() {
     const [search, setSearch] = React.useState("");
     const [mediaType, setmediaType] = React.useState("");
     const [mediaCards, setmediaCards] = React.useState([]);
