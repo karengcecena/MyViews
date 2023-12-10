@@ -273,17 +273,35 @@ def show_media(media_type, TMDB_id):
         media_id = media.media_id
         all_ratings = crud.get_all_ratings(media_id)
 
+         #get movie / show recommended
+        if media != False:
+
+            url = f"https://api.themoviedb.org/3/{media_type}/{media.TMDB_id}/recommendations"
+
+            payload = {"api_key": API_KEY} 
+            media_res = requests.get(url, params=payload)
+
+            if media_res:
+                media_data = media_res.json()
+                media_results=media_data["results"]
+            else:
+                media_results = None
+
+        else:
+            media_results = None
+
     else: 
         all_ratings = False
+        media_results = None
 
     # check if user is logged in in order to display playlists correctly 
     if "username" in session:
         user = crud.get_user_by_username(session["username"])
 
-        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user, media_type=media_type, all_ratings=all_ratings)
+        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=user, media_type=media_type, all_ratings=all_ratings, media_results=media_results)
 
     else:
-        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=False, media_type=media_type, all_ratings=all_ratings)
+        return render_template("media_information.html", data=data, TMDB_id=TMDB_id, user=False, media_type=media_type, all_ratings=all_ratings, media_results=media_results)
  
 @app.route("/<media_type>/<TMDB_id>/add-to-playlist", methods=["POST"])
 def add_media_to_playlist(media_type, TMDB_id):

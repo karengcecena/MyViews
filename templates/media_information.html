@@ -226,6 +226,52 @@
 
     </div>
 
+    {% if (media_type == "movie") %}
+
+        <div class="row rec movie_recs">
+            <div class="row title">
+                <h1>More like {{data["original_title"]}}:</h1>
+            </div>
+            
+            <div class="scrollmenu">
+                {% if media_results %}
+                    {% for movie in media_results %}
+                    <div class="col media_card">
+                        <div class="media_title_search"><a class= "media_title text-wrap" href="/media-info/movie/{{ movie['id'] }}"> {{ movie["original_title"] }} </a></div>
+                        <div class="media_poster_path_search"><img src="https://image.tmdb.org/t/p/original{{ movie['poster_path'] }}" alt=""></div>
+                    </div>
+                    {% endfor %}
+                
+                {% else %}
+                    <p>Sorry, there are currently no recommendation for this movie at the moment.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    {% elif (media_type == "tv") %}
+
+        <div class="row rec show_recs">
+            <div class="row title">
+                <h1>More like {{data["name"]}}:</h1>
+            </div>
+
+            <div class="scrollmenu">
+                {% if media_results %}
+                    {% for show in media_results %}
+                    <div class="col media_card">
+                        <div class="media_title_search"><a class="media_title text-wrap" href="/media-info/tv/{{ show['id'] }}"> {{ show["name"] }} </a></div>
+                        <div class="media_poster_path_search"><img src="https://image.tmdb.org/t/p/original{{ show['poster_path'] }}" alt=""></div>
+                    </div>
+                    {% endfor %}
+                    
+                {% else%}
+                    <p>Sorry, there are currently no recommendation for this show at the moment.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    {% endif %}
+
         <!-- display ratings for FRIENDS ONLY:  -->
         
         {% if all_ratings %} 
