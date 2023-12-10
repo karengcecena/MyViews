@@ -276,28 +276,18 @@ def show_media(media_type, TMDB_id):
          #get movie / show recommended
         if media != False:
 
-            print(media_type)
             url = f"https://api.themoviedb.org/3/{media_type}/{media.TMDB_id}/recommendations"
 
-            # if media_type == "movie":
-            #     url = f"https://api.themoviedb.org/3/movie/{media.TMDB_id}/recommendations"
-            # else:
-            #     url = f"https://api.themoviedb.org/3/tv/{last_show.TMDB_id}/recommendations"
-            # url = "https://api.themoviedb.org/3/tv/{last_show.TMDB_id}/recommendations"
-
             payload = {"api_key": API_KEY} 
-
             media_res = requests.get(url, params=payload)
 
             if media_res:
                 media_data = media_res.json()
                 media_results=media_data["results"]
             else:
-                media_data = None
                 media_results = None
 
         else:
-            media_data = None
             media_results = None
 
     else: 
