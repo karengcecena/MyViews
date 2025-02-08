@@ -5,7 +5,7 @@
 **MyViews** is a web app that allows users and guests to search for movies and tv shows. This app is for those who love organization and sharing their recommended media with friends. Users who log in can rate the media, categorize them into playlists, see their recommended and trending tv shows and movies, as well as add friends to see their profiles as well. The user profile also contains data visualization graphs, allowing users to be more mindful of the type and amount of media they are taking in. 
 
 ## 📋 Content
-* [Deployment](#deployment)
+* [Tutorial](#tutorial)
 * [About the Developer](#aboutme)
 * [Tech Stack](#technologies)
 * [Database Model](#databasemodel)
