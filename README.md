@@ -16,11 +16,7 @@
 
 ## 🌐 <a name="deployment"></a>Deployment
 
-Deployed using AWS Lightsail.
-
-Check out MyViews' [Website](http://myviews.link/)
-
-Or check out [MyViews](https://youtu.be/uvLiHigX4Fg) on youtube for a tutorial of its features. 
+Check out [MyViews](https://youtu.be/uvLiHigX4Fg) on youtube for a tutorial of its features. 
 
 
 ## 🪐 <a name="aboutme"></a>About the Developer
