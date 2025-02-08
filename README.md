@@ -14,7 +14,7 @@
 * [Installation](#installation)
 
 
-## 🌐 <a name="deployment"></a>Deployment
+## 🌐 <a name="tutorial"></a>Tutorial
 
 Check out [MyViews](https://youtu.be/uvLiHigX4Fg) on youtube for a tutorial of its features. 
 
